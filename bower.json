@@ -1,0 +1,26 @@
+{
+  "name": "obsidian-city",
+  "version": "0.0.0",
+  "homepage": "https://github.com/codenameyau/obsidian-city",
+  "authors": [
+    "Jorge Yau <jyau01@citymail.cuny.edu>"
+  ],
+  "description": "Procedural city with generated architecture",
+  "keywords": [
+    "procedural",
+    "city",
+    "js"
+  ],
+  "license": "GPL",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "pubtest": "~0.0.1"
+  }
+}
