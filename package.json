@@ -1,0 +1,30 @@
+{
+  "name": "obsidian-city",
+  "version": "0.0.0",
+  "description": "Procedural city with generated architecture",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codenameyau/obsidian-city.git"
+  },
+  "keywords": [
+    "procedural",
+    "city"
+  ],
+  "author": "Jorge Yau",
+  "license": "GPL",
+  "bugs": {
+    "url": "https://github.com/codenameyau/obsidian-city/issues"
+  },
+  "homepage": "https://github.com/codenameyau/obsidian-city",
+  "devDependencies": {
+    "gulp": "^3.8.1",
+    "gulp-rev": "^0.4.1",
+    "gulp-uglify": "^0.3.1",
+    "gulp-usemin": "^0.3.5",
+    "rimraf": "^2.2.8"
+  }
+}
