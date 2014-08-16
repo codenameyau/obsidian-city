@@ -4,126 +4,130 @@
 'use strict';
 
 
-/********************
- * Global Variables *
- ********************/
+/****************
+ * Main Program *
+ ****************/
+(function() {
 
-// Built-in
-var scene, camera, renderer;
+  var city = new ObsidianCity();
+})();
 
-// Plugins
-var controls, gui;
+// // Built-in
+// var scene, camera, renderer;
 
-
-/********************
- * Helper Functions *
- ********************/
-function basicFloorGrid(lines, steps, gridColor) {
-  lines = lines || 20;
-  steps = steps || 2;
-  gridColor = gridColor || 0xFFFFFF;
-  var floorGrid = new THREE.Geometry();
-  var gridLine = new THREE.LineBasicMaterial( {color: gridColor} );
-  for (var i = -lines; i <= lines; i += steps) {
-    floorGrid.vertices.push(new THREE.Vector3(-lines, 0, i));
-    floorGrid.vertices.push(new THREE.Vector3( lines, 0, i));
-    floorGrid.vertices.push(new THREE.Vector3( i, 0, -lines));
-    floorGrid.vertices.push(new THREE.Vector3( i, 0, lines));
-  }
-  return new THREE.Line(floorGrid, gridLine, THREE.LinePieces);
-}
+// // Plugins
+// var controls, gui;
 
 
-/***********************
- * Rendering Functions *
- ***********************/
-
-function renderScene() {
-  renderer.render( scene, camera );
-}
-
-function updateScene() {
-  controls.update();
-}
-
-function animateScene() {
-  window.requestAnimationFrame( animateScene );
-  renderScene();
-  updateScene();
-}
-
-function resizeWindow() {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-}
-
-function addToDOM(object) {
-  var container = document.getElementById('canvas-body');
-  container.appendChild(object);
-}
+// /********************
+//  * Helper Functions *
+//  ********************/
+// function basicFloorGrid(lines, steps, gridColor) {
+//   lines = lines || 20;
+//   steps = steps || 2;
+//   gridColor = gridColor || 0xFFFFFF;
+//   var floorGrid = new THREE.Geometry();
+//   var gridLine = new THREE.LineBasicMaterial( {color: gridColor} );
+//   for (var i = -lines; i <= lines; i += steps) {
+//     floorGrid.vertices.push(new THREE.Vector3(-lines, 0, i));
+//     floorGrid.vertices.push(new THREE.Vector3( lines, 0, i));
+//     floorGrid.vertices.push(new THREE.Vector3( i, 0, -lines));
+//     floorGrid.vertices.push(new THREE.Vector3( i, 0, lines));
+//   }
+//   return new THREE.Line(floorGrid, gridLine, THREE.LinePieces);
+// }
 
 
-/************************
- * Scene Initialization *
- ************************/
+// /***********************
+//  * Rendering Functions *
+//  ***********************/
 
-function initializeScene() {
+// function renderScene() {
+//   renderer.render( scene, camera );
+// }
 
-  /*************************
-   * Initialize Essentials *
-   *************************/
+// function updateScene() {
+//   controls.update();
+// }
 
-  // Scene and window resize listener
-  scene = new THREE.Scene();
-  var canvasWidth  = window.innerWidth;
-  var canvasHeight = window.innerHeight;
-  window.addEventListener('resize', resizeWindow, false);
+// function animateScene() {
+//   window.requestAnimationFrame( animateScene );
+//   renderScene();
+//   updateScene();
+// }
 
-  // Camera and set initial view
-  var aspectRatio  = canvasWidth/canvasHeight;
-  camera = new THREE.PerspectiveCamera( CAMERA.fov, aspectRatio, CAMERA.near, CAMERA.far );
-  camera.position.set( CAMERA.zoomX, CAMERA.zoomY, CAMERA.zoomZ );
-  camera.lookAt(scene.position);
-  scene.add(camera);
+// function resizeWindow() {
+//   camera.aspect = window.innerWidth / window.innerHeight;
+//   camera.updateProjectionMatrix();
+//   renderer.setSize(window.innerWidth, window.innerHeight);
+// }
 
-  // Add WebGL renderer to DOM
-  renderer = new THREE.WebGLRenderer(RENDERER);
-  renderer.setSize(canvasWidth, canvasHeight);
-  addToDOM(renderer.domElement);
-
-
-  /**********************
-   * Initialize Plugins *
-   **********************/
-
-  // OrbitControls using mouse
-  controls = new THREE.OrbitControls(camera);
-  for (var key in CONTROLS) { controls[key] = CONTROLS[key]; }
-  controls.addEventListener('change', renderScene);
-
-  /***************
-   * Custom Code *
-   ***************/
-
-  // Example: light sources
-  var lightAmbient = new THREE.AmbientLight(0x666666);
-  var lightSource = new THREE.PointLight(0x888888);
-  lightSource.position.set(0, 50, 80);
-  scene.add(lightAmbient);
-  scene.add(lightSource);
-
-  // Example: basic floor grid
-  scene.add(basicFloorGrid(20, 2));
-
-  // Example: crate with texture
-
-}
+// function addToDOM(object) {
+//   var container = document.getElementById('canvas-body');
+//   container.appendChild(object);
+// }
 
 
-/**********************
- * Render and Animate *
- **********************/
+// /************************
+//  * Scene Initialization *
+//  ************************/
 
-initializeScene();
-animateScene();
+// function initializeScene() {
+
+//   ************************
+//    * Initialize Essentials *
+//    ************************
+
+//   // Scene and window resize listener
+//   scene = new THREE.Scene();
+//   var canvasWidth  = window.innerWidth;
+//   var canvasHeight = window.innerHeight;
+//   window.addEventListener('resize', resizeWindow, false);
+
+//   // Camera and set initial view
+//   var aspectRatio  = canvasWidth/canvasHeight;
+//   camera = new THREE.PerspectiveCamera( CAMERA.fov, aspectRatio, CAMERA.near, CAMERA.far );
+//   camera.position.set( CAMERA.zoomX, CAMERA.zoomY, CAMERA.zoomZ );
+//   camera.lookAt(scene.position);
+//   scene.add(camera);
+
+//   // Add WebGL renderer to DOM
+//   renderer = new THREE.WebGLRenderer(RENDERER);
+//   renderer.setSize(canvasWidth, canvasHeight);
+//   addToDOM(renderer.domElement);
+
+
+//   /**********************
+//    * Initialize Plugins *
+//    **********************/
+
+//   // OrbitControls using mouse
+//   controls = new THREE.OrbitControls(camera);
+//   for (var key in CONTROLS) { controls[key] = CONTROLS[key]; }
+//   controls.addEventListener('change', renderScene);
+
+//   /***************
+//    * Custom Code *
+//    ***************/
+
+//   // Example: light sources
+//   var lightAmbient = new THREE.AmbientLight(0x666666);
+//   var lightSource = new THREE.PointLight(0x888888);
+//   lightSource.position.set(0, 50, 80);
+//   scene.add(lightAmbient);
+//   scene.add(lightSource);
+
+//   // Example: basic floor grid
+//   scene.add(basicFloorGrid(20, 2));
+
+//   // Example: crate with texture
+
+// }
+
+
+// /**********************
+//  * Render and Animate *
+//  **********************/
+
+// initializeScene();
+// animateScene();

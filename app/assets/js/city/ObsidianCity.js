@@ -9,6 +9,7 @@
  ****************************/
 function ObsidianCity() {
   this.initializeSettings();
+  this.initializeScene();
 }
 
 ObsidianCity.prototype.initializeSettings = function() {
@@ -37,6 +38,22 @@ ObsidianCity.prototype.initializeSettings = function() {
   };
 };
 
+ObsidianCity.prototype.initializeScene = function() {
+  this.scene = new THREE.Scene();
+};
+
+ObsidianCity.prototype.rendererScene = function() {
+  this.renderer.render(this.scene, this.camera );
+};
+
+ObsidianCity.prototype.updateScene = function() {
+  if (this.renderer.running) {
+    window.requestAnimationFrame(this.updateScene.bind(this));
+    this.clock.delta = this.clock.getDelta();
+    this.camera.update();
+    this.renderScene();
+  }
+};
 
 /*******************************
  * ObsidianCity Public Methods *
