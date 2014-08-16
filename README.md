@@ -3,7 +3,7 @@ obsidian-city
 
 ###The goal
 > Make a night-time cityscape using nothing but procedurally
-generated content. -Shamus Young
+generated content. -[Shamus Young](https://www.youtube.com/watch?v=-d2-PtK4F6Y)
 
 
 ###Progress

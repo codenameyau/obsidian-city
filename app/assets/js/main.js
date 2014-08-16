@@ -14,17 +14,10 @@ var scene, camera, renderer;
 // Plugins
 var controls, gui;
 
-// Scene objects
-
 
 /********************
  * Helper Functions *
  ********************/
-
-function degToRad(degrees) {
-  return Math.PI/180 * degrees;
-}
-
 function basicFloorGrid(lines, steps, gridColor) {
   lines = lines || 20;
   steps = steps || 2;
