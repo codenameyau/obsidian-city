@@ -12,6 +12,7 @@ function ObsidianCity() {
   this.initializeSettings();
   this.initializeClock();
   this.initializeScene();
+  this.initializeControls();
   this.initializeEventListeners();
 }
 

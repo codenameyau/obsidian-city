@@ -7,7 +7,7 @@
 /***********************
  * ObsidianCity Street *
  **********************/
-ObsidianCity.prototype.enablefloorGrid = function(lines, steps, gridColor) {
+ObsidianCity.prototype.enableFloorGrid = function(lines, steps, gridColor) {
   lines = lines || 20;
   steps = steps || 2;
   gridColor = gridColor || 0xFFFFFF;

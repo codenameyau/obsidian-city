@@ -33,7 +33,7 @@ ObsidianCity.prototype.initializeSettings = function() {
 
     renderer: {
       antialias: false,
-    }
+    },
   };
 };
 
@@ -75,6 +75,14 @@ ObsidianCity.prototype.initializeScene = function() {
 };
 
 
+ObsidianCity.prototype.initializeControls = function() {
+  var settings = this.settings.controls;
+  this.controls = new THREE.OrbitControls(this.camera);
+  for (var key in settings) { this.controls[key] = settings[key]; }
+  this.controls.addEventListener('change', this.renderScene);
+};
+
+
 ObsidianCity.prototype.initializeEventListeners = function() {
   window.addEventListener('resize', this.resizeWindow.bind(this), false);
   window.addEventListener('focus', this.resumeClock.bind(this), false);
@@ -86,7 +94,7 @@ ObsidianCity.prototype.initializeEventListeners = function() {
 /*************************
  * ObsidianCity Renderer *
  *************************/
-ObsidianCity.prototype.rendererScene = function() {
+ObsidianCity.prototype.renderScene = function() {
   this.renderer.render(this.scene, this.camera );
 };
 
@@ -95,7 +103,6 @@ ObsidianCity.prototype.updateScene = function() {
   if (this.renderer.running) {
     window.requestAnimationFrame(this.updateScene.bind(this));
     this.clock.delta = this.clock.getDelta();
-    this.camera.update();
     this.renderScene();
   }
 };
@@ -121,16 +128,14 @@ ObsidianCity.prototype.pauseClock = function() {
 };
 
 
-ObsidianCity.prototype.resumeGame = function() {
-  this.HUD.paused.style.display = 'none';
+ObsidianCity.prototype.resumeRenderer = function() {
   this.renderer.running = true;
   this.resumeClock();
   window.requestAnimationFrame(this.updateScene.bind(this));
 };
 
 
-ObsidianCity.prototype.pauseGame = function() {
-  this.HUD.paused.style.display = 'block';
+ObsidianCity.prototype.pauseRenderer = function() {
   this.renderer.running = false;
   this.pauseClock();
 };
@@ -138,17 +143,28 @@ ObsidianCity.prototype.pauseGame = function() {
 
 ObsidianCity.prototype.togglePause = function() {
   if (this.renderer.running) {
-    this.pauseGame();
+    this.pauseRenderer();
   }
   else {
-    this.resumeGame();
+    this.resumeRenderer();
   }
+  console.log(this.renderer.running);
 };
 
 
 /********************************
  * ObsidianCity Event Listeners *
  ********************************/
+ObsidianCity.prototype.keyboardInput = function(event) {
+  switch (event.which) {
+
+  // spacebar: toggle pause
+  case 32:
+    event.preventDefault();
+    this.togglePause();
+    break;
+  }
+};
 
 
 /*******************************
