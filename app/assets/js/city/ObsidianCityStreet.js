@@ -7,7 +7,7 @@
 /***********************
  * ObsidianCity Street *
  **********************/
-ObsidianCity.prototype.floorGrid = function(lines, steps, gridColor) {
+ObsidianCity.prototype.enablefloorGrid = function(lines, steps, gridColor) {
   lines = lines || 20;
   steps = steps || 2;
   gridColor = gridColor || 0xFFFFFF;
@@ -19,5 +19,5 @@ ObsidianCity.prototype.floorGrid = function(lines, steps, gridColor) {
     floorGrid.vertices.push(new THREE.Vector3( i, 0, -lines));
     floorGrid.vertices.push(new THREE.Vector3( i, 0, lines));
   }
-  return new THREE.Line(floorGrid, gridLine, THREE.LinePieces);
+  this.scene.add(new THREE.Line(floorGrid, gridLine, THREE.LinePieces));
 };

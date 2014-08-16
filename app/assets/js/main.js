@@ -9,39 +9,10 @@
  ****************/
 (function() {
   var city = new ObsidianCity();
+  city.enableFloorGrid();
 
 })();
 
-
-
-// /***********************
-//  * Rendering Functions *
-//  ***********************/
-
-// function renderScene() {
-//   renderer.render( scene, camera );
-// }
-
-// function updateScene() {
-//   controls.update();
-// }
-
-// function animateScene() {
-//   window.requestAnimationFrame( animateScene );
-//   renderScene();
-//   updateScene();
-// }
-
-// function resizeWindow() {
-//   camera.aspect = window.innerWidth / window.innerHeight;
-//   camera.updateProjectionMatrix();
-//   renderer.setSize(window.innerWidth, window.innerHeight);
-// }
-
-// function addToDOM(object) {
-//   var container = document.getElementById('canvas-body');
-//   container.appendChild(object);
-// }
 
 
 // /************************
