@@ -9,6 +9,12 @@
  **********************/
 ObsidianCity.prototype.utils = {
 
+  // Adds element to DOM
+  addToDOM : function(parent, element) {
+    var container = document.getElementById(parent);
+    container.appendChild(element);
+  },
+
   // Returns value if property is not defined
   checkProperty : function(object, property, value) {
     if (object && typeof object[property] !== 'undefined') { value = object[property]; }
