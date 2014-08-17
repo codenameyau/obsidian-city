@@ -31,10 +31,10 @@ canvas {
   z-index : 125;
   width : 100%;
   position : absolute;
-  top : 40%;
+  top : 45%;
   text-align : center;
   color : rgba(200, 200, 200, 0.5);
   text-transform : uppercase;
-  font-size : 30px;
+  font-size : 35px;
   letter-spacing : 8px;
 }

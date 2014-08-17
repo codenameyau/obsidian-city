@@ -13,11 +13,9 @@ function ObsidianCity() {
   this.initializeClock();
   this.initializeScene();
   this.initializeCamera();
-  this.initializeCamera();
   this.initializeControls();
   this.initializeHUD();
   this.initializeEventListeners();
-  this.updateScene();
 }
 
 

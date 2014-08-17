@@ -24,11 +24,11 @@ ObsidianCity.prototype.initializeSettings = function() {
 
     controls: {
       enabled: true,
-      userPan: true,
-      userPanSpeed: 1,
+      userPan: false,
+      userPanSpeed: 0.5,
       minDistance: 10.0,
       maxDistance: 200.0,
-      maxPolarAngle: (Math.PI/180) * 80,
+      maxPolarAngle: (Math.PI/180) * 85,
     },
 
     renderer: {
@@ -54,24 +54,19 @@ ObsidianCity.prototype.initializeScene = function() {
 
 
 ObsidianCity.prototype.initializeCamera = function() {
-  var settings = this.settings.camera;
-  this.camera = new THREE.PerspectiveCamera(
-    settings.fov,
-    window.innerWidth/window.innerHeight,
-    settings.near,
-    settings.far
-  );
-  this.camera.position.set(settings.zoomX, settings.zoomY, settings.zoomZ);
+  var set = this.settings.camera;
+  var aspect = window.innerWidth/window.innerHeight;
+  this.camera = new THREE.PerspectiveCamera(set.fov, aspect, set.near, set.far);
+  this.camera.position.set(set.zoomX, set.zoomY, set.zoomZ);
   this.camera.lookAt(this.scene.position);
   this.scene.add(this.camera);
 };
 
 
 ObsidianCity.prototype.initializeControls = function() {
-  var settings = this.settings.controls;
+  var set = this.settings.controls;
   this.controls = new THREE.OrbitControls(this.camera);
-  for (var key in settings) { this.controls[key] = settings[key]; }
-  this.controls.addEventListener('change', this.renderScene);
+  for (var key in set) { this.controls[key] = set[key]; }
 };
 
 
@@ -93,14 +88,14 @@ ObsidianCity.prototype.initializeEventListeners = function() {
  * ObsidianCity Renderer *
  *************************/
 ObsidianCity.prototype.renderScene = function() {
-  this.renderer.render(this.scene, this.camera );
+  this.renderer.render(this.scene, this.camera);
 };
 
 
 ObsidianCity.prototype.updateScene = function() {
   if (this.renderer.running) {
     window.requestAnimationFrame(this.updateScene.bind(this));
-    this.clock.delta = this.clock.getDelta();
+    this.controls.update();
     this.renderScene();
   }
 };
@@ -127,7 +122,6 @@ ObsidianCity.prototype.pauseClock = function() {
 
 
 ObsidianCity.prototype.resumeRenderer = function() {
-  this.HUD.paused.style.display = 'none';
   this.renderer.running = true;
   this.resumeClock();
   window.requestAnimationFrame(this.updateScene.bind(this));
@@ -135,7 +129,6 @@ ObsidianCity.prototype.resumeRenderer = function() {
 
 
 ObsidianCity.prototype.pauseRenderer = function() {
-  this.HUD.paused.style.display = 'block';
   this.renderer.running = false;
   this.pauseClock();
 };
@@ -143,9 +136,13 @@ ObsidianCity.prototype.pauseRenderer = function() {
 
 ObsidianCity.prototype.togglePause = function() {
   if (this.renderer.running) {
+    this.HUD.paused.style.display = 'block';
+    this.controls.enabled = false;
     this.pauseRenderer();
   }
   else {
+    this.HUD.paused.style.display = 'none';
+    this.controls.enabled = true;
     this.resumeRenderer();
   }
 };

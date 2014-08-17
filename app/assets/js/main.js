@@ -11,5 +11,6 @@
   var city = new ObsidianCity();
   console.log(city);
   city.enableFloorGrid();
+  city.updateScene();
 
 })();
