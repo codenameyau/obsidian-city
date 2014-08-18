@@ -31,4 +31,9 @@ ObsidianCity.prototype.utils = {
     return 180/Math.PI * degrees;
   },
 
+  // Returns random integer in range
+  randomInteger : function(min, max) {
+    return parseInt(Math.random() * (max - min) + min, 10);
+  },
+
 };

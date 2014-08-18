@@ -10,7 +10,7 @@
 ObsidianCity.prototype.enablePausedHUD = function() {
   var container = document.createElement('div');
   container.className = 'hud-paused';
-  container.innerText = 'Paused';
+  container.textContent = 'Paused';
   this.utils.addToDOM(this.settings.meta.dom, container);
   this.HUD.paused = container;
 };

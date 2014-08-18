@@ -16,6 +16,7 @@ body {
   color: #333;
   margin: 0;
   overflow: hidden;
+  cursor: default;
 }
 
 canvas {

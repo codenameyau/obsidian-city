@@ -10,7 +10,8 @@
 (function() {
   var city = new ObsidianCity();
   console.log(city);
-  city.enableFloorGrid();
+
+  city.enableFloorGrid(32, 4);
   city.updateScene();
 
 })();
