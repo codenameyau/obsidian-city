@@ -16,7 +16,7 @@
   city.addAmbientLight();
 
   // Generate building
-  city.generateBuilding('block', 2, 2);
+  city.generateBuilding('block', 16, 32);
 
   // Run update loop
   city.updateScene();

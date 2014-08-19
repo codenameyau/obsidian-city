@@ -16,7 +16,10 @@ function ObsidianCity() {
   this.initializeControls();
   this.initializeHUD();
   this.initializeEventListeners();
-  this.initializeGeometry();
+
+  // Define reusable resources
+  this.defineBuildingGeometry();
+  this.defineBuildingMaterial();
 }
 
 /**************************

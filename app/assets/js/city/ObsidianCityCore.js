@@ -76,14 +76,6 @@ ObsidianCity.prototype.initializeHUD = function() {
 };
 
 
-ObsidianCity.prototype.initializeGeometry = function() {
-  this.geometry = {};
-  // Initialize reusable box geometry
-  this.box = new THREE.BoxGeometry(1, 1, 1);
-  this.box.applyMatrix(new THREE.Matrix4().makeTranslation(0, 0.5, 0));
-};
-
-
 ObsidianCity.prototype.initializeEventListeners = function() {
   window.addEventListener('resize', this.resizeWindow.bind(this), false);
   window.addEventListener('focus', this.resumeClock.bind(this), false);
