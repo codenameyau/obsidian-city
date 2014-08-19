@@ -21,7 +21,6 @@
       'controls userPan should be false');
   });
 
-
   testCity.results();
 
 })();

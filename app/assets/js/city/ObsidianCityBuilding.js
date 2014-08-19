@@ -36,13 +36,20 @@ ObsidianCity.prototype.defineBuildingMaterial = function() {
  * ObsidianCity Building Mesh *
  ******************************/
 ObsidianCity.prototype.generateBuilding = function(type, width, length) {
+  switch (type) {
+
+  case 'block':
+    return this.blockBuilding(width, length);
+
+  }
+};
+
+
+ObsidianCity.prototype.blockBuilding = function(width, length) {
   var height = this.utils.randomInteger(30, 50);
   var geometry = this.geometry.box;
   var material = this.material.basicLambert;
   var mesh = new THREE.Mesh(geometry, material);
-  mesh.scale.x = width;
-  mesh.scale.y = height;
-  mesh.scale.z = length;
-  this.scene.add(mesh);
+  mesh.scale.set(width, height, length);
+  return mesh;
 };
-

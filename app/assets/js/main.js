@@ -9,14 +9,16 @@
  ****************/
 (function() {
   var city = new ObsidianCity();
-  city.enableFloorGrid(32, 4);
+  city.enableFloorGrid(64, 4);
   console.log(city);
 
   // [TODO] Add lighting
   city.addAmbientLight();
+  city.addDirectionalLight(0x2F2F8F, 0, 0.5, 0.2);
 
   // Generate building
-  city.generateBuilding('block', 16, 32);
+  var mesh = city.generateBuilding('block', 16, 16);
+  city.scene.add(mesh);
 
   // Run update loop
   city.updateScene();

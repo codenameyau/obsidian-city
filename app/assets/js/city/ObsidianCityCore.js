@@ -58,7 +58,6 @@ ObsidianCity.prototype.initializeCamera = function() {
   var aspect = window.innerWidth/window.innerHeight;
   this.camera = new THREE.PerspectiveCamera(set.fov, aspect, set.near, set.far);
   this.camera.position.set(set.zoomX, set.zoomY, set.zoomZ);
-  this.camera.lookAt(this.scene.position);
   this.scene.add(this.camera);
 };
 
