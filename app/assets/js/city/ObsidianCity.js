@@ -16,8 +16,8 @@ function ObsidianCity() {
   this.initializeControls();
   this.initializeHUD();
   this.initializeEventListeners();
+  this.initializeGeometry();
 }
-
 
 /**************************
  * ObsidianCity Generator *

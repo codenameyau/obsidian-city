@@ -18,8 +18,8 @@ ObsidianCity.prototype.initializeSettings = function() {
       near: 1,
       far: 1000,
       zoomX: 0,
-      zoomY: 100,
-      zoomZ: 0,
+      zoomY: 20,
+      zoomZ: 100,
     },
 
     controls: {
@@ -73,6 +73,14 @@ ObsidianCity.prototype.initializeControls = function() {
 ObsidianCity.prototype.initializeHUD = function() {
   this.HUD = {};
   this.enablePausedHUD();
+};
+
+
+ObsidianCity.prototype.initializeGeometry = function() {
+  this.geometry = {};
+  // Initialize reusable box geometry
+  this.box = new THREE.BoxGeometry(1, 1, 1);
+  this.box.applyMatrix(new THREE.Matrix4().makeTranslation(0, 0.5, 0));
 };
 
 
