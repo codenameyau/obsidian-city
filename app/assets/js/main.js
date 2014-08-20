@@ -12,7 +12,7 @@
   city.enableFloorGrid(64, 4);
   console.log(city);
 
-  // [TODO] Add lighting
+  // [TODO] Hemisphere lighting
   city.addAmbientLight();
   city.addDirectionalLight(0x2F2F8F, 0, 0.5, 0.2);
 

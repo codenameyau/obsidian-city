@@ -26,7 +26,7 @@ ObsidianCity.prototype.defineBuildingMaterial = function() {
 
   // Window texture
   this.material.building = {
-    striped: this.windowStripedMaterial(),
+    striped: this.stripedBuildingMaterial(),
   };
 };
 
@@ -34,7 +34,7 @@ ObsidianCity.prototype.defineBuildingMaterial = function() {
 /***********************************
  * ObsidianCity Texture Generation *
  ***********************************/
-ObsidianCity.prototype.textureCanvas = function(width, height) {
+ObsidianCity.prototype.textureCanvas = function(width, height, bgcolor) {
   // Create canvas and set dimensions
   var canvas = document.createElement('canvas');
   canvas.width = width || 32;
@@ -42,14 +42,14 @@ ObsidianCity.prototype.textureCanvas = function(width, height) {
 
   // Fill canvas with white
   var ctx = canvas.getContext('2d');
-  ctx.fillStyle = '#FFFFFF';
+  ctx.fillStyle = bgcolor || '#FFFFFF';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
-  return canvas;
+  return ctx;
 };
 
 
-ObsidianCity.prototype.textureResolution = function(canvas, width, height) {
-  // Create high-res canvas
+ObsidianCity.prototype.createTexture = function(canvas, width, height) {
+  // Create hi-res canvas
   var hiResCanvas = document.createElement('canvas');
   hiResCanvas.width = width || 512;
   hiResCanvas.height = height || 512;
@@ -60,12 +60,9 @@ ObsidianCity.prototype.textureResolution = function(canvas, width, height) {
   ctx.webkitImageSmoothingEnabled  = false;
   ctx.mozImageSmoothingEnabled = false;
   ctx.drawImage(canvas, 0, 0, hiResCanvas.width, hiResCanvas.height);
-  return hiResCanvas;
-};
 
-
-ObsidianCity.prototype.createTextureMaterial = function(canvas) {
-  var texture = new THREE.Texture(canvas);
+  // Create texture material from hi-res canvas
+  var texture = new THREE.Texture(hiResCanvas);
   texture.anisotropy = this.renderer.getMaxAnisotropy();
   texture.needsUpdate = true;
   return new THREE.MeshLambertMaterial({
@@ -78,23 +75,42 @@ ObsidianCity.prototype.createTextureMaterial = function(canvas) {
 /*******************************
  * ObsidianCity Window Texture *
  *******************************/
-ObsidianCity.prototype.windowStripedMaterial = function() {
+ObsidianCity.prototype.stripedBuildingMaterial = function() {
+  // Initial texture size
   var width = 32, height = 64;
 
   // Draw shade of random luminance in windows
-  var canvas = this.textureCanvas(width, height);
-  var ctx = canvas.getContext('2d');
+  var context = this.textureCanvas(width, height, '#FFFFFF');
   for (var y=2; y<height; y += 2) {
     for (var x=0; x<width; x += 2) {
-      var value = Math.floor( Math.random() * height );
-      ctx.fillStyle = 'rgb(' + [value, value, value].join(',') + ')';
-      ctx.fillRect(x, y, 2, 1);
+      var value = Math.floor(Math.random() * height);
+      context.fillStyle = 'rgb(' + [value, value, value].join(',') + ')';
+      context.fillRect(x, y, 2, 1);
     }
   }
 
   // Create a hi-res texture from canvas
-  var hiResCanvas = this.textureResolution(canvas, 512, 1024);
-  return this.createTextureMaterial(hiResCanvas);
+  return this.createTexture(context.canvas, 512, 1024);
+};
+
+
+ObsidianCity.prototype.squareBuildingMaterial = function(width, height) {
+  var padding = 2;
+  var windowLength = 32;
+  var windowHeight = 32;
+  var padLength = windowLength + padding;
+  var padHeight = windowHeight + padding;
+
+  // Create blank canvas to draw windows
+  var context = this.textureCanvas(width, height, '#000000');
+  for (var i=padding; i<height; i++) {
+    for (var j=padding; j<width; j++) {
+
+    }
+  }
+
+  // Create a hi-res texture from canvas
+  return this.createTexture(context.canvas, 512, 1024);
 };
 
 
@@ -105,6 +121,7 @@ ObsidianCity.prototype.blockBuilding = function(width, length) {
   var height = this.utils.randomInteger(30, 50);
   var geometry = this.geometry.box;
   var material = this.material.building.striped;
+  // var material = this.squareBuildingMaterial(width, height);
   var mesh = new THREE.Mesh(geometry, material);
   mesh.scale.set(width, height, length);
   return mesh;

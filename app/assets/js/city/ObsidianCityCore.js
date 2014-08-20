@@ -14,8 +14,8 @@ ObsidianCity.prototype.initializeSettings = function() {
     },
 
     camera: {
-      fov: 45,
-      near: 1,
+      fov: 40,
+      near: 0.5,
       far: 1000,
       zoomX: 0,
       zoomY: 20,
