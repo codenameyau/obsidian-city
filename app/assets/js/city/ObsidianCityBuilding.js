@@ -75,22 +75,27 @@ ObsidianCity.prototype.createTexture = function(canvas, width, height) {
 /*******************************
  * ObsidianCity Window Texture *
  *******************************/
+ObsidianCity.prototype.drawWindow = function(ctx, color, x, y, xSize, ySize) {
+  ctx.fillStyle = color || '0x9C9C9C';
+  ctx.fillRect(x, y, xSize, ySize);
+};
+
+
 ObsidianCity.prototype.stripedBuildingMaterial = function() {
   // Initial texture size
   var width = 32, height = 64;
 
   // Draw shade of random luminance in windows
-  var context = this.textureCanvas(width, height, '#FFFFFF');
+  var ctx = this.textureCanvas(width, height, '#FFFFFF');
   for (var y=2; y<height; y += 2) {
     for (var x=0; x<width; x += 2) {
-      var value = Math.floor(Math.random() * height);
-      context.fillStyle = 'rgb(' + [value, value, value].join(',') + ')';
-      context.fillRect(x, y, 2, 1);
+      var color = this.utils.randomGrayscale(40, 100);
+      this.drawWindow(ctx, color, x, y, 2, 1);
     }
   }
 
   // Create a hi-res texture from canvas
-  return this.createTexture(context.canvas, 512, 1024);
+  return this.createTexture(ctx.canvas, 512, 1024);
 };
 
 
@@ -102,7 +107,7 @@ ObsidianCity.prototype.squareBuildingMaterial = function(width, height) {
   var padHeight = windowHeight + padding;
 
   // Create blank canvas to draw windows
-  var context = this.textureCanvas(width, height, '#000000');
+  var ctx = this.textureCanvas(width, height, '#000000');
   for (var i=padding; i<height; i++) {
     for (var j=padding; j<width; j++) {
 
@@ -110,7 +115,7 @@ ObsidianCity.prototype.squareBuildingMaterial = function(width, height) {
   }
 
   // Create a hi-res texture from canvas
-  return this.createTexture(context.canvas, 512, 1024);
+  return this.createTexture(ctx.canvas, 512, 1024);
 };
 
 

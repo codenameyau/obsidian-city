@@ -36,4 +36,12 @@ ObsidianCity.prototype.utils = {
     return parseInt(Math.random() * (max - min) + min, 10);
   },
 
+  // Returns random grayscale color in range
+  randomGrayscale: function(min, max) {
+    min = min || 0;
+    max = max || 255;
+    var value = this.randomInteger(min, max);
+    return 'rgb(' + [value, value, value].join(',') + ')';
+  },
+
 };
