@@ -8,6 +8,7 @@
  * ObsidianCity Building Resources *
  ***********************************/
 ObsidianCity.prototype.defineBuildingGeometry = function() {
+  // Define reusable geometry
   this.geometry = {};
 
   // Basic box geometry
@@ -21,7 +22,8 @@ ObsidianCity.prototype.defineBuildingMaterial = function() {
 
   // Basic material
   this.material.basic = {
-    gray: new THREE.MeshLambertMaterial({color: 0xCCCCCC}),
+    gray: new THREE.MeshLambertMaterial({ color: 0xCCCCCC }),
+    black: new THREE.MeshBasicMaterial({ color: 0x010101 }),
   };
 
   // Window texture
@@ -106,7 +108,7 @@ ObsidianCity.prototype.squareBuildingMaterial = function(width, height) {
   var ctx = this.textureCanvas(windows, height, '#000000');
   for (var i=padding; i<windows; i++) {
     for (var j=padding; j<height; j++) {
-      var color = this.utils.randomGrayscale(10, 220);
+      var color = this.utils.randomGrayscale(10, 180);
       this.drawWindow(ctx, color, i, j, 2, 1);
       j += 1;
     }
@@ -124,9 +126,13 @@ ObsidianCity.prototype.squareBuildingMaterial = function(width, height) {
 ObsidianCity.prototype.blockBuilding = function(width, length) {
   var height = this.utils.randomInteger(70, 80);
   var geometry = this.geometry.box;
-  // var material = this.material.building.striped;
-  var material = this.squareBuildingMaterial(width, height);
-  var mesh = new THREE.Mesh(geometry, material);
+
+  // Define mesh materials
+  var side = this.squareBuildingMaterial(width, height);
+  var top = this.material.basic.black;
+  var materials = [side, side, top, top, side, side];
+  var meshMaterial = new THREE.MeshFaceMaterial(materials);
+  var mesh = new THREE.Mesh(geometry, meshMaterial);
   mesh.scale.set(width, height, length);
   return mesh;
 };
