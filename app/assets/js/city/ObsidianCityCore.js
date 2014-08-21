@@ -19,7 +19,7 @@ ObsidianCity.prototype.initializeSettings = function() {
       far: 1000,
       zoomX: 0,
       zoomY: 20,
-      zoomZ: 100,
+      zoomZ: 200,
     },
 
     controls: {

@@ -76,7 +76,7 @@ ObsidianCity.prototype.createTexture = function(canvas, width, height) {
  * ObsidianCity Window Texture *
  *******************************/
 ObsidianCity.prototype.drawWindow = function(ctx, color, x, y, xSize, ySize) {
-  ctx.fillStyle = color || '0x9C9C9C';
+  ctx.fillStyle = color;
   ctx.fillRect(x, y, xSize, ySize);
 };
 
@@ -95,27 +95,26 @@ ObsidianCity.prototype.stripedBuildingMaterial = function() {
   }
 
   // Create a hi-res texture from canvas
-  return this.createTexture(ctx.canvas, 512, 1024);
+  return this.createTexture(ctx.canvas, 256, 512);
 };
 
 
 ObsidianCity.prototype.squareBuildingMaterial = function(width, height) {
-  var padding = 2;
-  var windowLength = 32;
-  var windowHeight = 32;
-  var padLength = windowLength + padding;
-  var padHeight = windowHeight + padding;
-
   // Create blank canvas to draw windows
-  var ctx = this.textureCanvas(width, height, '#000000');
-  for (var i=padding; i<height; i++) {
-    for (var j=padding; j<width; j++) {
-
+  var windows = width * 2;
+  var padding = 1;
+  var ctx = this.textureCanvas(windows, height, '#000000');
+  for (var i=padding; i<windows; i++) {
+    for (var j=padding; j<height; j++) {
+      var color = this.utils.randomGrayscale(10, 220);
+      this.drawWindow(ctx, color, i, j, 2, 1);
+      j += 1;
     }
+    i += 2;
   }
 
   // Create a hi-res texture from canvas
-  return this.createTexture(ctx.canvas, 512, 1024);
+  return this.createTexture(ctx.canvas, 512, 512);
 };
 
 
@@ -123,10 +122,10 @@ ObsidianCity.prototype.squareBuildingMaterial = function(width, height) {
  * ObsidianCity Building Mesh *
  ******************************/
 ObsidianCity.prototype.blockBuilding = function(width, length) {
-  var height = this.utils.randomInteger(30, 50);
+  var height = this.utils.randomInteger(70, 80);
   var geometry = this.geometry.box;
-  var material = this.material.building.striped;
-  // var material = this.squareBuildingMaterial(width, height);
+  // var material = this.material.building.striped;
+  var material = this.squareBuildingMaterial(width, height);
   var mesh = new THREE.Mesh(geometry, material);
   mesh.scale.set(width, height, length);
   return mesh;
