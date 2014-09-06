@@ -10,15 +10,14 @@
 ObsidianCity.prototype.defineBuildingGeometry = function() {
   // Define reusable geometry
   this.geometry = {};
+  this.createBoxGeometry('base');
+  this.createBoxGeometry('building');
+};
 
-  // Reusable building geometry
-  this.geometry.building = new THREE.BoxGeometry(1, 1, 1);
-  this.geometry.building.applyMatrix(new THREE.Matrix4().makeTranslation(0, 0.5, 0));
 
-  // Reusable base geometry
-  this.geometry.base = new THREE.BoxGeometry(1, 1, 1);
-  this.geometry.base.applyMatrix(new THREE.Matrix4().makeTranslation(0, 0.5, 0));
-
+ObsidianCity.prototype.createBoxGeometry = function(name) {
+  this.geometry[name] = new THREE.BoxGeometry(1, 1, 1);
+  this.geometry[name].applyMatrix(new THREE.Matrix4().makeTranslation(0, 0.5, 0));
 };
 
 
@@ -31,10 +30,8 @@ ObsidianCity.prototype.defineBuildingMaterial = function() {
     black: new THREE.MeshBasicMaterial({ color: 0x080808 }),
   };
 
-  // Window texture
-  this.material.building = {
-    striped: this.stripedBuildingMaterial(),
-  };
+  // [TODO] Window texture cache
+  this.material.building = {};
 };
 
 
@@ -107,9 +104,10 @@ ObsidianCity.prototype.stripedBuildingMaterial = function() {
 
 
 ObsidianCity.prototype.squareBuildingMaterial = function(width, height) {
-  // Create blank canvas to draw windows
   var windows = width * 2;
   var padding = 1;
+
+  // Draw windows on blank canvas
   var ctx = this.textureCanvas(windows, height, '#000000');
   for (var i=padding; i<windows; i++) {
     for (var j=padding; j<height; j++) {
@@ -148,14 +146,14 @@ ObsidianCity.prototype.blockBuilding = function(width, length, height) {
   var windowBuilding = new THREE.Mesh(geometry, windowMaterial);
   windowBuilding.scale.set(width-4, height, length-4);
   windowBuilding.position.set(0, baseHeight, 0);
+
   var windowBuilding2 = new THREE.Mesh(geometry, windowMaterial);
-  windowBuilding2.scale.set(width-6, height-20, length-6);
-  windowBuilding2.position.set(10, baseHeight, 0);
+  windowBuilding2.scale.set(width-4, height-20, length-6);
+  windowBuilding2.position.set(5, baseHeight, 0);
 
   var windowBuilding3 = new THREE.Mesh(geometry, windowMaterial);
   windowBuilding3.scale.set(width-8, height+20, length-8);
   windowBuilding3.position.set(0, baseHeight, 0);
-
 
   buildingObject.add(windowBuilding);
   buildingObject.add(windowBuilding2);
