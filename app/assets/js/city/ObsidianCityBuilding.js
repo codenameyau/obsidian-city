@@ -11,9 +11,14 @@ ObsidianCity.prototype.defineBuildingGeometry = function() {
   // Define reusable geometry
   this.geometry = {};
 
-  // Basic box geometry
-  this.geometry.box = new THREE.BoxGeometry(1, 1, 1);
-  this.geometry.box.applyMatrix(new THREE.Matrix4().makeTranslation(0, 0.5, 0));
+  // Reusable building geometry
+  this.geometry.building = new THREE.BoxGeometry(1, 1, 1);
+  this.geometry.building.applyMatrix(new THREE.Matrix4().makeTranslation(0, 0.5, 0));
+
+  // Reusable base geometry
+  this.geometry.base = new THREE.BoxGeometry(1, 1, 1);
+  this.geometry.base.applyMatrix(new THREE.Matrix4().makeTranslation(0, 0.5, 0));
+
 };
 
 
@@ -39,7 +44,7 @@ ObsidianCity.prototype.defineBuildingMaterial = function() {
 ObsidianCity.prototype.textureCanvas = function(width, height, bgcolor) {
   // Create canvas and set dimensions
   var canvas = document.createElement('canvas');
-  canvas.width = width || 32;
+  canvas.width  = width  || 32;
   canvas.height = height || 32;
 
   // Fill canvas with white
@@ -124,33 +129,44 @@ ObsidianCity.prototype.squareBuildingMaterial = function(width, height) {
  * ObsidianCity Building Mesh *
  ******************************/
 ObsidianCity.prototype.blockBuilding = function(width, length, height) {
-  var building = new THREE.Object3D();
-  var geometry = this.geometry.box;
+  var buildingObject = new THREE.Object3D();
+  var geometry = this.geometry.building;
 
   // Define materials
   var black = this.material.basic.black;
   var windows = this.squareBuildingMaterial(width, height);
+  var materials = [windows, windows, black, black, windows, windows];
+  var windowMaterial = new THREE.MeshFaceMaterial(materials);
 
   // Create building base
   var baseHeight = 2;
-  var buildingBase = new THREE.Mesh(geometry, black);
+  var buildingBase = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), black);
   buildingBase.scale.set(width, baseHeight, length);
-  building.add(buildingBase);
+  buildingObject.add(buildingBase);
 
-  // Create building floors
-  var materials = [windows, windows, black, black, windows, windows];
-  var windowMaterial = new THREE.MeshFaceMaterial(materials);
-  var windowBuilding = new THREE.Mesh(geometry, black);
+  // [Bug] change black to windowMaterial
+  var windowBuilding = new THREE.Mesh(geometry, windowMaterial);
   windowBuilding.scale.set(width-4, height, length-4);
   windowBuilding.position.set(0, baseHeight, 0);
-  building.add(windowBuilding);
-  return building;
+  var windowBuilding2 = new THREE.Mesh(geometry, windowMaterial);
+  windowBuilding2.scale.set(width-6, height-20, length-6);
+  windowBuilding2.position.set(10, baseHeight, 0);
+
+  var windowBuilding3 = new THREE.Mesh(geometry, windowMaterial);
+  windowBuilding3.scale.set(width-8, height+20, length-8);
+  windowBuilding3.position.set(0, baseHeight, 0);
+
+
+  buildingObject.add(windowBuilding);
+  buildingObject.add(windowBuilding2);
+  buildingObject.add(windowBuilding3);
+  return buildingObject;
 };
 
 
 ObsidianCity.prototype.genericBuilding = function(width, length, height) {
   var building = new THREE.Object3D();
-  var geometry = this.geometry.box;
+  var geometry = this.geometry.building;
 
   // Define mesh materials
   var side = this.squareBuildingMaterial(width, height);
