@@ -10,7 +10,7 @@
 (function() {
   var city = new ObsidianCity();
   city.enableFloorGrid(64, 4);
-  console.log(city);
+  // console.log(city);
 
   // [TODO] Hemisphere lighting
   city.addAmbientLight();
