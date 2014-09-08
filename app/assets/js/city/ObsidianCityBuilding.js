@@ -27,7 +27,7 @@ ObsidianCity.prototype.defineBuildingMaterial = function() {
   // Basic material
   this.material.basic = {
     gray: new THREE.MeshLambertMaterial({ color: 0xCCCCCC }),
-    black: new THREE.MeshBasicMaterial({ color: 0x080808 }),
+    black: new THREE.MeshBasicMaterial({ color: 0x030303 }),
   };
 
   // [TODO] Window texture cache
@@ -137,35 +137,77 @@ ObsidianCity.prototype.buildingBase = function(width, length, height) {
   return baseMesh;
 };
 
+ObsidianCity.prototype.buildingStack = function(width, length, height) {
+  var geometry = this.geometry.building;
+  var black = this.material.basic.black;
+  var windows = this.squareBuildingMaterial(width, height);
+  var windowsMap = [windows, windows, black, black, windows, windows];
+  var windowMaterial = new THREE.MeshFaceMaterial(windowsMap);
+  var buildingMesh = new THREE.Mesh(geometry, windowMaterial);
+  buildingMesh.scale.set(width, height, length);
+  return buildingMesh;
+};
 
-ObsidianCity.prototype.genericBuilding = function(width, length, height, sections) {
-  // Define geometries and material
+
+ObsidianCity.prototype.genericBuilding = function(width, length, totalHeight, stacks) {
+  // Define building properties
   var buildingObject = new THREE.Object3D();
-  var buildingGeometry = this.geometry.building;
+  var baseHeight = 2;
+  var currentHeight = 0;
+  var height = Math.round(totalHeight/stacks);
   var black = this.material.basic.black;
 
-  // Create floor base
-  var baseHeight = 2;
-  var floorBase = this.buildingBase(25, 20, baseHeight);
-  buildingObject.add(floorBase);
+  // Create building stacks
+  for (var i=0; i<stacks; i++) {
 
-  // Create building sections
-  sections = sections || 3;
-  for (var i=0; i<sections; i++) {
-    // Create window texture based on height
-    height = height + i*3 + this.utils.randomInteger(0, 5);
-    var windows = this.squareBuildingMaterial(width, height);
-    var windowsMap = [windows, windows, black, black, windows, windows];
-    var windowMaterial = new THREE.MeshFaceMaterial(windowsMap);
+    // Add floor base
+    var floorBase = this.buildingBase(width, length, baseHeight);
+    floorBase.position.set(0, currentHeight, 0);
+    buildingObject.add(floorBase);
+    currentHeight += baseHeight;
+    width  -= 1;
+    length -= 1;
 
-    // Create building section mesh
-    var posX = this.utils.randomInteger(-5, 5);
-    var posZ = this.utils.randomInteger(-5, 5);
-    var buildingSection = new THREE.Mesh(buildingGeometry, windowMaterial);
-    buildingSection.scale.set(width-i*2, height, length-i*2);
-    buildingSection.position.set(posX, baseHeight, posZ);
-    buildingObject.add(buildingSection);
+    // Add building stack
+    var buildingStack = new THREE.Mesh(buildingGeometry, windowMaterial);
   }
 
   return buildingObject;
 };
+
+
+// ObsidianCity.prototype.genericBuilding = function(width, length, height, sections) {
+//   // Define geometries and material
+//   var buildingObject = new THREE.Object3D();
+//   var buildingGeometry = this.geometry.building;
+//   var black = this.material.basic.black;
+
+//   // Create floor base
+//   var baseHeight = 2;
+//   var floorBase = this.buildingBase(width+5, length+5, baseHeight);
+//   buildingObject.add(floorBase);
+
+//   // Create building sections
+//   sections = sections || 3;
+//   for (var i=0; i<sections; i++) {
+//     // Re-adjust dimensions of sections
+//     height = height + i*3 + this.utils.randomInteger(0, 5);
+//     width = width - i;
+//     length = length - i;
+
+//     // Create window texture based on height
+//     var windows = this.squareBuildingMaterial(width, height);
+//     var windowsMap = [windows, windows, black, black, windows, windows];
+//     var windowMaterial = new THREE.MeshFaceMaterial(windowsMap);
+
+//     // Create building section mesh
+//     var posX = this.utils.randomInteger(-5, 5);
+//     var posZ = this.utils.randomInteger(-5, 5);
+//     var buildingSection = new THREE.Mesh(buildingGeometry, windowMaterial);
+//     buildingSection.scale.set(width-i*2, height, length-i*2);
+//     buildingSection.position.set(posX, baseHeight, posZ);
+//     buildingObject.add(buildingSection);
+//   }
+
+//   return buildingObject;
+// };

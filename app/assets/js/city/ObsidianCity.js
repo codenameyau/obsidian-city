@@ -1,5 +1,5 @@
 /*-------JSHint Directives-------*/
-/* global ObsidianCity, THREE    */
+/* global THREE                  */
 /*-------------------------------*/
 'use strict';
 
