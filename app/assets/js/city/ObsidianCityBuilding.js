@@ -79,13 +79,20 @@ ObsidianCity.prototype.createTexture = function(canvas, width, height) {
 /*******************************
  * ObsidianCity Window Texture *
  *******************************/
+ObsidianCity.prototype.mapTextureFace = function(face) {
+  var black = this.material.basic.black;
+  var windowsMap = [face, face, black, black, face, face];
+  return new THREE.MeshFaceMaterial(windowsMap);
+};
+
+
 ObsidianCity.prototype.drawWindow = function(ctx, color, x, y, xSize, ySize) {
   ctx.fillStyle = color;
   ctx.fillRect(x, y, xSize, ySize);
 };
 
 
-ObsidianCity.prototype.stripedBuildingMaterial = function(width, height) {
+ObsidianCity.prototype.windowStriped = function(width, height) {
   // Draw shade of random luminance in windows
   var ctx = this.textureCanvas(width, height);
   var lightsColor, windowColor;
@@ -103,7 +110,7 @@ ObsidianCity.prototype.stripedBuildingMaterial = function(width, height) {
 };
 
 
-ObsidianCity.prototype.squareBuildingMaterial = function(width, height) {
+ObsidianCity.prototype.windowSquare = function(width, height) {
   var windows = width * 2;
   var padding = 1;
   var ctx = this.textureCanvas(windows, height);
@@ -136,13 +143,9 @@ ObsidianCity.prototype.buildBase = function(building, currentHeight, width, leng
   building.add(baseMesh);
 };
 
-ObsidianCity.prototype.buildSection = function(building, currentHeight, width, length, height) {
+ObsidianCity.prototype.buildSection = function(building, material, currentHeight, width, length, height) {
   var geometry = this.geometry.building;
-  var black = this.material.basic.black;
-  var windows = this.squareBuildingMaterial(width, height);
-  var windowsMap = [windows, windows, black, black, windows, windows];
-  var windowMaterial = new THREE.MeshFaceMaterial(windowsMap);
-  var buildingMesh = new THREE.Mesh(geometry, windowMaterial);
+  var buildingMesh = new THREE.Mesh(geometry, material);
   buildingMesh.scale.set(width, height, length);
   buildingMesh.position.set(0, currentHeight, 0);
   building.add(buildingMesh);
@@ -169,6 +172,7 @@ ObsidianCity.prototype.genericBuilding = function(width, length, totalHeight, st
   var height = Math.round(totalHeight / stacks);
   var baseHeight = 1;
   var currentHeight = 0;
+  var windowMaterial;
 
   // Create building stacks
   for (var i=0; i<stacks; i++) {
@@ -179,15 +183,17 @@ ObsidianCity.prototype.genericBuilding = function(width, length, totalHeight, st
     length -= 1;
 
     // Add building stack
-    this.buildSection(buildingObject, currentHeight, width, length, height);
+    windowMaterial = this.mapTextureFace(this.windowSquare(width, height));
+    this.buildSection(buildingObject, windowMaterial, currentHeight, width, length, height);
     currentHeight += height;
     width  -= 1;
     length -= 1;
   }
 
-  // Add roof and cover
+  // Add roof and decorations
   this.buildBase(buildingObject, currentHeight, width, length, baseHeight);
   currentHeight += 1;
   this.buildRoof(buildingObject, currentHeight, true);
   return buildingObject;
 };
+

@@ -18,8 +18,12 @@
 
   // Generate building
   var buildingA = city.genericBuilding(20, 20, 50, 3);
-  buildingA.position.set(0, 0, 0);
+  buildingA.position.set(20, 0, 0);
   city.scene.add(buildingA);
+
+  var buildingB = city.genericBuilding(20, 20, 50, 3);
+  buildingB.position.set(-20, 0, 0);
+  city.scene.add(buildingB);
 
   // Run update loop
   city.updateScene();
