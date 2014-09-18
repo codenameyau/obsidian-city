@@ -8,7 +8,7 @@
  * ObsidianCity Building Resources *
  ***********************************/
 ObsidianCity.prototype.defineBuildingGeometry = function() {
-  // Define reusable geometry
+  // reusable geometry
   this.geometry = {};
   this.createBoxGeometry('base');
   this.createBoxGeometry('building');
@@ -106,13 +106,16 @@ ObsidianCity.prototype.stripedBuildingMaterial = function() {
 ObsidianCity.prototype.squareBuildingMaterial = function(width, height) {
   var windows = width * 2;
   var padding = 1;
+  var windowColor;
+  var lightsColor;
 
   // Draw windows on blank canvas
   var ctx = this.textureCanvas(windows, height, '#000000');
   for (var i=padding; i<windows; i++) {
+    lightsColor = this.utils.randomInteger(0, 100);
     for (var j=padding; j<height; j++) {
-      var color = this.utils.randomGrayscale(10, 180);
-      this.drawWindow(ctx, color, i, j, 2, 1);
+      windowColor = this.utils.randomGrayscale(10, 180);
+      this.drawWindow(ctx, windowColor, i, j, 2, 1);
       j += 1;
     }
     i += 2;
