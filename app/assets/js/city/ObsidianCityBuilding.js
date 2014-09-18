@@ -98,7 +98,6 @@ ObsidianCity.prototype.stripedBuildingMaterial = function() {
     }
   }
 
-  // Create a hi-res texture from canvas
   return this.createTexture(ctx.canvas, 256, 512);
 };
 
@@ -106,19 +105,20 @@ ObsidianCity.prototype.stripedBuildingMaterial = function() {
 ObsidianCity.prototype.squareBuildingMaterial = function(width, height) {
   var windows = width * 2;
   var padding = 1;
-  var windowColor;
   var lightsColor;
-
-  // Draw windows on blank canvas
+  var windowColor;
   var ctx = this.textureCanvas(windows, height, '#000000');
-  for (var i=padding; i<windows; i++) {
-    lightsColor = this.utils.randomInteger(0, 100);
-    for (var j=padding; j<height; j++) {
-      windowColor = this.utils.randomGrayscale(10, 180);
-      this.drawWindow(ctx, windowColor, i, j, 2, 1);
-      j += 1;
+
+  // Draw windows texture
+  for (var h=padding; h<height; h++) {
+    lightsColor = this.utils.randomInteger(20, 150);
+    for (var w=padding; w<windows; w++) {
+      windowColor = this.utils.getGrayscale(
+        this.utils.randomNormal(lightsColor, 90));
+      this.drawWindow(ctx, windowColor, w, h, 2, 1);
+      w += 2;
     }
-    i += 2;
+    h += 1;
   }
 
   // Create a hi-res texture from canvas

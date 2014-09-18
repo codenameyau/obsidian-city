@@ -36,6 +36,15 @@ ObsidianCity.prototype.utils = {
     return parseInt(Math.random() * (max - min) + min, 10);
   },
 
+  // Returns random number in distribution
+  randomNormal: function(mean, std) {
+    var min = mean - std;
+    var max = mean + std;
+    var valueA = this.randomInteger(min, max);
+    var valueB = this.randomInteger(min, max);
+    return parseInt((valueA+valueB)/2, 10);
+  },
+
   // Returns random grayscale color in range
   randomGrayscale: function(min, max) {
     min = min || 0;
