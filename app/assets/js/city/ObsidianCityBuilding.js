@@ -46,7 +46,7 @@ ObsidianCity.prototype.textureCanvas = function(width, height, bgcolor) {
 
   // Fill canvas with white
   var ctx = canvas.getContext('2d');
-  ctx.fillStyle = bgcolor || '#FFFFFF';
+  ctx.fillStyle = bgcolor || '#000000';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   return ctx;
 };
@@ -85,16 +85,17 @@ ObsidianCity.prototype.drawWindow = function(ctx, color, x, y, xSize, ySize) {
 };
 
 
-ObsidianCity.prototype.stripedBuildingMaterial = function() {
-  // Initial texture size
-  var width = 32, height = 64;
-
+ObsidianCity.prototype.stripedBuildingMaterial = function(width, height) {
   // Draw shade of random luminance in windows
-  var ctx = this.textureCanvas(width, height, '#FFFFFF');
+  var ctx = this.textureCanvas(width, height);
+  var lightsColor, windowColor;
+
   for (var y=2; y<height; y += 2) {
+    lightsColor = this.utils.randomInteger(20, 120);
     for (var x=0; x<width; x += 2) {
-      var color = this.utils.randomGrayscale(40, 100);
-      this.drawWindow(ctx, color, x, y, 2, 1);
+      windowColor = this.utils.getGrayscale(
+        this.utils.randomNormal(lightsColor, 100));
+      this.drawWindow(ctx, windowColor, x, y, 2, 1);
     }
   }
 
@@ -105,20 +106,17 @@ ObsidianCity.prototype.stripedBuildingMaterial = function() {
 ObsidianCity.prototype.squareBuildingMaterial = function(width, height) {
   var windows = width * 2;
   var padding = 1;
-  var lightsColor;
-  var windowColor;
-  var ctx = this.textureCanvas(windows, height, '#000000');
+  var ctx = this.textureCanvas(windows, height);
+  var lightsColor, windowColor;
 
   // Draw windows texture
-  for (var h=padding; h<height; h++) {
-    lightsColor = this.utils.randomInteger(20, 150);
-    for (var w=padding; w<windows; w++) {
+  for (var h=padding; h<height; h += 2) {
+    lightsColor = this.utils.randomInteger(20, 120);
+    for (var w=padding; w<windows; w += 2.5) {
       windowColor = this.utils.getGrayscale(
-        this.utils.randomNormal(lightsColor, 90));
-      this.drawWindow(ctx, windowColor, w, h, 2, 1);
-      w += 2;
+        this.utils.randomNormal(lightsColor, 100));
+      this.drawWindow(ctx, windowColor, w, h, 1.5, 1);
     }
-    h += 1;
   }
 
   // Create a hi-res texture from canvas
