@@ -12,11 +12,18 @@ ObsidianCity.prototype.defineBuildingGeometry = function() {
   this.geometry = {};
   this.createBoxGeometry('base');
   this.createBoxGeometry('building');
+  this.createCylinderGeometry('cylinder');
 };
 
 
 ObsidianCity.prototype.createBoxGeometry = function(name) {
   this.geometry[name] = new THREE.BoxGeometry(1, 1, 1);
+  this.geometry[name].applyMatrix(new THREE.Matrix4().makeTranslation(0, 0.5, 0));
+};
+
+
+ObsidianCity.prototype.createCylinderGeometry = function(name) {
+  this.geometry[name] = new THREE.CylinderGeometry(1, 1, 1, 32);
   this.geometry[name].applyMatrix(new THREE.Matrix4().makeTranslation(0, 0.5, 0));
 };
 
@@ -92,7 +99,7 @@ ObsidianCity.prototype.drawWindow = function(ctx, color, x, y, xSize, ySize) {
 };
 
 
-ObsidianCity.prototype.windowStriped = function(width, height) {
+ObsidianCity.prototype.stripedWindow = function(width, height) {
   // Draw shade of random luminance in windows
   var ctx = this.textureCanvas(width, height);
   var lightsColor, windowColor;
@@ -110,7 +117,7 @@ ObsidianCity.prototype.windowStriped = function(width, height) {
 };
 
 
-ObsidianCity.prototype.windowSquare = function(width, height) {
+ObsidianCity.prototype.squareWindow = function(width, height) {
   var windows = width * 2;
   var padding = 1;
   var ctx = this.textureCanvas(windows, height);
@@ -143,6 +150,7 @@ ObsidianCity.prototype.buildBase = function(building, currentHeight, width, leng
   building.add(baseMesh);
 };
 
+
 ObsidianCity.prototype.buildSection = function(building, material, currentHeight, width, length, height) {
   var geometry = this.geometry.building;
   var buildingMesh = new THREE.Mesh(geometry, material);
@@ -150,6 +158,7 @@ ObsidianCity.prototype.buildSection = function(building, material, currentHeight
   buildingMesh.position.set(0, currentHeight, 0);
   building.add(buildingMesh);
 };
+
 
 ObsidianCity.prototype.buildRoof = function(building, currentHeight, block) {
   block = block || true;
@@ -162,6 +171,16 @@ ObsidianCity.prototype.buildRoof = function(building, currentHeight, block) {
   blockMesh.position.set(posX, currentHeight, posZ);
   building.add(blockMesh);
 };
+
+
+ObsidianCity.prototype.buildCylinder = function(building, material, currentHeight, radius, height) {
+  var geometry = this.geometry.cylinder;
+  var buildingMesh = new THREE.Mesh(geometry, material);
+  buildingMesh.scale.set(radius, height, radius);
+  buildingMesh.position.set(0, currentHeight, 0);
+  building.add(buildingMesh);
+};
+
 
 /*******************************
  * ObsidianCity Building Types *
@@ -183,7 +202,7 @@ ObsidianCity.prototype.genericBuilding = function(width, length, totalHeight, st
     length -= 1;
 
     // Add building stack
-    windowMaterial = this.mapTextureFace(this.windowSquare(width, height));
+    windowMaterial = this.mapTextureFace(this.squareWindow(width, height));
     this.buildSection(buildingObject, windowMaterial, currentHeight, width, length, height);
     currentHeight += height;
     width  -= 1;
@@ -197,3 +216,19 @@ ObsidianCity.prototype.genericBuilding = function(width, length, totalHeight, st
   return buildingObject;
 };
 
+
+ObsidianCity.prototype.cylinderBuilding = function(radius, height) {
+  // Define properties
+  var buildingObject = new THREE.Object3D();
+  var currentHeight = 0;
+  var baseHeight = 1;
+  var baseSize = radius * 2;
+  var windowMaterial = this.mapTextureFace(this.squareWindow(baseSize, height));
+
+  // Construct building
+  this.buildBase(buildingObject, currentHeight, baseSize, baseSize, baseHeight);
+  currentHeight += baseHeight;
+  this.buildCylinder(buildingObject, windowMaterial, currentHeight, radius, height);
+  currentHeight += height;
+  return buildingObject;
+};

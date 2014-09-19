@@ -21,7 +21,7 @@
   buildingA.position.set(20, 0, 0);
   city.scene.add(buildingA);
 
-  var buildingB = city.genericBuilding(20, 20, 50, 3);
+  var buildingB = city.cylinderBuilding(10, 50);
   buildingB.position.set(-20, 0, 0);
   city.scene.add(buildingB);
 
