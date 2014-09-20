@@ -1,5 +1,6 @@
 /*-------JSHint Directives-------*/
 /* global ObsidianCity           */
+/* global ObsidianBuilding       */
 /*-------------------------------*/
 'use strict';
 
@@ -7,7 +8,7 @@
 /**********************
  * ObsidianCity Utils *
  **********************/
-ObsidianCity.prototype.utils = {
+var utilities = {
 
   // Adds element to DOM
   addToDOM: function(parent, element) {
@@ -58,3 +59,7 @@ ObsidianCity.prototype.utils = {
   },
 
 };
+
+// Bind utilities inheritance
+ObsidianCity.prototype.utils = utilities;
+ObsidianBuilding.prototype.utils = utilities;

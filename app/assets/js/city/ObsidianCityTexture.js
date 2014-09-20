@@ -1,51 +1,13 @@
-/*-------JSHint Directives-------*/
-/* global ObsidianCity, THREE    */
-/*-------------------------------*/
+/*-------JSHint Directives--------*/
+/* global ObsidianBuilding, THREE */
+/*--------------------------------*/
 'use strict';
 
 
 /***********************************
- * ObsidianCity Building Resources *
+ * ObsidianBuilding Texture Canvas *
  ***********************************/
-ObsidianCity.prototype.defineBuildingGeometry = function() {
-  // reusable geometry
-  this.geometry = {};
-  this.createBoxGeometry('base');
-  this.createBoxGeometry('building');
-  this.createCylinderGeometry('cylinder');
-};
-
-
-ObsidianCity.prototype.createBoxGeometry = function(name) {
-  this.geometry[name] = new THREE.BoxGeometry(1, 1, 1);
-  this.geometry[name].applyMatrix(new THREE.Matrix4().makeTranslation(0, 0.5, 0));
-};
-
-
-ObsidianCity.prototype.createCylinderGeometry = function(name) {
-  this.geometry[name] = new THREE.CylinderGeometry(1, 1, 1, 32);
-  this.geometry[name].applyMatrix(new THREE.Matrix4().makeTranslation(0, 0.5, 0));
-};
-
-// [TODO] deprecate
-ObsidianCity.prototype.defineBuildingMaterial = function() {
-  this.material = {};
-
-  // Basic material
-  this.material.basic = {
-    gray: new THREE.MeshLambertMaterial({ color: 0xCCCCCC }),
-    black: new THREE.MeshBasicMaterial({ color: 0x020202 }),
-  };
-
-  // [TODO] Window texture cache
-  this.material.building = {};
-};
-
-
-/*******************************
- * ObsidianCity Texture Canvas *
- *******************************/
-ObsidianCity.prototype.textureCanvas = function(width, height, bgcolor) {
+ObsidianBuilding.prototype.textureCanvas = function(width, height, bgcolor) {
   // Create canvas and set dimensions
   var canvas = document.createElement('canvas');
   canvas.width  = width  || 32;
@@ -59,7 +21,7 @@ ObsidianCity.prototype.textureCanvas = function(width, height, bgcolor) {
 };
 
 
-ObsidianCity.prototype.createTexture = function(canvas, width, height) {
+ObsidianBuilding.prototype.createTexture = function(canvas, width, height) {
   // Create hi-res canvas
   var hiResCanvas = document.createElement('canvas');
   hiResCanvas.width = width || 512;
@@ -74,7 +36,6 @@ ObsidianCity.prototype.createTexture = function(canvas, width, height) {
 
   // Create texture material from hi-res canvas
   var texture = new THREE.Texture(hiResCanvas);
-  texture.anisotropy = this.renderer.getMaxAnisotropy();
   texture.needsUpdate = true;
   return new THREE.MeshLambertMaterial({
     map: texture,
@@ -83,23 +44,23 @@ ObsidianCity.prototype.createTexture = function(canvas, width, height) {
 };
 
 
-/*******************************
- * ObsidianCity Window Texture *
- *******************************/
-ObsidianCity.prototype.mapTextureFace = function(face) {
-  var black = this.material.basic.black;
-  var windowsMap = [face, face, black, black, face, face];
-  return new THREE.MeshFaceMaterial(windowsMap);
-};
-
-
-ObsidianCity.prototype.drawWindow = function(ctx, color, x, y, xSize, ySize) {
+ObsidianBuilding.prototype.drawRectangle = function(ctx, color, x, y, xSize, ySize) {
   ctx.fillStyle = color;
   ctx.fillRect(x, y, xSize, ySize);
 };
 
 
-ObsidianCity.prototype.stripedWindow = function(width, height) {
+/***********************************
+ * ObsidianBuilding Window Texture *
+ ***********************************/
+ObsidianBuilding.prototype.mapTextureFace = function(face) {
+  var black = this.material.black;
+  var windowsMap = [face, face, black, black, face, face];
+  return new THREE.MeshFaceMaterial(windowsMap);
+};
+
+
+ObsidianBuilding.prototype.stripedWindow = function(width, height) {
   // Draw shade of random luminance in windows
   var ctx = this.textureCanvas(width, height);
   var lightsColor, windowColor;
@@ -109,7 +70,7 @@ ObsidianCity.prototype.stripedWindow = function(width, height) {
     for (var x=0; x<width; x += 2) {
       windowColor = this.utils.getGrayscale(
         this.utils.randomNormal(lightsColor, 100));
-      this.drawWindow(ctx, windowColor, x, y, 2, 1);
+      this.drawRectangle(ctx, windowColor, x, y, 2, 1);
     }
   }
 
@@ -117,7 +78,7 @@ ObsidianCity.prototype.stripedWindow = function(width, height) {
 };
 
 
-ObsidianCity.prototype.squareWindow = function(width, height) {
+ObsidianBuilding.prototype.squareWindow = function(width, height) {
   var windows = width * 2;
   var padding = 1;
   var ctx = this.textureCanvas(windows, height);
@@ -129,7 +90,7 @@ ObsidianCity.prototype.squareWindow = function(width, height) {
     for (var w=padding; w<windows; w += 2.5) {
       windowColor = this.utils.getGrayscale(
         this.utils.randomNormal(lightsColor, 100));
-      this.drawWindow(ctx, windowColor, w, h, 1.5, 1);
+      this.drawRectangle(ctx, windowColor, w, h, 1.5, 1);
     }
   }
 
