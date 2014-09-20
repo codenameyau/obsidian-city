@@ -3,44 +3,31 @@
 /*-------------------------------*/
 'use strict';
 
+/********************************
+ * ObsidianBuilding Constructor *
+ ********************************/
+function ObsidianBuilding(type, settings) {
+  this.type = type;
+  switch (type) {
+    case 'generic':
+      this.createGenericBuilding(settings);
+      break;
+  }
+}
 
-/***********************************
- * ObsidianCity Building Resources *
- ***********************************/
-ObsidianCity.prototype.defineBuildingGeometry = function() {
-  // reusable geometry
-  this.geometry = {};
-  this.createBoxGeometry('base');
-  this.createBoxGeometry('building');
-  this.createCylinderGeometry('cylinder');
+ObsidianBuilding.prototype.geometry = {
+  base: new THREE.BoxGeometry(1, 1, 1),
+  building: new THREE.BoxGeometry(1, 1, 1),
 };
 
-
-ObsidianCity.prototype.createBoxGeometry = function(name) {
-  this.geometry[name] = new THREE.BoxGeometry(1, 1, 1);
-  this.geometry[name].applyMatrix(new THREE.Matrix4().makeTranslation(0, 0.5, 0));
-};
+/****************************
+ * ObsidianBuilding Methods *
+ ****************************/
 
 
-ObsidianCity.prototype.createCylinderGeometry = function(name) {
-  this.geometry[name] = new THREE.CylinderGeometry(1, 1, 1, 32);
-  this.geometry[name].applyMatrix(new THREE.Matrix4().makeTranslation(0, 0.5, 0));
-};
-
-
-ObsidianCity.prototype.defineBuildingMaterial = function() {
-  this.material = {};
-
-  // Basic material
-  this.material.basic = {
-    gray: new THREE.MeshLambertMaterial({ color: 0xCCCCCC }),
-    black: new THREE.MeshBasicMaterial({ color: 0x020202 }),
-  };
-
-  // [TODO] Window texture cache
-  this.material.building = {};
-};
-
+/**************************
+ * ObsidianBuilding Types *
+ **************************/
 
 /************************************
  * ObsidianCity Building Foundation *

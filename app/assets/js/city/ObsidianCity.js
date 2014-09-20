@@ -18,7 +18,7 @@ function ObsidianCity() {
   this.initializeEventListeners();
 
   // Define reusable resources
-  this.defineBuildingGeometry();
+  // this.defineBuildingGeometry();
   this.defineBuildingMaterial();
 }
 
