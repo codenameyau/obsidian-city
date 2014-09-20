@@ -27,7 +27,7 @@ ObsidianCity.prototype.createCylinderGeometry = function(name) {
   this.geometry[name].applyMatrix(new THREE.Matrix4().makeTranslation(0, 0.5, 0));
 };
 
-
+// [TODO] deprecate
 ObsidianCity.prototype.defineBuildingMaterial = function() {
   this.material = {};
 

@@ -3,14 +3,19 @@
 /*-------------------------------*/
 'use strict';
 
+
 /********************************
  * ObsidianBuilding Constructor *
  ********************************/
 function ObsidianBuilding(type, settings) {
   this.type = type;
+  this.mesh = new THREE.Object3D();
+  this.dimension = {};
+
+  // Run algorithm
   switch (type) {
     case 'generic':
-      this.createGenericBuilding(settings);
+      this.genericBuilding(settings);
       break;
   }
 }
@@ -20,25 +25,71 @@ ObsidianBuilding.prototype.geometry = {
   building: new THREE.BoxGeometry(1, 1, 1),
 };
 
+ObsidianBuilding.prototype.material = {
+  black: new THREE.MeshBasicMaterial({ color: 0x020202 }),
+  gray: new THREE.MeshBasicMaterial({ color: 0xCCCCCC }),
+};
+
+
 /****************************
  * ObsidianBuilding Methods *
  ****************************/
+ObsidianBuilding.prototype.setDimensions = function(settings) {
+  this.dimension.base = settings.base || 1;
+  this.dimension.current = 0;
+  this.dimension.width  = settings.width;
+  this.dimension.length = settings.length;
+  this.dimension.height = settings.height;
+  this.dimension.radius = settings.radius;
+};
 
 
 /**************************
  * ObsidianBuilding Types *
  **************************/
+ObsidianBuilding.prototype.genericBuilding = function(settings) {
+  this.setDimensions(settings);
+  var width  = settings.width;
+  var length = settings.length;
+  var height = settings.height;
+  var stacks = settings.stack;
+  var stackHeight = Math.round(height / stacks);
+  var windowMaterial;
 
-/************************************
- * ObsidianCity Building Foundation *
- ************************************/
-ObsidianCity.prototype.buildBase = function(building, currentHeight, width, length, height) {
-  var material = this.material.basic.black;
+  // Create building stacks
+  for (var i=0; i<stacks; i++) {
+    // Add floor base
+    this.buildBase();
+    this.dimension.width  -= 1;
+    this.dimension.length -= 1;
+
+    // Add building stack
+    // windowMaterial = this.mapTextureFace(this.squareWindow(width, height));
+    // this.buildSection(buildingObject, windowMaterial, currentHeight, width, length, height);
+    // currentHeight += height;
+    // width  -= 1;
+    // length -= 1;
+  }
+
+  // // Add roof and decorations
+  // this.buildBase(width, length, baseHeight);
+  // currentHeight += 1;
+  // this.buildRoof(buildingObject, currentHeight, true);
+};
+
+
+/*******************************
+ * ObsidianBuilding Foundation *
+ *******************************/
+ObsidianBuilding.prototype.buildBase = function() {
+  var dim = this.dimension;
+  var material = this.material.black;
   var geometry = this.geometry.base;
   var baseMesh = new THREE.Mesh(geometry, material);
-  baseMesh.scale.set(width, height, length);
-  baseMesh.position.set(0, currentHeight, 0);
-  building.add(baseMesh);
+  baseMesh.scale.set(dim.width, dim.base, dim.length);
+  baseMesh.position.set(0, dim.current, 0);
+  dim.current += dim.base;
+  this.mesh.add(baseMesh);
 };
 
 

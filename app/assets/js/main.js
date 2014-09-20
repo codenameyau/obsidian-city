@@ -21,10 +21,10 @@
   // buildingA.position.set(20, 0, 0);
   // city.scene.add(buildingA);
 
-  var buildA = new ObsidianBuilding('generic',
+  var buildingA = new ObsidianBuilding('generic',
     {width: 20, length: 20, height: 50, stack: 3});
-
-  console.log(buildA);
+  city.scene.add(buildingA.mesh);
+  console.log(buildingA);
 
   // var buildingB = city.cylinderBuilding(10, 50);
   // buildingB.position.set(-20, 0, 0);
