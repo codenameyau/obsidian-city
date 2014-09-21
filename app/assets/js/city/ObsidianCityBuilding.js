@@ -43,7 +43,7 @@ ObsidianBuilding.prototype.updateTranslation = function() {
 
 ObsidianBuilding.prototype.updateTranslation();
 ObsidianBuilding.prototype.material = {
-  black: new THREE.MeshBasicMaterial({ color: 0x020202 }),
+  black: new THREE.MeshBasicMaterial({ color: 0x060606 }),
   gray: new THREE.MeshBasicMaterial({ color: 0xCCCCCC }),
 };
 
@@ -69,9 +69,8 @@ ObsidianBuilding.prototype.move = function(x, y, z) {
 /*******************************
  * ObsidianBuilding Foundation *
  *******************************/
-ObsidianBuilding.prototype.buildBase = function() {
+ObsidianBuilding.prototype.buildBase = function(material) {
   var dim = this.dimension;
-  var material = this.material.black;
   var geometry = this.geometry.base;
   var baseMesh = new THREE.Mesh(geometry, material);
   baseMesh.scale.set(dim.width, dim.base, dim.length);
@@ -92,11 +91,10 @@ ObsidianBuilding.prototype.buildSection = function(material, sectionHeight) {
 };
 
 
-ObsidianBuilding.prototype.buildRoof = function() {
+ObsidianBuilding.prototype.buildRoof = function(material) {
   var blockHeight = 2;
   var dim = this.dimension;
   var geometry = this.geometry.base;
-  var material = this.material.black;
   var blockMesh = new THREE.Mesh(geometry, material);
   var posX = this.utils.randomInteger(-4, 4);
   var posZ = this.utils.randomInteger(-4, 4);
@@ -126,11 +124,12 @@ ObsidianBuilding.prototype.genericBuilding = function(settings) {
   var dim = this.dimension;
   var stacks = settings.stack;
   var stackHeight = Math.round(dim.height / stacks);
+  var black = this.material.black;
 
   // Create building stacks
   for (var i=0; i<stacks; i++) {
     // Add floor base
-    this.buildBase();
+    this.buildBase(black);
     dim.width  -= 1;
     dim.length -= 1;
 
@@ -140,8 +139,8 @@ ObsidianBuilding.prototype.genericBuilding = function(settings) {
   }
 
   // Add roof and decorations
-  this.buildBase();
-  this.buildRoof();
+  this.buildBase(black);
+  this.buildRoof(black);
 };
 
 
@@ -153,11 +152,14 @@ ObsidianBuilding.prototype.cylinderBuilding = function(settings) {
   this.setDimensions(settings);
   var dim = this.dimension;
   var baseSize = dim.radius * 2;
+  var windowSize = baseSize * Math.PI;
   dim.width = baseSize;
   dim.length = baseSize;
-  var material = this.mapTextureFace(this.squareWindow(baseSize, dim.height));
+  var material = this.mapTextureFace(this.squareWindow(windowSize, dim.height));
+  var black = this.material.black;
 
   // Construct building
-  this.buildBase();
+  this.buildBase(black);
   this.buildCylinder(material, dim.radius, dim.height);
+  this.buildCylinder(black, dim.radius, 1);
 };
