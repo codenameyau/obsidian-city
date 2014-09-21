@@ -7,10 +7,9 @@
 /********************************
  * ObsidianBuilding Constructor *
  ********************************/
-function ObsidianBuilding(type, windows, settings) {
+function ObsidianBuilding(type, settings) {
   this.mesh = new THREE.Object3D();
   this.type = type;
-  this.windows = windows;
   this.settings = settings;
   this.setDimensions();
 
@@ -138,7 +137,7 @@ ObsidianBuilding.prototype.genericBuilding = function() {
     dim.length -= 1;
 
     // Add building stack
-    var windowMaterial = this.mapTextureFace(this.squareWindow(dim.width, stackHeight));
+    var windowMaterial = this.generateWindow(dim.width, stackHeight);
     this.buildSection(windowMaterial, stackHeight);
   }
 
@@ -155,7 +154,7 @@ ObsidianBuilding.prototype.cylinderBuilding = function() {
   var windowSize = baseSize * Math.PI;
   dim.width = baseSize;
   dim.length = baseSize;
-  var material = this.mapTextureFace(this.squareWindow(windowSize, dim.height));
+  var material = this.generateWindow(windowSize, dim.height);
   var black = this.material.black;
 
   // Construct building

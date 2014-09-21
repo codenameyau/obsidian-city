@@ -60,6 +60,12 @@ ObsidianBuilding.prototype.mapTextureFace = function(face) {
 };
 
 
+ObsidianBuilding.prototype.generateWindow = function(width, height) {
+  var windowTexture = this.squareWindow(width, height);
+  return this.mapTextureFace(windowTexture);
+};
+
+
 ObsidianBuilding.prototype.columnWindow = function(width, height) {
 
 };
@@ -81,6 +87,5 @@ ObsidianBuilding.prototype.squareWindow = function(width, height) {
     }
   }
 
-  // Create a hi-res texture from canvas
   return this.createTexture(ctx.canvas, 512, 512);
 };
