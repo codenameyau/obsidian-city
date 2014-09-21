@@ -37,7 +37,8 @@ ObsidianBuilding.prototype.geometry = {
 
 ObsidianBuilding.prototype.updateTranslation = function() {
   for (var k in this.geometry) {
-    this.geometry[k].applyMatrix(new THREE.Matrix4().makeTranslation(0, 0.5, 0));
+    this.geometry[k].applyMatrix(
+      new THREE.Matrix4().makeTranslation(0, 0.5, 0));
   }
 };
 
@@ -137,7 +138,7 @@ ObsidianBuilding.prototype.genericBuilding = function() {
     dim.length -= 1;
 
     // Add building stack
-    var windowMaterial = this.generateWindow(dim.width, stackHeight);
+    var windowMaterial = this.generateWindows(dim.width, stackHeight);
     this.buildSection(windowMaterial, stackHeight);
   }
 
@@ -154,7 +155,7 @@ ObsidianBuilding.prototype.cylinderBuilding = function() {
   var windowSize = baseSize * Math.PI;
   dim.width = baseSize;
   dim.length = baseSize;
-  var material = this.generateWindow(windowSize, dim.height);
+  var material = this.generateWindows(windowSize, dim.height);
   var black = this.material.black;
 
   // Construct building

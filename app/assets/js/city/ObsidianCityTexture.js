@@ -60,24 +60,13 @@ ObsidianBuilding.prototype.mapTextureFace = function(face) {
 };
 
 
-ObsidianBuilding.prototype.generateWindow = function(width, height) {
-  var windowTexture = this.squareWindow(width, height);
-  return this.mapTextureFace(windowTexture);
-};
-
-
-ObsidianBuilding.prototype.columnWindow = function(width, height) {
-
-};
-
-
-ObsidianBuilding.prototype.squareWindow = function(width, height) {
+ObsidianBuilding.prototype.generateWindows = function(width, height) {
   var windows = width * 2;
   var padding = 1;
-  var ctx = this.textureCanvas(windows, height);
   var lightsColor, windowColor;
 
   // Draw windows texture
+  var ctx = this.textureCanvas(windows, height);
   for (var h=padding; h<height; h += 2) {
     lightsColor = this.utils.randomInteger(20, 150);
     for (var w=padding; w<windows; w += 2.5) {
@@ -87,5 +76,6 @@ ObsidianBuilding.prototype.squareWindow = function(width, height) {
     }
   }
 
-  return this.createTexture(ctx.canvas, 512, 512);
+  // Map created texture to window face
+  return this.mapTextureFace(this.createTexture(ctx.canvas, 512, 512));
 };
