@@ -86,7 +86,7 @@ ObsidianBuilding.prototype.squareWindow = function(width, height) {
 
   // Draw windows texture
   for (var h=padding; h<height; h += 2) {
-    lightsColor = this.utils.randomInteger(20, 120);
+    lightsColor = this.utils.randomInteger(20, 150);
     for (var w=padding; w<windows; w += 2.5) {
       windowColor = this.utils.getGrayscale(
         this.utils.randomNormal(lightsColor, 100));

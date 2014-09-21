@@ -42,6 +42,7 @@ ObsidianCity.prototype.initializeClock = function() {
   this.clock.delta = this.clock.getDelta();
 };
 
+
 ObsidianCity.prototype.initializeScene = function() {
   this.scene = new THREE.Scene();
   this.renderer = new THREE.WebGLRenderer(this.settings.renderer);
@@ -49,6 +50,7 @@ ObsidianCity.prototype.initializeScene = function() {
   this.utils.addToDOM(this.settings.meta.dom, this.renderer.domElement);
   this.renderer.running = true;
 };
+
 
 ObsidianCity.prototype.initializeCamera = function() {
   var set = this.settings.camera;
@@ -58,16 +60,19 @@ ObsidianCity.prototype.initializeCamera = function() {
   this.scene.add(this.camera);
 };
 
+
 ObsidianCity.prototype.initializeControls = function() {
   var set = this.settings.controls;
   this.controls = new THREE.OrbitControls(this.camera);
   for (var key in set) { this.controls[key] = set[key]; }
 };
 
+
 ObsidianCity.prototype.initializeHUD = function() {
   this.HUD = {};
   this.enablePausedHUD();
 };
+
 
 ObsidianCity.prototype.initializeEventListeners = function() {
   window.addEventListener('resize', this.resizeWindow.bind(this), false);
@@ -84,6 +89,7 @@ ObsidianCity.prototype.renderScene = function() {
   this.renderer.render(this.scene, this.camera);
 };
 
+
 ObsidianCity.prototype.updateScene = function() {
   if (this.renderer.running) {
     window.requestAnimationFrame(this.updateScene.bind(this));
@@ -91,6 +97,7 @@ ObsidianCity.prototype.updateScene = function() {
     this.renderScene();
   }
 };
+
 
 ObsidianCity.prototype.resizeWindow = function() {
   this.camera.aspect = window.innerWidth / window.innerHeight;
@@ -106,9 +113,11 @@ ObsidianCity.prototype.resumeClock = function() {
   this.clock.start();
 };
 
+
 ObsidianCity.prototype.pauseClock = function() {
   this.clock.stop();
 };
+
 
 ObsidianCity.prototype.resumeRenderer = function() {
   this.renderer.running = true;
@@ -116,10 +125,12 @@ ObsidianCity.prototype.resumeRenderer = function() {
   window.requestAnimationFrame(this.updateScene.bind(this));
 };
 
+
 ObsidianCity.prototype.pauseRenderer = function() {
   this.renderer.running = false;
   this.pauseClock();
 };
+
 
 ObsidianCity.prototype.togglePause = function() {
   if (this.renderer.running) {
@@ -153,15 +164,6 @@ ObsidianCity.prototype.keyboardInput = function(event) {
 /*******************************
  * ObsidianCity Public Methods *
  *******************************/
-ObsidianCity.prototype.changeSettings = function(type, dictionary) {
-  var setting = this.settings[type];
-  for (var key in dictionary) {
-    if (setting.hasOwnProperty(key)) {
-      setting[key] = dictionary[key];
-    }
-  }
-};
-
-ObsidianCity.prototype.addToScene = function(mesh) {
+ObsidianCity.prototype.add = function(mesh) {
   this.scene.add(mesh);
 };

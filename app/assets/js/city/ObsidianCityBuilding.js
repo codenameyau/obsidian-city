@@ -1,5 +1,5 @@
 /*-------JSHint Directives-------*/
-/* global ObsidianCity, THREE    */
+/* global THREE                  */
 /*-------------------------------*/
 'use strict';
 
@@ -17,6 +17,9 @@ function ObsidianBuilding(type, settings) {
     case 'generic':
       this.genericBuilding(settings);
       break;
+    case 'cylinder':
+      this.cylinderBuilding(settings);
+      break;
   }
 }
 
@@ -27,6 +30,7 @@ function ObsidianBuilding(type, settings) {
 ObsidianBuilding.prototype.geometry = {
   base: new THREE.BoxGeometry(1, 1, 1),
   building: new THREE.BoxGeometry(1, 1, 1),
+  cylinder: new THREE.CylinderGeometry(1, 1, 1, 32),
 };
 
 
@@ -54,6 +58,11 @@ ObsidianBuilding.prototype.setDimensions = function(settings) {
   this.dimension.length = settings.length;
   this.dimension.height = settings.height;
   this.dimension.radius = settings.radius;
+};
+
+
+ObsidianBuilding.prototype.move = function(x, y, z) {
+  this.mesh.position.set(x, y, z);
 };
 
 
@@ -98,12 +107,14 @@ ObsidianBuilding.prototype.buildRoof = function() {
 };
 
 
-ObsidianCity.prototype.buildCylinder = function(building, material, currentHeight, radius, height) {
+ObsidianBuilding.prototype.buildCylinder = function(material, radius, height) {
+  var dim = this.dimension;
   var geometry = this.geometry.cylinder;
   var buildingMesh = new THREE.Mesh(geometry, material);
   buildingMesh.scale.set(radius, height, radius);
-  buildingMesh.position.set(0, currentHeight, 0);
-  building.add(buildingMesh);
+  buildingMesh.position.set(0, dim.current, 0);
+  dim.current += height;
+  this.mesh.add(buildingMesh);
 };
 
 
@@ -137,18 +148,16 @@ ObsidianBuilding.prototype.genericBuilding = function(settings) {
 /*******************************
  * ObsidianCity Building Types *
  *******************************/
-ObsidianCity.prototype.cylinderBuilding = function(radius, height) {
+ObsidianBuilding.prototype.cylinderBuilding = function(settings) {
   // Define properties
-  var buildingObject = new THREE.Object3D();
-  var currentHeight = 0;
-  var baseHeight = 1;
-  var baseSize = radius * 2;
-  var windowMaterial = this.mapTextureFace(this.squareWindow(baseSize, height));
+  this.setDimensions(settings);
+  var dim = this.dimension;
+  var baseSize = dim.radius * 2;
+  dim.width = baseSize;
+  dim.length = baseSize;
+  var material = this.mapTextureFace(this.squareWindow(baseSize, dim.height));
 
   // Construct building
-  this.buildBase(buildingObject, currentHeight, baseSize, baseSize, baseHeight);
-  currentHeight += baseHeight;
-  this.buildCylinder(buildingObject, windowMaterial, currentHeight, radius, height);
-  currentHeight += height;
-  return buildingObject;
+  this.buildBase();
+  this.buildCylinder(material, dim.radius, dim.height);
 };

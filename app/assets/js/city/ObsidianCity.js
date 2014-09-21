@@ -9,7 +9,7 @@
  * ObsidianCity Constructor *
  ****************************/
 function ObsidianCity() {
-  // Functions defined in Core
+  // Start ObsidianCityCore
   this.initializeSettings();
   this.initializeClock();
   this.initializeScene();
@@ -18,6 +18,7 @@ function ObsidianCity() {
   this.initializeHUD();
   this.initializeEventListeners();
 }
+
 
 /**************************
  * ObsidianCity Generator *
