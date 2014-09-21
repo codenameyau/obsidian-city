@@ -60,21 +60,8 @@ ObsidianBuilding.prototype.mapTextureFace = function(face) {
 };
 
 
-ObsidianBuilding.prototype.stripedWindow = function(width, height) {
-  // Draw shade of random luminance in windows
-  var ctx = this.textureCanvas(width, height);
-  var lightsColor, windowColor;
+ObsidianBuilding.prototype.columnWindow = function(width, height) {
 
-  for (var y=2; y<height; y += 2) {
-    lightsColor = this.utils.randomInteger(20, 120);
-    for (var x=0; x<width; x += 2) {
-      windowColor = this.utils.getGrayscale(
-        this.utils.randomNormal(lightsColor, 100));
-      this.drawRectangle(ctx, windowColor, x, y, 2, 1);
-    }
-  }
-
-  return this.createTexture(ctx.canvas, 256, 512);
 };
 
 

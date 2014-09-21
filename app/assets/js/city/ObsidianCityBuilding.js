@@ -7,18 +7,20 @@
 /********************************
  * ObsidianBuilding Constructor *
  ********************************/
-function ObsidianBuilding(type, settings) {
-  this.type = type;
+function ObsidianBuilding(type, windows, settings) {
   this.mesh = new THREE.Object3D();
-  this.dimension = {};
+  this.type = type;
+  this.windows = windows;
+  this.settings = settings;
+  this.setDimensions();
 
   // Run algorithm
   switch (type) {
     case 'generic':
-      this.genericBuilding(settings);
+      this.genericBuilding();
       break;
     case 'cylinder':
-      this.cylinderBuilding(settings);
+      this.cylinderBuilding();
       break;
   }
 }
@@ -51,7 +53,9 @@ ObsidianBuilding.prototype.material = {
 /****************************
  * ObsidianBuilding Methods *
  ****************************/
-ObsidianBuilding.prototype.setDimensions = function(settings) {
+ObsidianBuilding.prototype.setDimensions = function() {
+  var settings = this.settings;
+  this.dimension = {};
   this.dimension.base = settings.base || 1;
   this.dimension.current = 0;
   this.dimension.width  = settings.width;
@@ -119,10 +123,10 @@ ObsidianBuilding.prototype.buildCylinder = function(material, radius, height) {
 /**************************
  * ObsidianBuilding Types *
  **************************/
-ObsidianBuilding.prototype.genericBuilding = function(settings) {
-  this.setDimensions(settings);
+ObsidianBuilding.prototype.genericBuilding = function() {
+  // Define properties
   var dim = this.dimension;
-  var stacks = settings.stack;
+  var stacks = this.settings.stack;
   var stackHeight = Math.round(dim.height / stacks);
   var black = this.material.black;
 
@@ -144,12 +148,8 @@ ObsidianBuilding.prototype.genericBuilding = function(settings) {
 };
 
 
-/*******************************
- * ObsidianCity Building Types *
- *******************************/
-ObsidianBuilding.prototype.cylinderBuilding = function(settings) {
+ObsidianBuilding.prototype.cylinderBuilding = function() {
   // Define properties
-  this.setDimensions(settings);
   var dim = this.dimension;
   var baseSize = dim.radius * 2;
   var windowSize = baseSize * Math.PI;
