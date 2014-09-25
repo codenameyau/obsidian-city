@@ -56,7 +56,6 @@ ObsidianBuilding.prototype.material = {
 ObsidianBuilding.prototype.setDimensions = function() {
   var settings = this.settings;
   this.dimension = {};
-  this.dimension.base = settings.base || 1;
   this.dimension.current = 0;
   this.dimension.width  = settings.width;
   this.dimension.length = settings.length;
@@ -73,13 +72,13 @@ ObsidianBuilding.prototype.move = function(x, y, z) {
 /*******************************
  * ObsidianBuilding Foundation *
  *******************************/
-ObsidianBuilding.prototype.buildBase = function(material) {
+ObsidianBuilding.prototype.buildBase = function(material, height) {
   var dim = this.dimension;
   var geometry = this.geometry.base;
   var baseMesh = new THREE.Mesh(geometry, material);
-  baseMesh.scale.set(dim.width, dim.base, dim.length);
+  baseMesh.scale.set(dim.width, height, dim.length);
   baseMesh.position.set(0, dim.current, 0);
-  dim.current += dim.base;
+  dim.current += height;
   this.mesh.add(baseMesh);
 };
 
@@ -133,7 +132,7 @@ ObsidianBuilding.prototype.genericBuilding = function() {
   // Create building stacks
   for (var i=0; i<stacks; i++) {
     // Add floor base
-    this.buildBase(black);
+    this.buildBase(black, 1);
     dim.width  -= 1;
     dim.length -= 1;
 
@@ -143,7 +142,7 @@ ObsidianBuilding.prototype.genericBuilding = function() {
   }
 
   // Add roof and decorations
-  this.buildBase(black);
+  this.buildBase(black, 2);
   this.buildRoof(black);
 };
 
@@ -159,7 +158,8 @@ ObsidianBuilding.prototype.cylinderBuilding = function() {
   var black = this.material.black;
 
   // Construct building
-  this.buildBase(black);
+  this.buildBase(black, 1);
   this.buildCylinder(material, dim.radius, dim.height);
-  this.buildCylinder(black, dim.radius, 1);
+  this.buildCylinder(black, dim.radius, 2);
+  this.buildRoof(black);
 };
