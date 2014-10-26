@@ -53,18 +53,18 @@ ObsidianCity.prototype.initializeScene = function() {
 
 
 ObsidianCity.prototype.initializeCamera = function() {
-  var set = this.settings.camera;
+  var s = this.settings.camera;
   var aspect = window.innerWidth/window.innerHeight;
-  this.camera = new THREE.PerspectiveCamera(set.fov, aspect, set.near, set.far);
-  this.camera.position.set(set.zoomX, set.zoomY, set.zoomZ);
+  this.camera = new THREE.PerspectiveCamera(s.fov, aspect, s.near, s.far);
+  this.camera.position.set(s.zoomX, s.zoomY, s.zoomZ);
   this.scene.add(this.camera);
 };
 
 
 ObsidianCity.prototype.initializeControls = function() {
-  var set = this.settings.controls;
+  var s = this.settings.controls;
   this.controls = new THREE.OrbitControls(this.camera);
-  for (var key in set) { this.controls[key] = set[key]; }
+  for (var key in s) { this.controls[key] = s[key]; }
 };
 
 

@@ -170,5 +170,14 @@ ObsidianBuilding.prototype.cylinderBuilding = function() {
 
 ObsidianBuilding.prototype.sectionBuilding = function() {
   // Building properties
+  var dim = this.dimension;
+  var black = this.material.black;
+  var sideWidth = Math.floor(dim.width * 0.1);
+  var mainWidth = Math.floor(dim.width * 0.7);
+
+  // Add building base
+  this.buildBase(black, 1);
+
+  // Construct sections
 
 };
