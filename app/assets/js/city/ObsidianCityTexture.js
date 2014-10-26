@@ -21,11 +21,11 @@ ObsidianBuilding.prototype.textureCanvas = function(width, height, bgcolor) {
 };
 
 
-ObsidianBuilding.prototype.createTexture = function(canvas, width, height) {
-  // Create hi-res canvas
+ObsidianBuilding.prototype.createTexture = function(canvas) {
+  // Create hi-res canvas (change resolution)
   var hiResCanvas = document.createElement('canvas');
-  hiResCanvas.width = width || 512;
-  hiResCanvas.height = height || 512;
+  hiResCanvas.width  = 256;
+  hiResCanvas.height = 256;
 
   // Draw in old canvas to new canvas
   var ctx = hiResCanvas.getContext('2d');
@@ -53,12 +53,11 @@ ObsidianBuilding.prototype.drawRectangle = function(ctx, color, x, y, xSize, ySi
 /***********************************
  * ObsidianBuilding Window Texture *
  ***********************************/
-ObsidianBuilding.prototype.generateWindows = function(width, length, height) {
-  var black = this.material.black;
+ObsidianBuilding.prototype.drawWindows = function(width, height) {
   var windows = width * 2;
   var padding = 1;
 
-  // Draw windows texture
+  // Draw windows texture on new canvas
   var ctx = this.textureCanvas(windows, height);
   for (var h=padding; h<height; h += 2) {
     var lightsColor = this.utils.randomInteger(20, 150);
@@ -68,10 +67,14 @@ ObsidianBuilding.prototype.generateWindows = function(width, length, height) {
       this.drawRectangle(ctx, windowColor, w, h, 1.5, 1);
     }
   }
+  return ctx.canvas;
+};
 
-  // Map created texture to window face
-  var texture = this.createTexture(ctx.canvas, 256, 256);
-  var windowsMap = [texture, texture, black, black, texture, texture];
+ObsidianBuilding.prototype.generateWindows = function(width, length, height) {
+  var black = this.material.black;
+  var front = this.createTexture(this.drawWindows(width, height));
+  var side  = this.createTexture(this.drawWindows(length, height));
+  var windowsMap = [side, side, black, black, front, front];
   return new THREE.MeshFaceMaterial(windowsMap);
 };
 
@@ -93,7 +96,7 @@ ObsidianBuilding.prototype.generateCylinderWindows = function(radius, height) {
   }
 
   // Map created texture to window face
-  var texture = this.createTexture(ctx.canvas, 256, 256);
+  var texture = this.createTexture(ctx.canvas);
   var windowsMap = [texture, texture, black, black, texture, texture];
   return new THREE.MeshFaceMaterial(windowsMap);
 };

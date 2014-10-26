@@ -135,15 +135,16 @@ ObsidianBuilding.prototype.genericBuilding = function() {
   var black = this.material.black;
 
   // Create building stacks
+  this.buildBase(black, 1);
   for (var i=0; i<stacks; i++) {
     // Add floor base
-    this.buildBase(black, 1);
+    this.buildBase(black, 2);
     width  -= 1;
     length -= 1;
 
     // Add building stack
-    var windowMaterial = this.generateWindows(width, stackHeight);
-    this.buildStack(windowMaterial, stackHeight);
+    var material = this.generateWindows(width, length, stackHeight);
+    this.buildStack(material, stackHeight);
   }
 
   // Add roof and decorations

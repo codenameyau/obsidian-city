@@ -20,7 +20,7 @@
 
   // Generic building
   var buildingA = new ObsidianBuilding('generic',
-    {width: 60, length: 20, height: 55, stack: 3});
+    {width: 40, length: 20, height: 55, stack: 3});
   buildingA.move(-30, 0, 0);
   city.add(buildingA.mesh);
 
