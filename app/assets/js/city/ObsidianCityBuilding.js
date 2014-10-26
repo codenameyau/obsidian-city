@@ -21,6 +21,9 @@ function ObsidianBuilding(type, settings) {
     case 'cylinder':
       this.cylinderBuilding();
       break;
+    case 'section':
+      this.sectionBuilding();
+      break;
   }
 }
 
@@ -83,7 +86,7 @@ ObsidianBuilding.prototype.buildBase = function(material, height) {
 };
 
 
-ObsidianBuilding.prototype.buildSection = function(material, sectionHeight) {
+ObsidianBuilding.prototype.buildStack = function(material, sectionHeight) {
   var dim = this.dimension;
   var geometry = this.geometry.building;
   var buildingMesh = new THREE.Mesh(geometry, material);
@@ -123,7 +126,7 @@ ObsidianBuilding.prototype.buildCylinder = function(material, radius, height) {
  * ObsidianBuilding Types *
  **************************/
 ObsidianBuilding.prototype.genericBuilding = function() {
-  // Define properties
+  // Building properties
   var dim = this.dimension;
   var stacks = this.settings.stack;
   var stackHeight = Math.round(dim.height / stacks);
@@ -138,7 +141,7 @@ ObsidianBuilding.prototype.genericBuilding = function() {
 
     // Add building stack
     var windowMaterial = this.generateWindows(dim.width, stackHeight);
-    this.buildSection(windowMaterial, stackHeight);
+    this.buildStack(windowMaterial, stackHeight);
   }
 
   // Add roof and decorations
@@ -148,7 +151,7 @@ ObsidianBuilding.prototype.genericBuilding = function() {
 
 
 ObsidianBuilding.prototype.cylinderBuilding = function() {
-  // Define properties
+  // Building Properties
   var dim = this.dimension;
   var baseSize = dim.radius * 2;
   var windowSize = baseSize * Math.PI;
@@ -162,4 +165,10 @@ ObsidianBuilding.prototype.cylinderBuilding = function() {
   this.buildCylinder(material, dim.radius, dim.height);
   this.buildCylinder(black, dim.radius, 2);
   this.buildRoof(black);
+};
+
+
+ObsidianBuilding.prototype.sectionBuilding = function() {
+  // Building properties
+
 };
