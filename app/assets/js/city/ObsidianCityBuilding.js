@@ -127,20 +127,22 @@ ObsidianBuilding.prototype.buildCylinder = function(material, radius, height) {
  **************************/
 ObsidianBuilding.prototype.genericBuilding = function() {
   // Building properties
-  var dim = this.dimension;
+  var width = this.dimension.width;
+  var height = this.dimension.height;
+  var length = this.dimension.length;
   var stacks = this.settings.stack;
-  var stackHeight = Math.round(dim.height / stacks);
+  var stackHeight = Math.round(height / stacks);
   var black = this.material.black;
 
   // Create building stacks
   for (var i=0; i<stacks; i++) {
     // Add floor base
     this.buildBase(black, 1);
-    dim.width  -= 1;
-    dim.length -= 1;
+    width  -= 1;
+    length -= 1;
 
     // Add building stack
-    var windowMaterial = this.generateWindows(dim.width, stackHeight);
+    var windowMaterial = this.generateWindows(width, stackHeight);
     this.buildStack(windowMaterial, stackHeight);
   }
 
@@ -157,7 +159,7 @@ ObsidianBuilding.prototype.cylinderBuilding = function() {
   var windowSize = baseSize * Math.PI;
   dim.width = baseSize;
   dim.length = baseSize;
-  var material = this.generateWindows(windowSize, dim.height);
+  var material = this.generateCylinderWindows(windowSize, dim.height);
   var black = this.material.black;
 
   // Construct building

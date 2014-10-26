@@ -19,16 +19,16 @@
   city.addHemisphereLight(0x9999C9, 0x222222, 0.8);
 
   // Generic building
-  // var buildingA = new ObsidianBuilding('generic',
-  //   {width: 60, length: 20, height: 55, stack: 3});
-  // buildingA.move(-30, 0, 0);
-  // city.add(buildingA.mesh);
+  var buildingA = new ObsidianBuilding('generic',
+    {width: 60, length: 20, height: 55, stack: 3});
+  buildingA.move(-30, 0, 0);
+  city.add(buildingA.mesh);
 
   // Office building
-  var buildingB = new ObsidianBuilding('cylinder',
-    {radius: 20, height: 25});
-  buildingB.move(0, 0, 0);
-  city.add(buildingB.mesh);
+  // var buildingB = new ObsidianBuilding('cylinder',
+  //   {radius: 10, height: 55});
+  // buildingB.move(0, 0, 0);
+  // city.add(buildingB.mesh);
 
   // // Section building
   // var buildingA = new ObsidianBuilding('section',
