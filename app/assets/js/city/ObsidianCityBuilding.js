@@ -138,7 +138,7 @@ ObsidianBuilding.prototype.genericBuilding = function() {
   this.buildBase(black, 1);
   for (var i=0; i<stacks; i++) {
     // Add floor base
-    this.buildBase(black, 2);
+    this.buildBase(black, 1);
     width  -= 1;
     length -= 1;
 
@@ -164,7 +164,7 @@ ObsidianBuilding.prototype.cylinderBuilding = function() {
   var black = this.material.black;
 
   // Construct building
-  this.buildBase(black, 1);
+  this.buildBase(black, 2);
   this.buildCylinder(material, dim.radius, dim.height);
   this.buildCylinder(black, dim.radius, 2);
   this.buildRoof(black);

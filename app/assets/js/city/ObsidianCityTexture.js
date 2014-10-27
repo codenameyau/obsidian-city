@@ -44,12 +44,6 @@ ObsidianBuilding.prototype.createTexture = function(canvas) {
 };
 
 
-ObsidianBuilding.prototype.drawRectangle = function(ctx, color, x, y, xSize, ySize) {
-  ctx.fillStyle = color;
-  ctx.fillRect(x, y, xSize, ySize);
-};
-
-
 /***********************************
  * ObsidianBuilding Window Texture *
  ***********************************/
@@ -64,7 +58,8 @@ ObsidianBuilding.prototype.drawWindows = function(width, height) {
     for (var w=padding; w<windows; w += 2.5) {
       var windowColor = this.utils.getGrayscale(
         this.utils.randomNormal(lightsColor, 100));
-      this.drawRectangle(ctx, windowColor, w, h, 1.5, 1);
+      ctx.fillStyle = windowColor;
+      ctx.fillRect(w, h, 1.5, 1);
     }
   }
   return ctx.canvas;
@@ -81,22 +76,7 @@ ObsidianBuilding.prototype.generateWindows = function(width, length, height) {
 
 ObsidianBuilding.prototype.generateCylinderWindows = function(radius, height) {
   var black = this.material.black;
-  var windows = radius * 2;
-  var padding = 1;
-
-  // Draw windows texture
-  var ctx = this.textureCanvas(windows, height);
-  for (var h=padding; h<height; h += 2) {
-    var lightsColor = this.utils.randomInteger(20, 150);
-    for (var w=padding; w<windows; w += 2.5) {
-      var windowColor = this.utils.getGrayscale(
-        this.utils.randomNormal(lightsColor, 100));
-      this.drawRectangle(ctx, windowColor, w, h, 1.5, 1);
-    }
-  }
-
-  // Map created texture to window face
-  var texture = this.createTexture(ctx.canvas);
+  var texture = this.createTexture(this.drawWindows(radius, height));
   var windowsMap = [texture, texture, black, black, texture, texture];
   return new THREE.MeshFaceMaterial(windowsMap);
 };

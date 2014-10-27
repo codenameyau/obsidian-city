@@ -20,15 +20,15 @@
 
   // Generic building
   var buildingA = new ObsidianBuilding('generic',
-    {width: 40, length: 20, height: 55, stack: 3});
+    {width: 30, length: 20, height: 55, stack: 2});
   buildingA.move(-30, 0, 0);
   city.add(buildingA.mesh);
 
   // Office building
-  // var buildingB = new ObsidianBuilding('cylinder',
-  //   {radius: 10, height: 55});
-  // buildingB.move(0, 0, 0);
-  // city.add(buildingB.mesh);
+  var buildingB = new ObsidianBuilding('cylinder',
+    {radius: 10, height: 55});
+  buildingB.move(0, 0, 0);
+  city.add(buildingB.mesh);
 
   // // Section building
   // var buildingA = new ObsidianBuilding('section',
