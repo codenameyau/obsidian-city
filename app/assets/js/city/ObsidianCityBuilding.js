@@ -24,6 +24,9 @@ function ObsidianBuilding(type, settings) {
     case 'section':
       this.sectionBuilding();
       break;
+    case 'stacked':
+      this.stackedBuilding();
+      break;
   }
 }
 
@@ -108,14 +111,13 @@ ObsidianBuilding.prototype.buildSection = function(material, width, length, heig
 
 ObsidianBuilding.prototype.buildRoof = function(material) {
   var blockHeight = 2;
-  var dim = this.dimension;
   var geometry = this.geometry.base;
   var blockMesh = new THREE.Mesh(geometry, material);
   var posX = this.utils.randomInteger(-4, 4);
   var posZ = this.utils.randomInteger(-4, 4);
   blockMesh.scale.set(5, blockHeight, 5);
-  blockMesh.position.set(posX, dim.current, posZ);
-  dim.current += blockHeight;
+  blockMesh.position.set(posX, this.dimension.current, posZ);
+  this.dimension.current += blockHeight;
   this.mesh.add(blockMesh);
 };
 
@@ -186,15 +188,44 @@ ObsidianBuilding.prototype.sectionBuilding = function() {
   var width = this.dimension.width;
   var length = this.dimension.length;
   var height = this.dimension.height;
-  var sideLength = Math.floor(length * 0.55);
+  var sideLength = Math.floor(length * 0.50);
+  var mainLength = Math.floor(length * 0.9);
   var sideWidth = Math.floor(width * 0.9);
   var mainWidth = Math.floor(width * 0.55);
   var black = this.material.black;
 
   // Construct cross sections
   this.buildBase(black, 2);
-  var mainWindow = this.generateWindows(mainWidth, length, height);
+  var mainWindow = this.generateWindows(mainWidth, mainLength, height);
   var sideWindow = this.generateWindows(sideWidth, sideLength, height);
   this.buildSection(sideWindow, sideWidth, sideLength, height);
-  this.buildSection(mainWindow, mainWidth, length, height);
+  this.buildSection(mainWindow, mainWidth, mainLength, height);
+};
+
+
+ObsidianBuilding.prototype.stackedBuilding = function() {
+  // Building properties
+  var dim = this.dimension;
+  var width = dim.width;
+  var height = dim.height;
+  var length = dim.length;
+  var stacks = this.settings.stack || 2;
+  var stackHeight = 2 * stacks;
+  var black = this.material.black;
+
+  // Create main building
+  var mainWindow = this.generateWindows(width, length, height);
+  this.buildBase(black, 2);
+  this.buildStack(mainWindow, height);
+
+  // Create building stacks
+  for (var i=0; i<stacks; i++) {
+    dim.width -= 2;
+    dim.length -= 2;
+    this.buildBase(black, 1);
+    var stackWindow = this.generateWindows(dim.width, dim.length, stackHeight);
+    this.buildStack(stackWindow, stackHeight);
+    stackHeight -= 2;
+  }
+  this.buildBase(black, 1);
 };

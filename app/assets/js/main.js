@@ -20,22 +20,27 @@
 
   // Generic building
   var buildingA = new ObsidianBuilding('generic',
-    {width: 20, length: 20, height: 55, stack: 2});
-  buildingA.move(-30, 0, 0);
+    {width: 20, length: 20, height: 50, stack: 2});
+  buildingA.move(-30, 0, -35);
   city.add(buildingA.mesh);
 
   // Office building
   var buildingB = new ObsidianBuilding('cylinder',
-    {radius: 10, height: 55});
-  buildingB.move(0, 0, 0);
+    {radius: 10, height: 50});
+  buildingB.move(0, 0, -35);
   city.add(buildingB.mesh);
 
-  // // Section building
+  // Section building
   var buildingC = new ObsidianBuilding('section',
-    {width: 20, length: 20, height: 55});
-  buildingC.move(30, 0, 0);
+    {width: 20, length: 20, height: 50});
+  buildingC.move(30, 0, -35);
   city.add(buildingC.mesh);
 
+  // Stacked building
+  var buildingD = new ObsidianBuilding('stacked',
+    {width: 16, length: 16, height: 40, stack: 3});
+  buildingD.move(-30, 0, 0);
+  city.add(buildingD.mesh);
 
   // Run update loop
   city.updateScene();
