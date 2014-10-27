@@ -98,12 +98,13 @@ ObsidianBuilding.prototype.buildStack = function(material, sectionHeight) {
 
 
 ObsidianBuilding.prototype.buildSection = function(material, width, length, height) {
-  var dim = this.dimension;
   var geometry = this.geometry.building;
   var buildingMesh = new THREE.Mesh(geometry, material);
   buildingMesh.scale.set(width, height, length);
+  buildingMesh.position.set(0, this.dimension.current, 0);
   this.mesh.add(buildingMesh);
 };
+
 
 ObsidianBuilding.prototype.buildRoof = function(material) {
   var blockHeight = 2;
@@ -185,18 +186,15 @@ ObsidianBuilding.prototype.sectionBuilding = function() {
   var width = this.dimension.width;
   var length = this.dimension.length;
   var height = this.dimension.height;
-  var sideHeight = Math.floor(height * 0.8);
-  var sideWidth = Math.floor(width * 0.1);
-  var mainWidth = Math.floor(width * 0.7);
+  var sideLength = Math.floor(length * 0.55);
+  var sideWidth = Math.floor(width * 0.9);
+  var mainWidth = Math.floor(width * 0.55);
   var black = this.material.black;
 
-  // Add building base
+  // Construct cross sections
   this.buildBase(black, 2);
-
-  // [TODO] Construct sections
   var mainWindow = this.generateWindows(mainWidth, length, height);
-  var sideWindow = this.generateWindows(sideWidth, length, sideHeight);
-  this.buildSection(sideWindow, sideWidth, length, sideHeight);
+  var sideWindow = this.generateWindows(sideWidth, sideLength, height);
+  this.buildSection(sideWindow, sideWidth, sideLength, height);
   this.buildSection(mainWindow, mainWidth, length, height);
-  this.buildSection(sideWindow, sideWidth, length, sideHeight);
 };
