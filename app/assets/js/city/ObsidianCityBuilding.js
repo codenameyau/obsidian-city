@@ -97,6 +97,14 @@ ObsidianBuilding.prototype.buildStack = function(material, sectionHeight) {
 };
 
 
+ObsidianBuilding.prototype.buildSection = function(material, width, length, height) {
+  var dim = this.dimension;
+  var geometry = this.geometry.building;
+  var buildingMesh = new THREE.Mesh(geometry, material);
+  buildingMesh.scale.set(width, height, length);
+  this.mesh.add(buildingMesh);
+};
+
 ObsidianBuilding.prototype.buildRoof = function(material) {
   var blockHeight = 2;
   var dim = this.dimension;
@@ -130,7 +138,7 @@ ObsidianBuilding.prototype.genericBuilding = function() {
   var width = this.dimension.width;
   var height = this.dimension.height;
   var length = this.dimension.length;
-  var stacks = this.settings.stack;
+  var stacks = this.settings.stack || 1;
   var stackHeight = Math.round(height / stacks);
   var black = this.material.black;
 
@@ -164,6 +172,7 @@ ObsidianBuilding.prototype.cylinderBuilding = function() {
   var black = this.material.black;
 
   // Construct building
+  // [TODO] Solve multiple cylinder
   this.buildBase(black, 2);
   this.buildCylinder(material, dim.radius, dim.height);
   this.buildCylinder(black, dim.radius, 2);
@@ -173,14 +182,21 @@ ObsidianBuilding.prototype.cylinderBuilding = function() {
 
 ObsidianBuilding.prototype.sectionBuilding = function() {
   // Building properties
-  var dim = this.dimension;
+  var width = this.dimension.width;
+  var length = this.dimension.length;
+  var height = this.dimension.height;
+  var sideHeight = Math.floor(height * 0.8);
+  var sideWidth = Math.floor(width * 0.1);
+  var mainWidth = Math.floor(width * 0.7);
   var black = this.material.black;
-  var sideWidth = Math.floor(dim.width * 0.1);
-  var mainWidth = Math.floor(dim.width * 0.7);
 
   // Add building base
-  this.buildBase(black, 1);
+  this.buildBase(black, 2);
 
-  // Construct sections
-
+  // [TODO] Construct sections
+  var mainWindow = this.generateWindows(mainWidth, length, height);
+  var sideWindow = this.generateWindows(sideWidth, length, sideHeight);
+  this.buildSection(sideWindow, sideWidth, length, sideHeight);
+  this.buildSection(mainWindow, mainWidth, length, height);
+  this.buildSection(sideWindow, sideWidth, length, sideHeight);
 };
