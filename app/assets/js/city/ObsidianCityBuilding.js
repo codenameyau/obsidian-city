@@ -27,6 +27,9 @@ function ObsidianBuilding(type, settings) {
     case 'stacked':
       this.stackedBuilding();
       break;
+    case 'u-shaped':
+      this.uShapedBuilding();
+      break;
   }
 }
 
@@ -137,7 +140,6 @@ ObsidianBuilding.prototype.buildCylinder = function(material, radius, height) {
  * ObsidianBuilding Types *
  **************************/
 ObsidianBuilding.prototype.genericBuilding = function() {
-  // Building properties
   var width = this.dimension.width;
   var height = this.dimension.height;
   var length = this.dimension.length;
@@ -165,7 +167,6 @@ ObsidianBuilding.prototype.genericBuilding = function() {
 
 
 ObsidianBuilding.prototype.cylinderBuilding = function() {
-  // Building Properties
   var dim = this.dimension;
   var baseSize = dim.radius * 2;
   var windowSize = baseSize * Math.PI;
@@ -184,7 +185,6 @@ ObsidianBuilding.prototype.cylinderBuilding = function() {
 
 
 ObsidianBuilding.prototype.sectionBuilding = function() {
-  // Building properties
   var width = this.dimension.width;
   var length = this.dimension.length;
   var height = this.dimension.height;
@@ -204,7 +204,6 @@ ObsidianBuilding.prototype.sectionBuilding = function() {
 
 
 ObsidianBuilding.prototype.stackedBuilding = function() {
-  // Building properties
   var stacks = this.settings.stack || 2;
   var stackHeight = 2 * stacks;
   var dim = this.dimension;
@@ -227,5 +226,21 @@ ObsidianBuilding.prototype.stackedBuilding = function() {
     this.buildStack(stackWindow, stackHeight);
     stackHeight -= 2;
   }
+  this.buildBase(black, 1);
+};
+
+
+ObsidianBuilding.prototype.uShapedBuilding = function() {
+  var dim = this.dimension;
+  var sliceHeight = 10;
+  var width = dim.width;
+  var height = dim.height - sliceHeight;
+  var length = dim.length;
+  var black = this.material.black;
+
+  // Create main building
+  var mainWindow = this.generateWindows(width, length, height);
+  this.buildBase(black, 2);
+  this.buildStack(mainWindow, height);
   this.buildBase(black, 1);
 };
