@@ -38,7 +38,7 @@
 
   // Stacked building
   var buildingD = new ObsidianBuilding('stacked',
-    {width: 16, length: 16, height: 40, stack: 3});
+    {width: 16, length: 16, height: 50, stack: 3});
   buildingD.move(-30, 0, 0);
   city.add(buildingD.mesh);
 

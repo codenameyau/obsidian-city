@@ -205,12 +205,12 @@ ObsidianBuilding.prototype.sectionBuilding = function() {
 
 ObsidianBuilding.prototype.stackedBuilding = function() {
   // Building properties
-  var dim = this.dimension;
-  var width = dim.width;
-  var height = dim.height;
-  var length = dim.length;
   var stacks = this.settings.stack || 2;
   var stackHeight = 2 * stacks;
+  var dim = this.dimension;
+  var width = dim.width;
+  var height = dim.height - stackHeight * stacks;
+  var length = dim.length;
   var black = this.material.black;
 
   // Create main building
