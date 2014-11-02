@@ -10,7 +10,7 @@
  ****************/
 (function() {
   var city = new ObsidianCity();
-  city.enableFloorGrid(64, 4);
+  city.enableFloorGrid(80, 4);
   // console.log(city);
 
   // Hemisphere lighting
@@ -44,9 +44,9 @@
   buildingD.move(-30, 0, 0);
   city.add(buildingD.mesh);
 
-  // Alt-stack building
+  // Alternating building
   var buildingE = new ObsidianBuilding(build.alternatingBuilding,
-    {width: 16, length: 16, height: 50});
+    {width: 20, length: 12, height: 50});
   buildingE.move(0, 0, 0);
   city.add(buildingE.mesh);
 

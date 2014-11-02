@@ -79,13 +79,14 @@ ObsidianBuilding.prototype.buildBase = function(material, height) {
 };
 
 
-ObsidianBuilding.prototype.buildStack = function(material, sectionHeight) {
+ObsidianBuilding.prototype.buildStack = function(material, height, scale) {
+  scale = scale || 1;
   var dim = this.dimension;
   var geometry = this.geometry.building;
   var buildingMesh = new THREE.Mesh(geometry, material);
-  buildingMesh.scale.set(dim.width, sectionHeight, dim.length);
+  buildingMesh.scale.set(dim.width * scale, height, dim.length * scale);
   buildingMesh.position.set(0, dim.current, 0);
-  this.updateHeight(sectionHeight);
+  this.updateHeight(height);
   this.mesh.add(buildingMesh);
 };
 
@@ -218,8 +219,20 @@ ObsidianBuilding.prototype.stackedBuilding = function() {
 
 
 ObsidianBuilding.prototype.alternatingBuilding = function() {
-
+  var width = this.dimension.width;
+  var length = this.dimension.length;
+  var height = this.dimension.height;
+  var stackHeight = 10;
+  var stacks = Math.floor(height / stackHeight);
+  var blackMaterial = this.material.black;
+  this.buildBase(blackMaterial, 1);
+  for (var i=0; i<stacks; i++) {
+    var windowMateral = this.generateWindows(width, length, stackHeight);
+    this.buildBase(blackMaterial, 1);
+    this.buildStack(windowMateral, stackHeight, 0.92);
+  }
 };
+
 
 ObsidianBuilding.prototype.hShapedBuilding = function() {
   var dim = this.dimension;
