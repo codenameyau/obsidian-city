@@ -37,7 +37,7 @@ ObsidianBuilding.prototype.updateTranslation();
 ObsidianBuilding.prototype.material = {
   black: new THREE.MeshBasicMaterial({ color: 0x060606 }),
   gray: new THREE.MeshBasicMaterial({ color: 0xCCCCCC }),
-  white: new THREE.MeshBasicMaterial({ color: 0xFEFEFE }),
+  white: new THREE.MeshBasicMaterial({ color: 0xEEEEEE }),
 };
 
 
@@ -101,19 +101,6 @@ ObsidianBuilding.prototype.buildSection = function(material, width, length, heig
 };
 
 
-ObsidianBuilding.prototype.buildRoof = function(material) {
-  var blockHeight = 2;
-  var geometry = this.geometry.base;
-  var blockMesh = new THREE.Mesh(geometry, material);
-  var posX = this.utils.randomInteger(-4, 4);
-  var posZ = this.utils.randomInteger(-4, 4);
-  blockMesh.scale.set(5, blockHeight, 5);
-  blockMesh.position.set(posX, this.dimension.current, posZ);
-  this.updateHeight(blockHeight);
-  this.mesh.add(blockMesh);
-};
-
-
 ObsidianBuilding.prototype.buildCylinder = function(material, radius, height) {
   var geometry = this.geometry.cylinder;
   var buildingMesh = new THREE.Mesh(geometry, material);
@@ -129,15 +116,20 @@ ObsidianBuilding.prototype.fontSettings = {
 };
 
 
-ObsidianBuilding.prototype.buildTextRoof = function(material, text) {
-  var dim = this.dimension;
-  var textMaterial = this.material.white;
-  var textGeometry = new THREE.TextGeometry(text, this.fontSettings);
-  var textMesh = new THREE.Mesh(textGeometry, textMaterial);
-  var posX = (-dim.width / 2) + 2;
-  textMesh.scale.set(0.8, 0.8, 0.4);
-  textMesh.position.set(posX, dim.current, 0);
-  this.mesh.add(textMesh);
+ObsidianBuilding.prototype.buildRoof = function(material) {
+  var text = this.settings.text;
+  if (text) {
+    var dim = this.dimension;
+    var textMaterial = this.material.white;
+    var textGeometry = new THREE.TextGeometry(text, this.fontSettings);
+    var textMesh = new THREE.Mesh(textGeometry, textMaterial);
+    var posX = -text.length/2;
+    var posZ = dim.length / 2;
+    textMesh.scale.set(0.6, 0.5, 0.2);
+    textMesh.position.set(posX, dim.current, posZ);
+    this.mesh.add(textMesh);
+  }
+  this.buildBase(material, 2);
 };
 
 
@@ -166,7 +158,7 @@ ObsidianBuilding.prototype.genericBuilding = function() {
   }
 
   // Add roof and decorations
-  this.buildTextRoof(black, 'HELLO CORP.');
+  this.buildRoof(black);
 };
 
 
@@ -184,7 +176,6 @@ ObsidianBuilding.prototype.cylinderBuilding = function() {
   this.buildBase(black, 2);
   this.buildCylinder(material, dim.radius, dim.height);
   this.buildCylinder(black, dim.radius, 2);
-  this.buildRoof(black);
 };
 
 
@@ -231,7 +222,7 @@ ObsidianBuilding.prototype.stackedBuilding = function() {
     this.buildStack(stackWindow, stackHeight);
     stackHeight -= 2;
   }
-  this.buildBase(black, 1);
+  this.buildRoof(black);
 };
 
 
@@ -248,6 +239,7 @@ ObsidianBuilding.prototype.alternatingBuilding = function() {
     this.buildBase(blackMaterial, 1);
     this.buildStack(windowMateral, stackHeight, 0.92);
   }
+  this.buildRoof(blackMaterial);
 };
 
 
@@ -273,5 +265,5 @@ ObsidianBuilding.prototype.hShapedBuilding = function() {
   this.buildSection(sideWindow, sideWidth, length, height, sidePosX, 0);
   this.updateHeight(height);
   dim.length = mainLength;
-  this.buildBase(black, 1);
+  this.buildRoof(black);
 };
