@@ -81,13 +81,18 @@ ObsidianBuilding.prototype.move = function(x, y, z) {
 /*******************************
  * ObsidianBuilding Foundation *
  *******************************/
+ObsidianBuilding.prototype.updateHeight = function(value) {
+  this.dimension.current += value;
+}
+
+
 ObsidianBuilding.prototype.buildBase = function(material, height) {
   var dim = this.dimension;
   var geometry = this.geometry.base;
   var baseMesh = new THREE.Mesh(geometry, material);
   baseMesh.scale.set(dim.width, height, dim.length);
   baseMesh.position.set(0, dim.current, 0);
-  dim.current += height;
+  this.updateHeight(height);
   this.mesh.add(baseMesh);
 };
 
@@ -98,16 +103,16 @@ ObsidianBuilding.prototype.buildStack = function(material, sectionHeight) {
   var buildingMesh = new THREE.Mesh(geometry, material);
   buildingMesh.scale.set(dim.width, sectionHeight, dim.length);
   buildingMesh.position.set(0, dim.current, 0);
-  dim.current += sectionHeight;
+  this.updateHeight(sectionHeight);
   this.mesh.add(buildingMesh);
 };
 
 
-ObsidianBuilding.prototype.buildSection = function(material, width, length, height) {
+ObsidianBuilding.prototype.buildSection = function(material, width, length, height, x, y) {
   var geometry = this.geometry.building;
   var buildingMesh = new THREE.Mesh(geometry, material);
   buildingMesh.scale.set(width, height, length);
-  buildingMesh.position.set(0, this.dimension.current, 0);
+  buildingMesh.position.set(x, this.dimension.current, y);
   this.mesh.add(buildingMesh);
 };
 
@@ -120,18 +125,17 @@ ObsidianBuilding.prototype.buildRoof = function(material) {
   var posZ = this.utils.randomInteger(-4, 4);
   blockMesh.scale.set(5, blockHeight, 5);
   blockMesh.position.set(posX, this.dimension.current, posZ);
-  this.dimension.current += blockHeight;
+  this.updateHeight(blockHeight);
   this.mesh.add(blockMesh);
 };
 
 
 ObsidianBuilding.prototype.buildCylinder = function(material, radius, height) {
-  var dim = this.dimension;
   var geometry = this.geometry.cylinder;
   var buildingMesh = new THREE.Mesh(geometry, material);
   buildingMesh.scale.set(radius, height, radius);
-  buildingMesh.position.set(0, dim.current, 0);
-  dim.current += height;
+  buildingMesh.position.set(0, this.dimension.current, 0);
+  this.updateHeight(height);
   this.mesh.add(buildingMesh);
 };
 
@@ -198,8 +202,9 @@ ObsidianBuilding.prototype.sectionBuilding = function() {
   this.buildBase(black, 2);
   var mainWindow = this.generateWindows(mainWidth, mainLength, height);
   var sideWindow = this.generateWindows(sideWidth, sideLength, height);
-  this.buildSection(sideWindow, sideWidth, sideLength, height);
-  this.buildSection(mainWindow, mainWidth, mainLength, height);
+  this.buildSection(sideWindow, sideWidth, sideLength, height, 0, 0);
+  this.buildSection(mainWindow, mainWidth, mainLength, height, 0, 0);
+  this.updateHeight(height);
 };
 
 
@@ -236,11 +241,15 @@ ObsidianBuilding.prototype.uShapedBuilding = function() {
   var width = dim.width;
   var height = dim.height - sliceHeight;
   var length = dim.length;
+  var sideWidth = Math.floor(width * 0.2);
+  var mainWidth = Math.floor(width * 0.6);
+  var mainLength = Math.floor(length * 0.4);
   var black = this.material.black;
 
   // Create main building
-  var mainWindow = this.generateWindows(width, length, height);
+  var mainWindow = this.generateWindows(mainWidth, length, height);
+  var sideWindow = this.generateWindows(sideWidth, length, height);
   this.buildBase(black, 2);
-  this.buildStack(mainWindow, height);
-  this.buildBase(black, 1);
+  this.buildSection(sideWindow, sideWidth, length, height, 0, 0);
+  this.updateHeight(height);
 };
