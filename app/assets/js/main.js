@@ -27,34 +27,34 @@
   city.add(buildingA.mesh);
 
   // Office building
-  // var buildingB = new ObsidianBuilding('cylinder',
-  //   {radius: 10, height: 50});
-  // buildingB.move(0, 0, -35);
-  // city.add(buildingB.mesh);
+  var buildingB = new ObsidianBuilding(build.cylinderBuilding,
+    {radius: 10, height: 50});
+  buildingB.move(0, 0, -35);
+  city.add(buildingB.mesh);
 
-  // // Section building
-  // var buildingC = new ObsidianBuilding('section',
-  //   {width: 20, length: 20, height: 50});
-  // buildingC.move(30, 0, -35);
-  // city.add(buildingC.mesh);
+  // Cross building
+  var buildingC = new ObsidianBuilding(build.crossBuilding,
+    {width: 20, length: 20, height: 50});
+  buildingC.move(30, 0, -35);
+  city.add(buildingC.mesh);
 
-  // // Stacked building
-  // var buildingD = new ObsidianBuilding('stacked',
-  //   {width: 16, length: 16, height: 50, stack: 3});
-  // buildingD.move(-30, 0, 0);
-  // city.add(buildingD.mesh);
+  // Stacked building
+  var buildingD = new ObsidianBuilding(build.stackedBuilding,
+    {width: 16, length: 16, height: 50, stack: 3});
+  buildingD.move(-30, 0, 0);
+  city.add(buildingD.mesh);
 
-  // // Alt-stack building
-  // var buildingE = new ObsidianBuilding('alternating',
-  //   {width: 16, length: 16, height: 50});
-  // buildingE.move(0, 0, 0);
-  // city.add(buildingE.mesh);
+  // Alt-stack building
+  var buildingE = new ObsidianBuilding(build.alternatingBuilding,
+    {width: 16, length: 16, height: 50});
+  buildingE.move(0, 0, 0);
+  city.add(buildingE.mesh);
 
-  // // U-shaped building
-  // var buildingG = new ObsidianBuilding('h-shaped',
-  //   {width: 45, length: 30, height: 25});
-  // buildingG.move(0, 0, 30);
-  // city.add(buildingG.mesh);
+  // H-shaped building
+  var buildingG = new ObsidianBuilding(build.hShapedBuilding,
+    {width: 45, length: 30, height: 25});
+  buildingG.move(0, 0, 30);
+  city.add(buildingG.mesh);
 
   // Run update loop
   city.updateScene();

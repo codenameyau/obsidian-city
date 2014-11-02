@@ -170,7 +170,7 @@ ObsidianBuilding.prototype.cylinderBuilding = function() {
 };
 
 
-ObsidianBuilding.prototype.sectionBuilding = function() {
+ObsidianBuilding.prototype.crossBuilding = function() {
   var width = this.dimension.width;
   var length = this.dimension.length;
   var height = this.dimension.height;
