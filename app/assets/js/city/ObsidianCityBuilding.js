@@ -7,30 +7,11 @@
 /********************************
  * ObsidianBuilding Constructor *
  ********************************/
-function ObsidianBuilding(type, settings) {
+function ObsidianBuilding(build, settings) {
   this.mesh = new THREE.Object3D();
-  this.type = type;
   this.settings = settings;
   this.setDimensions();
-
-  // Run algorithm
-  switch (type) {
-    case 'generic':
-      this.genericBuilding();
-      break;
-    case 'cylinder':
-      this.cylinderBuilding();
-      break;
-    case 'section':
-      this.sectionBuilding();
-      break;
-    case 'stacked':
-      this.stackedBuilding();
-      break;
-    case 'h-shaped':
-      this.hShapedBuilding();
-      break;
-  }
+  build.bind(this)();
 }
 
 
@@ -64,12 +45,13 @@ ObsidianBuilding.prototype.material = {
  ****************************/
 ObsidianBuilding.prototype.setDimensions = function() {
   var settings = this.settings;
-  this.dimension = {};
-  this.dimension.current = 0;
-  this.dimension.width  = settings.width;
-  this.dimension.length = settings.length;
-  this.dimension.height = settings.height;
-  this.dimension.radius = settings.radius;
+  this.dimension = {
+    current: 0,
+    width: settings.width,
+    length: settings.length,
+    height: settings.height,
+    radius: settings.radius,
+  };
 };
 
 
@@ -235,15 +217,20 @@ ObsidianBuilding.prototype.stackedBuilding = function() {
 };
 
 
+ObsidianBuilding.prototype.alternatingBuilding = function() {
+
+};
+
 ObsidianBuilding.prototype.hShapedBuilding = function() {
   var dim = this.dimension;
   var sliceHeight = 10;
   var width = dim.width;
   var height = dim.height - sliceHeight;
   var length = dim.length;
+  var widthModifier = 0.5;
   var sideWidth = Math.floor(width * 0.2);
   var mainWidth = Math.floor(width * 0.6);
-  var mainLength = Math.floor(length * 0.4);
+  var mainLength = Math.floor(length * widthModifier);
   var sidePosX = Math.floor(mainWidth/2);
 
   // Create main building
@@ -255,4 +242,6 @@ ObsidianBuilding.prototype.hShapedBuilding = function() {
   this.buildSection(mainWindow, width, mainLength, height, 0, 0);
   this.buildSection(sideWindow, sideWidth, length, height, sidePosX, 0);
   this.updateHeight(height);
+  dim.length = mainLength;
+  this.buildBase(black, 1);
 };

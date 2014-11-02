@@ -37,7 +37,7 @@ ObsidianBuilding.prototype.createTexture = function(canvas) {
   // Create texture material from hi-res canvas
   var texture = new THREE.Texture(hiResCanvas);
   texture.needsUpdate = true;
-  texture.anisotropy = 8;
+  texture.anisotropy = 16;
   return new THREE.MeshLambertMaterial({
     map: texture,
     vertexColors: THREE.VertexColors,
