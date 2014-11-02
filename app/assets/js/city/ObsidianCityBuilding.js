@@ -37,6 +37,7 @@ ObsidianBuilding.prototype.updateTranslation();
 ObsidianBuilding.prototype.material = {
   black: new THREE.MeshBasicMaterial({ color: 0x060606 }),
   gray: new THREE.MeshBasicMaterial({ color: 0xCCCCCC }),
+  white: new THREE.MeshBasicMaterial({ color: 0xFEFEFE }),
 };
 
 
@@ -123,6 +124,23 @@ ObsidianBuilding.prototype.buildCylinder = function(material, radius, height) {
 };
 
 
+ObsidianBuilding.prototype.fontSettings = {
+  size: 2, height: 1, curveSegments: 3,
+};
+
+
+ObsidianBuilding.prototype.buildTextRoof = function(material, text) {
+  var dim = this.dimension;
+  var textMaterial = this.material.white;
+  var textGeometry = new THREE.TextGeometry(text, this.fontSettings);
+  var textMesh = new THREE.Mesh(textGeometry, textMaterial);
+  var posX = (-dim.width / 2) + 2;
+  textMesh.scale.set(0.8, 0.8, 0.4);
+  textMesh.position.set(posX, dim.current, 0);
+  this.mesh.add(textMesh);
+};
+
+
 /**************************
  * ObsidianBuilding Types *
  **************************/
@@ -148,8 +166,7 @@ ObsidianBuilding.prototype.genericBuilding = function() {
   }
 
   // Add roof and decorations
-  this.buildBase(black, 2);
-  this.buildRoof(black);
+  this.buildTextRoof(black, 'HELLO CORP.');
 };
 
 

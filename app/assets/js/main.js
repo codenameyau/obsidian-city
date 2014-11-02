@@ -50,10 +50,16 @@
   buildingE.move(0, 0, 0);
   city.add(buildingE.mesh);
 
+  // Name building
+  var buildingF = new ObsidianBuilding(build.genericBuilding,
+    {width: 12, length: 16, height: 50});
+  buildingF.move(30, 0, 0);
+  city.add(buildingF.mesh);
+
   // H-shaped building
   var buildingG = new ObsidianBuilding(build.hShapedBuilding,
     {width: 45, length: 30, height: 25});
-  buildingG.move(0, 0, 30);
+  buildingG.move(0, 0, 35);
   city.add(buildingG.mesh);
 
   // Run update loop
