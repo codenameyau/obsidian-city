@@ -43,7 +43,7 @@
   city.add(buildingD.mesh);
 
   // U-shaped building
-  var buildingE = new ObsidianBuilding('u-shaped',
+  var buildingE = new ObsidianBuilding('h-shaped',
     {width: 45, length: 25, height: 20});
   buildingE.move(0, 0, 30);
   city.add(buildingE.mesh);
