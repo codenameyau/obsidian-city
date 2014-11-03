@@ -66,6 +66,7 @@ ObsidianBuilding.prototype.drawWindows = function(width, height) {
   return ctx.canvas;
 };
 
+
 ObsidianBuilding.prototype.generateWindows = function(width, length, height) {
   var black = this.material.black;
   var front = this.createTexture(this.drawWindows(width, height));

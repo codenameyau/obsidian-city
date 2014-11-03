@@ -21,7 +21,8 @@ function ObsidianBuilding(build, settings) {
 ObsidianBuilding.prototype.geometry = {
   base: new THREE.BoxGeometry(1, 1, 1),
   building: new THREE.BoxGeometry(1, 1, 1),
-  cylinder: new THREE.CylinderGeometry(1, 1, 1, 32),
+  cylinder: new THREE.CylinderGeometry(1, 1, 1, 20),
+  hexagon: new THREE.CylinderGeometry(1, 1, 1, 6),
 };
 
 
@@ -101,8 +102,7 @@ ObsidianBuilding.prototype.buildSection = function(material, width, length, heig
 };
 
 
-ObsidianBuilding.prototype.buildCylinder = function(material, radius, height) {
-  var geometry = this.geometry.cylinder;
+ObsidianBuilding.prototype.buildCylinder = function(geometry, material, radius, height) {
   var buildingMesh = new THREE.Mesh(geometry, material);
   buildingMesh.scale.set(radius, height, radius);
   buildingMesh.position.set(0, this.dimension.current, 0);
@@ -170,11 +170,29 @@ ObsidianBuilding.prototype.cylinderBuilding = function() {
   dim.length = baseSize;
   var material = this.generateCylinderWindows(windowSize, dim.height);
   var black = this.material.black;
+  var geometry = this.geometry.cylinder;
 
   // Construct building
   this.buildBase(black, 2);
-  this.buildCylinder(material, dim.radius, dim.height);
-  this.buildCylinder(black, dim.radius, 2);
+  this.buildCylinder(geometry, material, dim.radius, dim.height);
+  this.buildCylinder(geometry, black, dim.radius, 2);
+};
+
+
+ObsidianBuilding.prototype.hexagonBuilding = function() {
+  var dim = this.dimension;
+  var baseSize = dim.radius * 2;
+  var windowSize = baseSize * Math.PI;
+  dim.width = baseSize;
+  dim.length = baseSize;
+  var material = this.generateCylinderWindows(windowSize, dim.height);
+  var black = this.material.black;
+  var geometry = this.geometry.hexagon;
+
+  // Construct building
+  this.buildBase(black, 2);
+  this.buildCylinder(geometry, material, dim.radius, dim.height);
+  this.buildCylinder(geometry, black, dim.radius, 2);
 };
 
 

@@ -37,6 +37,7 @@ ObsidianCity.prototype.initializeSettings = function() {
   };
 };
 
+
 ObsidianCity.prototype.initializeClock = function() {
   this.clock = new THREE.Clock();
   this.clock.delta = this.clock.getDelta();

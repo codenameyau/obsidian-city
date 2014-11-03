@@ -9,6 +9,7 @@
  * Main Program *
  ****************/
 (function() {
+
   var city = new ObsidianCity();
   city.enableFloorGrid(80, 4);
   // console.log(city);
@@ -51,8 +52,8 @@
   city.add(buildingE.mesh);
 
   // Name building
-  var buildingF = new ObsidianBuilding(build.genericBuilding,
-    {width: 12, length: 16, height: 50});
+  var buildingF = new ObsidianBuilding(build.hexagonBuilding,
+    {radius: 10, height: 50});
   buildingF.move(30, 0, 0);
   city.add(buildingF.mesh);
 
