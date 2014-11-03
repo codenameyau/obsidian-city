@@ -123,7 +123,7 @@ ObsidianBuilding.prototype.buildRoof = function(material) {
     var textMaterial = this.material.white;
     var textGeometry = new THREE.TextGeometry(text, this.fontSettings);
     var textMesh = new THREE.Mesh(textGeometry, textMaterial);
-    var posX = -text.length/2;
+    var posX = Math.ceil(-text.length/2);
     var posZ = dim.length / 2;
     textMesh.scale.set(0.6, 0.5, 0.2);
     textMesh.position.set(posX, dim.current, posZ);
@@ -172,7 +172,6 @@ ObsidianBuilding.prototype.cylinderBuilding = function() {
   var black = this.material.black;
 
   // Construct building
-  // [TODO] Solve multiple cylinder
   this.buildBase(black, 2);
   this.buildCylinder(material, dim.radius, dim.height);
   this.buildCylinder(black, dim.radius, 2);

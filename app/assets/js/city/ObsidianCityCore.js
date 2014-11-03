@@ -17,17 +17,17 @@ ObsidianCity.prototype.initializeSettings = function() {
       fov: 40,
       near: 0.5,
       far: 1000,
-      zoomX: 0,
-      zoomY: 20,
-      zoomZ: 200,
+      zoomX: -120,
+      zoomY: 160,
+      zoomZ: 100,
     },
 
     controls: {
       enabled: true,
       userPan: false,
       userPanSpeed: 0.5,
-      minDistance: 10.0,
-      maxDistance: 200.0,
+      minDistance: 80.0,
+      maxDistance: 300.0,
       maxPolarAngle: (Math.PI/180) * 85,
     },
 
