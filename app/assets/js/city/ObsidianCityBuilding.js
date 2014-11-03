@@ -38,7 +38,7 @@ ObsidianBuilding.prototype.updateTranslation();
 ObsidianBuilding.prototype.material = {
   black: new THREE.MeshBasicMaterial({ color: 0x060606 }),
   gray: new THREE.MeshBasicMaterial({ color: 0xCCCCCC }),
-  white: new THREE.MeshBasicMaterial({ color: 0xEEEEEE }),
+  tint: new THREE.MeshBasicMaterial({ color: 0xCECEEF }),
 };
 
 
@@ -120,7 +120,7 @@ ObsidianBuilding.prototype.buildRoof = function(material) {
   var text = this.settings.text;
   if (text) {
     var dim = this.dimension;
-    var textMaterial = this.material.white;
+    var textMaterial = this.material.tint;
     var textGeometry = new THREE.TextGeometry(text, this.fontSettings);
     var textMesh = new THREE.Mesh(textGeometry, textMaterial);
     var posX = Math.ceil(-text.length/2);
@@ -170,24 +170,8 @@ ObsidianBuilding.prototype.cylinderBuilding = function() {
   dim.length = baseSize;
   var material = this.generateCylinderWindows(windowSize, dim.height);
   var black = this.material.black;
-  var geometry = this.geometry.cylinder;
-
-  // Construct building
-  this.buildBase(black, 2);
-  this.buildCylinder(geometry, material, dim.radius, dim.height);
-  this.buildCylinder(geometry, black, dim.radius, 2);
-};
-
-
-ObsidianBuilding.prototype.hexagonBuilding = function() {
-  var dim = this.dimension;
-  var baseSize = dim.radius * 2;
-  var windowSize = baseSize * Math.PI;
-  dim.width = baseSize;
-  dim.length = baseSize;
-  var material = this.generateCylinderWindows(windowSize, dim.height);
-  var black = this.material.black;
-  var geometry = this.geometry.hexagon;
+  var geometryType = this.settings.geometry || 'cylinder';
+  var geometry = this.geometry[geometryType];
 
   // Construct building
   this.buildBase(black, 2);

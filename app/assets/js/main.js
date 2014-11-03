@@ -16,9 +16,8 @@
 
   // Hemisphere lighting
   city.addAmbientLight(0x777777);
-  // city.addDirectionalLight(0x2F2F8F, 0, 0.5, 0.2);
-  city.addHemisphereLight(0x9999C9, 0x222222, 0.8);
-
+  city.addDirectionalLight(0x2F2AAF, 0.2, 0.5, 0.2);
+  city.addHemisphereLight(0x9999C9, 0x222222, 0.7);
   var build = ObsidianBuilding.prototype;
 
   // Generic building
@@ -29,7 +28,7 @@
 
   // Office building
   var buildingB = new ObsidianBuilding(build.cylinderBuilding,
-    {radius: 10, height: 50});
+    {radius: 10, height: 50, geometry: 'cylinder'});
   buildingB.move(0, 0, -35);
   city.add(buildingB.mesh);
 
@@ -51,9 +50,9 @@
   buildingE.move(0, 0, 0);
   city.add(buildingE.mesh);
 
-  // Name building
-  var buildingF = new ObsidianBuilding(build.hexagonBuilding,
-    {radius: 10, height: 50});
+  // Hexagon building
+  var buildingF = new ObsidianBuilding(build.cylinderBuilding,
+    {radius: 10, height: 50, geometry: 'hexagon'});
   buildingF.move(30, 0, 0);
   city.add(buildingF.mesh);
 
