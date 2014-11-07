@@ -55,9 +55,13 @@ ObsidianCity.prototype.layoutHorizontalRoad = function(pos) {
   var settings = this.settings.city;
   var roadWidth = settings.roadWidth;
   var cityWidth = settings.width;
+  // [TODO] Reuse and combine geometry
   var geometry = new THREE.PlaneGeometry(roadWidth, cityWidth);
   var material = new THREE.MeshBasicMaterial( {color: 0xFFFFFF} );
-  console.log(pos);
+  var mesh = new THREE.Mesh(geometry, material);
+  mesh.rotation.x = this.utils.degToRad(-90);
+  mesh.position.x = pos;
+  this.add(mesh);
 };
 
 
