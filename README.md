@@ -16,6 +16,3 @@ Generated window texture material using canvas.
 Generated buildings in several different designs.
 
 ![Screenshot of Buildings](https://raw.githubusercontent.com/codenameyau/obsidian-city/master/screenshot/11-02-2014.jpg)
-
-###Future Tasks
-- Window tint color

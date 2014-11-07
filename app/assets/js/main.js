@@ -10,17 +10,8 @@
  ****************/
 (function() {
 
-  // Define city settings
-  var citySettings = {
-    width: 500,
-    length: 490,
-    blockWidth: 32,
-    blockLength: 16,
-    roadWidth: 8,
-  };
-
   // Create city road layout
-  var city = new ObsidianCity(citySettings);
+  var city = new ObsidianCity();
   city.enableFloorGrid(500, 4);
   console.log(city);
 

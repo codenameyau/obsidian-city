@@ -17,7 +17,6 @@ function ObsidianCity(settings) {
   this.initializeControls();
   this.initializeHUD();
   this.initializeEventListeners();
-  this.settings.city = settings;
 }
 
 
