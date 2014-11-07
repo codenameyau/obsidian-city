@@ -21,3 +21,9 @@ ObsidianCity.prototype.enableFloorGrid = function(lines, steps, gridColor) {
   }
   this.scene.add(new THREE.Line(floorGrid, gridLine, THREE.LinePieces));
 };
+
+
+ObsidianCity.prototype.createRoadGrid = function() {
+
+};
+

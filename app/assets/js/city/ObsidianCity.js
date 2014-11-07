@@ -8,8 +8,8 @@
 /****************************
  * ObsidianCity Constructor *
  ****************************/
-function ObsidianCity() {
-  // Start ObsidianCityCore
+function ObsidianCity(settings) {
+  // Start ObsidianCity Core
   this.initializeSettings();
   this.initializeClock();
   this.initializeScene();
@@ -17,6 +17,7 @@ function ObsidianCity() {
   this.initializeControls();
   this.initializeHUD();
   this.initializeEventListeners();
+  this.settings.city = settings;
 }
 
 
