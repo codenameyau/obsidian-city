@@ -15,33 +15,6 @@ function ObsidianBuilding(build, settings) {
 }
 
 
-/******************************
- * ObsidianBuilding Resources *
- ******************************/
-ObsidianBuilding.prototype.geometry = {
-  base: new THREE.BoxGeometry(1, 1, 1),
-  building: new THREE.BoxGeometry(1, 1, 1),
-  cylinder: new THREE.CylinderGeometry(1, 1, 1, 20),
-  hexagon: new THREE.CylinderGeometry(1, 1, 1, 6),
-};
-
-
-ObsidianBuilding.prototype.updateTranslation = function() {
-  for (var k in this.geometry) {
-    this.geometry[k].applyMatrix(
-      new THREE.Matrix4().makeTranslation(0, 0.5, 0));
-  }
-};
-
-
-ObsidianBuilding.prototype.updateTranslation();
-ObsidianBuilding.prototype.material = {
-  black: new THREE.MeshBasicMaterial({ color: 0x060606 }),
-  gray: new THREE.MeshBasicMaterial({ color: 0xCCCCCC }),
-  tint: new THREE.MeshBasicMaterial({ color: 0xCECEEF }),
-};
-
-
 /****************************
  * ObsidianBuilding Methods *
  ****************************/

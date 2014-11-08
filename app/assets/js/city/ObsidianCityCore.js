@@ -36,11 +36,11 @@ ObsidianCity.prototype.initializeSettings = function() {
     },
 
     city: {
-      width: 500,
-      length: 490,
+      width: 1000,
+      length: 960,
       blockWidth: 32,
       blockLength: 16,
-      roadWidth: 8,
+      roadWidth: 4,
     },
   };
 };

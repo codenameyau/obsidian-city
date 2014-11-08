@@ -39,32 +39,32 @@ ObsidianCity.prototype.createRoadGrid = function() {
   var bottom = -Math.floor(cityLength/2);
   var top = -bottom + blockLength;
 
-  // Create vertical road grid
+  // Create horizontal road grid
   for (var w=left; w<right; w += wInc) {
-    this.layoutVerticalRoad(w);
+    this.layoutHorizontalRoad(w);
   }
 
-  // Create horizontal road grid
+  // Create vertical road grid
   for (var l=bottom; l<top; l += lInc) {
-    this.layoutHorizontalRoad(l);
+    this.layoutVerticalRoad(l);
   }
 };
 
 
-ObsidianCity.prototype.layoutHorizontalRoad = function(pos) {
+ObsidianCity.prototype.layoutVerticalRoad = function(pos) {
   var settings = this.settings.city;
   var roadWidth = settings.roadWidth;
   var cityWidth = settings.width;
-  // [TODO] Reuse and combine geometry
-  var geometry = new THREE.PlaneGeometry(roadWidth, cityWidth);
-  var material = new THREE.MeshBasicMaterial( {color: 0xFFFFFF} );
+  var geometry = this.geometry.plane;
+  var material = this.material.road;
   var mesh = new THREE.Mesh(geometry, material);
+  mesh.scale.set(roadWidth, cityWidth, 1);
   mesh.rotation.x = this.utils.degToRad(-90);
   mesh.position.x = pos;
   this.add(mesh);
 };
 
 
-ObsidianCity.prototype.layoutVerticalRoad = function(pos) {
+ObsidianCity.prototype.layoutHorizontalRoad = function(pos) {
 
 };
