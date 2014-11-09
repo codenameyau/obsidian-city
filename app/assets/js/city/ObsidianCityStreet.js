@@ -23,48 +23,49 @@ ObsidianCity.prototype.enableFloorGrid = function(lines, steps, gridColor) {
 };
 
 
-ObsidianCity.prototype.createRoadGrid = function() {
+ObsidianCity.prototype.layoutVerticalRoad = function() {
+  // Road dimensions
   var settings = this.settings.city;
   var cityWidth = settings.width;
-  var cityLength = settings.length;
-  var blockWidth = settings.blockWidth;
-  var blockLength = settings.blockLength;
   var roadWidth = settings.roadWidth;
-  var wInc = blockWidth  + roadWidth;
-  var lInc = blockLength + roadWidth;
-
-  // Define the city road boundaries
+  var incWidth = settings.blockWidth + roadWidth;
   var left = -Math.floor(cityWidth/2) - roadWidth;
   var right = -left + roadWidth;
-  var bottom = -Math.floor(cityLength/2);
-  var top = -bottom + blockLength;
 
-  // Create horizontal road grid
-  for (var w=left; w<right; w += wInc) {
-    this.layoutHorizontalRoad(w);
-  }
-
-  // Create vertical road grid
-  for (var l=bottom; l<top; l += lInc) {
-    this.layoutVerticalRoad(l);
-  }
-};
-
-
-ObsidianCity.prototype.layoutVerticalRoad = function(pos) {
-  var settings = this.settings.city;
-  var roadWidth = settings.roadWidth;
-  var cityWidth = settings.width;
+  // Road resources
   var geometry = this.geometry.plane;
   var material = this.material.road;
-  var mesh = new THREE.Mesh(geometry, material);
-  mesh.scale.set(roadWidth, cityWidth, 1);
-  mesh.rotation.x = this.utils.degToRad(-90);
-  mesh.position.x = pos;
-  this.add(mesh);
+
+  // Construct road
+  for (var pos=left; pos<right; pos += incWidth) {
+    var mesh = new THREE.Mesh(geometry, material);
+    mesh.rotation.x = this.utils.degToRad(-90);
+    mesh.scale.set(roadWidth, cityWidth, 1);
+    mesh.position.x = pos;
+    this.add(mesh);
+  }
 };
 
 
-ObsidianCity.prototype.layoutHorizontalRoad = function(pos) {
+ObsidianCity.prototype.layoutHorizontalRoad = function() {
+  // Road dimensions
+  var settings = this.settings.city;
+  var cityLength = settings.length;
+  var roadWidth = settings.roadWidth;
+  var incLength = settings.blockLength + roadWidth;
+  var bottom = -Math.floor(cityLength/2) - roadWidth;
+  var top = -bottom + roadWidth;
 
+  // Road resources
+  var geometry = this.geometry.plane;
+  var material = this.material.blue;
+
+  // Construct road
+  for (var pos=bottom; pos<top; pos += incLength) {
+    var mesh = new THREE.Mesh(geometry, material);
+    mesh.rotation.x = this.utils.degToRad(-90);
+    mesh.scale.set(cityLength, roadWidth, 1);
+    mesh.position.z = pos;
+    this.add(mesh);
+  }
 };

@@ -25,7 +25,7 @@ ObsidianCity.prototype.initializeSettings = function() {
     controls: {
       enabled: true,
       userPan: false,
-      userPanSpeed: 0.5,
+      userPanSpeed: 2,
       minDistance: 80.0,
       maxDistance: 800.0,
       maxPolarAngle: (Math.PI/180) * 85,
@@ -38,8 +38,8 @@ ObsidianCity.prototype.initializeSettings = function() {
     city: {
       width: 1000,
       length: 960,
-      blockWidth: 32,
-      blockLength: 16,
+      blockWidth: 64,
+      blockLength: 32,
       roadWidth: 4,
     },
   };

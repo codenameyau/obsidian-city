@@ -12,8 +12,7 @@
 
   // Create city road layout
   var city = new ObsidianCity();
-  city.enableFloorGrid(500, 100);
-  console.log(city);
+  // city.enableFloorGrid(500, 16, 0x44BB44);
 
   // Hemisphere lighting
   city.addAmbientLight(0x777777);
@@ -21,15 +20,16 @@
   city.addHemisphereLight(0x9999C9, 0x222222, 0.7);
 
   // Create road grid
-  city.createRoadGrid();
+  city.layoutVerticalRoad();
+  city.layoutHorizontalRoad();
 
   //  Construct buildings
   var build = ObsidianBuilding.prototype;
 
   // Generic building
   var buildingA = new ObsidianBuilding(build.genericBuilding,
-    {width: 16, length: 16, height: 50, stack: 2});
-  buildingA.move(-30, 0, -35);
+    {width: 16, length: 16, height: 60, stack: 2});
+  buildingA.move(-32, 0, -32);
   city.add(buildingA.mesh);
 
   // Office building
