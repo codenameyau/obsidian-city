@@ -113,24 +113,12 @@ ObsidianBuilding.prototype.genericBuilding = function() {
   var width = this.dimension.width;
   var height = this.dimension.height;
   var length = this.dimension.length;
-  var stacks = this.settings.stack || 1;
-  var stackHeight = Math.round(height / stacks);
   var black = this.material.black;
+  var material = this.generateWindows(width, length, height);
 
   // Create building stacks
   this.buildBase(black, 1);
-  for (var i=0; i<stacks; i++) {
-    // Add floor base
-    this.buildBase(black, 1);
-    width  -= 1;
-    length -= 1;
-
-    // Add building stack
-    var material = this.generateWindows(width, length, stackHeight);
-    this.buildStack(material, stackHeight);
-  }
-
-  // Add roof and decorations
+  this.buildStack(material, height);
   this.buildRoof(black);
 };
 
@@ -143,8 +131,24 @@ ObsidianBuilding.prototype.cylinderBuilding = function() {
   dim.length = baseSize;
   var material = this.generateCylinderWindows(windowSize, dim.height);
   var black = this.material.black;
-  var geometryType = this.settings.geometry || 'cylinder';
-  var geometry = this.geometry[geometryType];
+  var geometry = this.geometry.cylinder;
+
+  // Construct building
+  this.buildBase(black, 2);
+  this.buildCylinder(geometry, material, dim.radius, dim.height);
+  this.buildCylinder(geometry, black, dim.radius, 2);
+};
+
+
+ObsidianBuilding.prototype.hexagonBuilding = function() {
+  var dim = this.dimension;
+  var baseSize = dim.radius * 2;
+  var windowSize = baseSize * Math.PI;
+  dim.width = baseSize;
+  dim.length = baseSize;
+  var material = this.generateCylinderWindows(windowSize, dim.height);
+  var black = this.material.black;
+  var geometry = this.geometry.hexagon;
 
   // Construct building
   this.buildBase(black, 2);

@@ -12,7 +12,7 @@
 
   // Create city road layout
   var city = new ObsidianCity();
-  city.enableFloorGrid(350, 16, 0x999999);
+  city.enableFloorGrid(300, 16, 0x999999);
 
   // Hemisphere lighting
   city.addAmbientLight(0x777777);
@@ -27,61 +27,51 @@
   var build = ObsidianBuilding.prototype;
 
   // Building fps test
-  for (var i=0; i<200; i++) {
+  for (var i=0; i<150; i++) {
     var posX = city.utils.randomInteger(-250, 250);
     var posZ = city.utils.randomInteger(-250, 250);
     var wSize = 4 * city.utils.randomInteger(2, 8);
     var lSize = 4 * city.utils.randomInteger(2, 8);
     var hSize = 4 * city.utils.randomInteger(4, 20);
     var stacks = city.utils.randomInteger(1, 4);
-    var building = new ObsidianBuilding(build.stackedBuilding,
-      {width: wSize, length: lSize, height: hSize, stack: stacks});
+    var radius = city.utils.randomInteger(6, 12);
+    var buildingType = city.utils.randomInteger(0, 5);
+    var building;
+    var settings = {
+      width: wSize,
+      length: lSize,
+      height: hSize,
+      stack: stacks,
+      radius: radius
+    };
+
+    switch (buildingType) {
+      case 0: // Generic
+        building = new ObsidianBuilding(build.genericBuilding, settings);
+        break;
+
+      case 1: // Cylinder
+        building = new ObsidianBuilding(build.cylinderBuilding, settings);
+        break;
+
+      case 2: // Hexagon
+        building = new ObsidianBuilding(build.hexagonBuilding, settings);
+        break;
+
+      case 3: // Cross
+        building = new ObsidianBuilding(build.crossBuilding, settings);
+        break;
+
+      case 4: // Stacked
+        building = new ObsidianBuilding(build.stackedBuilding, settings);
+        break;
+    }
+
     building.move(posX, 0, posZ);
     city.add(building.mesh);
   }
 
-  // Generic building
-  // var buildingA = new ObsidianBuilding(build.genericBuilding,
-  //   {width: 64, length: 32, height: 60, stack: 2});
-  // buildingA.move(-240, 0, -240);
-  // city.add(buildingA.mesh);
-
-  // // Office building
-  // var buildingB = new ObsidianBuilding(build.cylinderBuilding,
-  //   {radius: 10, height: 50, geometry: 'cylinder'});
-  // buildingB.move(-200, 0, -240);
-  // city.add(buildingB.mesh);
-
-  // // Cross building
-  // var buildingC = new ObsidianBuilding(build.crossBuilding,
-  //   {width: 20, length: 20, height: 50});
-  // buildingC.move(30, 0, -35);
-  // city.add(buildingC.mesh);
-
-  // // Stacked building
-  // var buildingD = new ObsidianBuilding(build.stackedBuilding,
-  //   {width: 16, length: 16, height: 50, stack: 3});
-  // buildingD.move(-30, 0, 0);
-  // city.add(buildingD.mesh);
-
-  // // Alternating building
-  // var buildingE = new ObsidianBuilding(build.alternatingBuilding,
-  //   {width: 20, length: 12, height: 50, text: 'YAU INC'});
-  // buildingE.move(0, 0, 0);
-  // city.add(buildingE.mesh);
-
-  // // Hexagon building
-  // var buildingF = new ObsidianBuilding(build.cylinderBuilding,
-  //   {radius: 10, height: 50, geometry: 'hexagon'});
-  // buildingF.move(30, 0, 0);
-  // city.add(buildingF.mesh);
-
-  // // H-shaped building
-  // var buildingG = new ObsidianBuilding(build.hShapedBuilding,
-  //   {width: 45, length: 30, height: 25});
-  // buildingG.move(0, 0, 35);
-  // city.add(buildingG.mesh);
-
   // Run update loop
   city.updateScene();
+
 })();
