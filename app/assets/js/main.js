@@ -28,23 +28,28 @@
 
   // Building fps test
   for (var i=0; i<150; i++) {
-    var posX = city.utils.randomInteger(-250, 250);
-    var posZ = city.utils.randomInteger(-250, 250);
-    var wSize = 4 * city.utils.randomInteger(2, 8);
-    var lSize = 4 * city.utils.randomInteger(2, 8);
-    var hSize = 4 * city.utils.randomInteger(4, 20);
-    var stacks = city.utils.randomInteger(1, 4);
-    var radius = city.utils.randomInteger(6, 12);
+
+    // Position
+    var posX = city.utils.randomInteger(-280, 280);
+    var posZ = city.utils.randomInteger(-280, 280);
+
+    // Dimensions
+    var wSize = 4 * city.utils.randomInteger(4, 12);
+    var lSize = 4 * city.utils.randomInteger(4, 12);
+    var hSize = 4 * city.utils.randomInteger(8, 30);
+    var stacks = city.utils.randomInteger(2, 4);
+    var radius = city.utils.randomInteger(10, 12);
+    var settings = {
+          width: wSize,
+          length: lSize,
+          height: hSize,
+          stack: stacks,
+          radius: radius
+        };
+
+    // Select random building type
     var buildingType = city.utils.randomInteger(0, 5);
     var building;
-    var settings = {
-      width: wSize,
-      length: lSize,
-      height: hSize,
-      stack: stacks,
-      radius: radius
-    };
-
     switch (buildingType) {
       case 0: // Generic
         building = new ObsidianBuilding(build.genericBuilding, settings);
