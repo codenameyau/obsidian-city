@@ -58,7 +58,7 @@ ObsidianCity.prototype.layoutHorizontalRoad = function() {
 
   // Road resources
   var geometry = this.geometry.plane;
-  var material = this.material.blue;
+  var material = this.material.road;
 
   // Construct road
   for (var pos=bottom; pos<top; pos += incLength) {

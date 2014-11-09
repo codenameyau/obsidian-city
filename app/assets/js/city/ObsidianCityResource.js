@@ -24,8 +24,7 @@
     black: new THREE.MeshBasicMaterial({ color: 0x060606 }),
     gray:  new THREE.MeshBasicMaterial({ color: 0xCCCCCC }),
     tint:  new THREE.MeshBasicMaterial({ color: 0xCECEEF }),
-    blue:  new THREE.MeshBasicMaterial({ color: 0x4343DE }),
-    road:  new THREE.MeshBasicMaterial({ color: 0xAAAAAA }),
+    road:  new THREE.MeshBasicMaterial({ color: 0x888888 }),
   };
 
   // Update geometry matrix

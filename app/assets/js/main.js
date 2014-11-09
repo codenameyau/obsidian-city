@@ -12,7 +12,7 @@
 
   // Create city road layout
   var city = new ObsidianCity();
-  // city.enableFloorGrid(500, 16, 0x44BB44);
+  city.enableFloorGrid(350, 16, 0x999999);
 
   // Hemisphere lighting
   city.addAmbientLight(0x777777);
@@ -20,22 +20,36 @@
   city.addHemisphereLight(0x9999C9, 0x222222, 0.7);
 
   // Create road grid
-  city.layoutVerticalRoad();
-  city.layoutHorizontalRoad();
+  // city.layoutVerticalRoad();
+  // city.layoutHorizontalRoad();
 
   //  Construct buildings
   var build = ObsidianBuilding.prototype;
 
-  // Generic building
-  var buildingA = new ObsidianBuilding(build.genericBuilding,
-    {width: 16, length: 16, height: 60, stack: 2});
-  buildingA.move(-32, 0, -32);
-  city.add(buildingA.mesh);
+  // Building fps test
+  for (var i=0; i<200; i++) {
+    var posX = city.utils.randomInteger(-250, 250);
+    var posZ = city.utils.randomInteger(-250, 250);
+    var wSize = 4 * city.utils.randomInteger(2, 8);
+    var lSize = 4 * city.utils.randomInteger(2, 8);
+    var hSize = 4 * city.utils.randomInteger(4, 20);
+    var stacks = city.utils.randomInteger(1, 4);
+    var building = new ObsidianBuilding(build.stackedBuilding,
+      {width: wSize, length: lSize, height: hSize, stack: stacks});
+    building.move(posX, 0, posZ);
+    city.add(building.mesh);
+  }
 
-  // Office building
+  // Generic building
+  // var buildingA = new ObsidianBuilding(build.genericBuilding,
+  //   {width: 64, length: 32, height: 60, stack: 2});
+  // buildingA.move(-240, 0, -240);
+  // city.add(buildingA.mesh);
+
+  // // Office building
   // var buildingB = new ObsidianBuilding(build.cylinderBuilding,
   //   {radius: 10, height: 50, geometry: 'cylinder'});
-  // buildingB.move(0, 0, -35);
+  // buildingB.move(-200, 0, -240);
   // city.add(buildingB.mesh);
 
   // // Cross building
