@@ -26,29 +26,8 @@
   //  Construct buildings
   var build = ObsidianBuilding.prototype;
 
-  // Building fps test
-  for (var i=0; i<150; i++) {
-
-    // Position
-    var posX = city.utils.randomInteger(-280, 280);
-    var posZ = city.utils.randomInteger(-280, 280);
-
-    // Dimensions
-    var wSize = 4 * city.utils.randomInteger(4, 12);
-    var lSize = 4 * city.utils.randomInteger(4, 12);
-    var hSize = 4 * city.utils.randomInteger(8, 30);
-    var stacks = city.utils.randomInteger(2, 4);
-    var radius = city.utils.randomInteger(10, 12);
-    var settings = {
-          width: wSize,
-          length: lSize,
-          height: hSize,
-          stack: stacks,
-          radius: radius
-        };
-
-    // Select random building type
-    var buildingType = city.utils.randomInteger(0, 5);
+  // Select building type for random generation
+  var selectBuilding = function(buildingType, settings) {
     var building;
     switch (buildingType) {
       case 0: // Generic
@@ -71,7 +50,32 @@
         building = new ObsidianBuilding(build.stackedBuilding, settings);
         break;
     }
+    return building;
+  };
 
+  // Building fps test
+  for (var i=0; i<100; i++) {
+
+    // Position
+    var posX = city.utils.randomInteger(-280, 280);
+    var posZ = city.utils.randomInteger(-280, 280);
+
+    // Dimensions
+    var wSize = 4 * city.utils.randomInteger(4, 12);
+    var lSize = 4 * city.utils.randomInteger(4, 12);
+    var hSize = 4 * city.utils.randomInteger(8, 20);
+    var stacks = city.utils.randomInteger(2, 4);
+    var radius = city.utils.randomInteger(10, 12);
+    var settings = {
+          width: wSize,
+          length: lSize,
+          height: hSize,
+          stack: stacks,
+          radius: radius
+        };
+
+    // Select random building type
+    var building = selectBuilding(city.utils.randomInteger(0, 5), settings);
     building.move(posX, 0, posZ);
     city.add(building.mesh);
   }
