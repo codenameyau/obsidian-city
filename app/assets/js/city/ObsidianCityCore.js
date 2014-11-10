@@ -16,10 +16,10 @@ ObsidianCity.prototype.initializeSettings = function() {
     camera: {
       fov: 40,
       near: 0.5,
-      far: 3000,
+      far: 2000,
       zoomX: 200,
-      zoomY: 200,
-      zoomZ: 100,
+      zoomY: 100,
+      zoomZ: 200,
     },
 
     controls: {
@@ -27,7 +27,7 @@ ObsidianCity.prototype.initializeSettings = function() {
       userPan: false,
       userPanSpeed: 2,
       minDistance: 80.0,
-      maxDistance: 1200.0,
+      maxDistance: 300.0,
       maxPolarAngle: (Math.PI/180) * 85,
     },
 
@@ -36,10 +36,10 @@ ObsidianCity.prototype.initializeSettings = function() {
     },
 
     city: {
-      width: 128,
-      length: 128,
-      blockWidth: 25,
-      blockLength: 25,
+      width: 220,
+      length: 220,
+      blockWidth: 24,
+      blockLength: 24,
       roadWidth: 4,
     },
   };

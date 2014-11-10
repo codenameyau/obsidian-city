@@ -58,8 +58,8 @@
         building = new ObsidianBuilding(build.cylinderBuilding, settings);
         break;
 
-      case 4: // unused
-        building = new ObsidianBuilding(build.hexagonBuilding, settings);
+      case 4:
+        building = new ObsidianBuilding(build.hShapedBuilding, settings);
         break;
 
     }
@@ -67,9 +67,10 @@
   };
 
   var constructBuildings = function(l, w) {
+    // [TODO] Better height-position modifier
     var hMod = Math.floor(0.02 * (Math.abs(l) + Math.abs(w)));
-    var wSize = 4 * city.utils.randomInteger(4, 6);
-    var lSize = 4 * city.utils.randomInteger(4, 6);
+    var wSize = 4 * city.utils.randomInteger(4, 8);
+    var lSize = 4 * city.utils.randomInteger(4, 8);
     var hSize = 4 * (city.utils.randomInteger(8, 14) - hMod);
     var stacks = city.utils.randomInteger(0, 3);
     var radius = city.utils.randomInteger(8, 12);
@@ -79,13 +80,13 @@
           height: hSize,
           stack: stacks,
           radius: radius,
-          text: 'Hello'
+          // text: 'Hello'
         };
 
     // Select random building type
-    var buildingType = city.utils.randomInteger(0, 4);
+    var buildingType = city.utils.randomInteger(0, 5);
     var building = selectBuilding(buildingType, settings);
-    building.mesh.rotation.y += city.utils.randomInteger(-6, 6); // 0 to 360 deg
+    // building.mesh.rotation.y += city.utils.randomInteger(-6, 6);
     building.move(l, 0, w);
     city.add(building.mesh);
   };

@@ -140,23 +140,6 @@ ObsidianBuilding.prototype.cylinderBuilding = function() {
 };
 
 
-ObsidianBuilding.prototype.hexagonBuilding = function() {
-  var dim = this.dimension;
-  var baseSize = dim.radius * 2;
-  var windowSize = baseSize * Math.PI;
-  dim.width = baseSize;
-  dim.length = baseSize;
-  var material = this.generateCylinderWindows(windowSize, dim.height);
-  var black = this.material.black;
-  var geometry = this.geometry.hexagon;
-
-  // Construct building
-  this.buildBase(black, 2);
-  this.buildCylinder(geometry, material, dim.radius, dim.height);
-  this.buildCylinder(geometry, black, dim.radius, 2);
-};
-
-
 ObsidianBuilding.prototype.crossBuilding = function() {
   var width = this.dimension.width;
   var length = this.dimension.length;
