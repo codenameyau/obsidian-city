@@ -66,11 +66,12 @@
   };
 
   var constructBuildings = function(l, w) {
-    var wSize = 4 * city.utils.randomInteger(4, 8);
-    var lSize = 4 * city.utils.randomInteger(4, 8);
-    var hSize = 4 * city.utils.randomInteger(8, 20);
-    var stacks = city.utils.randomInteger(2, 4);
-    var radius = city.utils.randomInteger(10, 12);
+    var hMod = Math.floor(0.02 * (Math.abs(l) + Math.abs(w)));
+    var wSize = 4 * city.utils.randomInteger(4, 6);
+    var lSize = 4 * city.utils.randomInteger(4, 6);
+    var hSize = 4 * (city.utils.randomInteger(12, 18) - hMod);
+    var stacks = city.utils.randomInteger(0, 3);
+    var radius = city.utils.randomInteger(8, 12);
     var settings = {
           width: wSize,
           length: lSize,

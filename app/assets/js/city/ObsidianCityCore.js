@@ -38,8 +38,8 @@ ObsidianCity.prototype.initializeSettings = function() {
     city: {
       width: 256,
       length: 256,
-      blockWidth: 64,
-      blockLength: 32,
+      blockWidth: 24,
+      blockLength: 24,
       roadWidth: 4,
     },
   };
