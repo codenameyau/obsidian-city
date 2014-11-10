@@ -58,6 +58,11 @@ var utilities = {
     return 'rgb(' + [value, value, value].join(',') + ')';
   },
 
+  // Returns rgb string
+  getRGB: function(r, g, b) {
+    return 'rgb(' + [r, g, b].join(',') + ')';
+  },
+
 };
 
 // Bind utilities inheritance

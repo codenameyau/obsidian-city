@@ -10,9 +10,11 @@
  ****************/
 (function() {
 
-  // Create city road layout
+  /***************
+   * Define City *
+   ***************/
   var city = new ObsidianCity();
-  city.enableFloorGrid(300, 16, 0x999999);
+  city.enableFloorGrid(256, 16, 0x999999);
 
   // Hemisphere lighting
   city.addAmbientLight(0x777777);
@@ -25,44 +27,47 @@
 
   //  Construct buildings
   var build = ObsidianBuilding.prototype;
+  var cs = city.settings.city;
+  var top = -cs.length;
+  var bottom = cs.length;
+  var left = -cs.width;
+  var right = cs.width;
+  var roadWidth = cs.roadWidth;
+  var blockWidth = cs.blockWidth;
+  var blockLength = cs.blockLength;
 
-  // Select building type for random generation
+  /********************
+   * Helper Functions *
+   ********************/
   var selectBuilding = function(buildingType, settings) {
     var building;
     switch (buildingType) {
-      case 0: // Generic
+      case 0:
         building = new ObsidianBuilding(build.genericBuilding, settings);
         break;
 
-      case 1: // Cylinder
+      case 1:
         building = new ObsidianBuilding(build.cylinderBuilding, settings);
         break;
 
-      case 2: // Hexagon
+      case 2:
         building = new ObsidianBuilding(build.hexagonBuilding, settings);
         break;
 
-      case 3: // Cross
+      case 3:
         building = new ObsidianBuilding(build.crossBuilding, settings);
         break;
 
-      case 4: // Stacked
+      case 4:
         building = new ObsidianBuilding(build.stackedBuilding, settings);
         break;
     }
     return building;
   };
 
-  // Building fps test
-  for (var i=0; i<100; i++) {
-
-    // Position
-    var posX = city.utils.randomInteger(-280, 280);
-    var posZ = city.utils.randomInteger(-280, 280);
-
-    // Dimensions
-    var wSize = 4 * city.utils.randomInteger(4, 12);
-    var lSize = 4 * city.utils.randomInteger(4, 12);
+  var constructBuildings = function(l, w) {
+    var wSize = 4 * city.utils.randomInteger(4, 8);
+    var lSize = 4 * city.utils.randomInteger(4, 8);
     var hSize = 4 * city.utils.randomInteger(8, 20);
     var stacks = city.utils.randomInteger(2, 4);
     var radius = city.utils.randomInteger(10, 12);
@@ -76,9 +81,22 @@
 
     // Select random building type
     var building = selectBuilding(city.utils.randomInteger(0, 5), settings);
-    building.move(posX, 0, posZ);
+    building.move(l, 0, w);
     city.add(building.mesh);
+  };
+
+
+  /*****************
+   * Generate City *
+   *****************/
+  for (var l=top; l<bottom; l += blockLength) {
+    for (var w=left; w<right; w += blockWidth) {
+      constructBuildings(l, w);
+      w += roadWidth;
+    }
+    l += roadWidth;
   }
+
 
   // Run update loop
   city.updateScene();
