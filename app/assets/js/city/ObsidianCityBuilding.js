@@ -103,6 +103,21 @@ ObsidianBuilding.prototype.buildRoof = function(material) {
     this.mesh.add(textMesh);
   }
   this.buildBase(material, 2);
+  this.buildDecoration(0, 0);
+};
+
+
+ObsidianBuilding.prototype.buildDecoration = function(x, z) {
+  var height = 2;
+  var dim = this.dimension;
+  var width = Math.floor(dim.width / 3);
+  var length = Math.floor(dim.length / 3);
+  var geometry = this.geometry.building;
+  var material = this.material.black;
+  var mesh = new THREE.Mesh(geometry, material);
+  mesh.scale.set(width, height, length);
+  mesh.position.set(x, dim.current, z);
+  this.mesh.add(mesh);
 };
 
 
@@ -120,6 +135,7 @@ ObsidianBuilding.prototype.genericBuilding = function() {
   this.buildBase(black, 1);
   this.buildStack(material, height);
   this.buildRoof(black);
+  this.buildDecoration(0, 0);
 };
 
 
