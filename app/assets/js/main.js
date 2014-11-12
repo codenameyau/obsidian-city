@@ -63,13 +63,12 @@
         break;
 
       case 3:
-        building = new ObsidianBuilding(build.cylinderBuilding, settings);
-        break;
-
-      case 4:
         building = new ObsidianBuilding(build.hShapedBuilding, settings);
         break;
 
+      case 4: // Unused
+        building = new ObsidianBuilding(build.cylinderBuilding, settings);
+        break;
     }
     return building;
   };
@@ -88,13 +87,14 @@
         height: hSize,
         stack: stacks,
         radius: radius,
-        // text: 'Hello',
+        text: 'Hello',
       };
 
     // Select random building type
-    var buildingType = city.utils.randomInteger(0, 5);
+    var buildingType = city.utils.randomInteger(0, 4);
     var building = selectBuilding(buildingType, settings);
-    // building.mesh.rotation.y += city.utils.randomInteger(-6, 6);
+    var rotationAngle = city.utils.randomInteger(0, 4) * 90;
+    building.rotate(rotationAngle);
     building.move(l, 0, w);
     city.add(building.mesh);
   };

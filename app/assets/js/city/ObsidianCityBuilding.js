@@ -35,6 +35,10 @@ ObsidianBuilding.prototype.move = function(x, y, z) {
 };
 
 
+ObsidianBuilding.prototype.rotate = function(deg) {
+  this.mesh.rotation.y = this.utils.degToRad(deg);
+};
+
 /*******************************
  * ObsidianBuilding Foundation *
  *******************************/
