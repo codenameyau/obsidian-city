@@ -11,8 +11,8 @@
    * City Settings *
    *****************/
   var settings = {
-    width: 220,
-    length: 220,
+    width: 150,
+    length: 150,
     blockWidth: 24,
     blockLength: 24,
     roadWidth: 4,
@@ -76,10 +76,10 @@
 
   var constructBuildings = function(l, w) {
     // [TODO] Better height-position modifier
-    var hMod = Math.floor(0.02 * (Math.abs(l) + Math.abs(w)));
+    var hMod = Math.floor(0.025 * Math.max(Math.abs(l), Math.abs(w)));
     var wSize = 4 * city.utils.randomInteger(4, 8);
     var lSize = 4 * city.utils.randomInteger(4, 8);
-    var hSize = 4 * (city.utils.randomInteger(8, 14) - hMod);
+    var hSize = 4 * (city.utils.randomInteger(10, 14) - hMod);
     var stacks = city.utils.randomInteger(0, 3);
     var radius = city.utils.randomInteger(8, 12);
     var settings = {

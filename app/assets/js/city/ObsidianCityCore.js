@@ -27,7 +27,7 @@ ObsidianCity.prototype.initializeSettings = function() {
       userPan: false,
       userPanSpeed: 2,
       minDistance: 80.0,
-      maxDistance: 300.0,
+      maxDistance: 600.0,
       maxPolarAngle: (Math.PI/180) * 85,
     },
 
