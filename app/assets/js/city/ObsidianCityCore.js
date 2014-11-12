@@ -34,14 +34,6 @@ ObsidianCity.prototype.initializeSettings = function() {
     renderer: {
       antialias: false,
     },
-
-    city: {
-      width: 220,
-      length: 220,
-      blockWidth: 24,
-      blockLength: 24,
-      roadWidth: 4,
-    },
   };
 };
 

@@ -5,15 +5,23 @@
 'use strict';
 
 
-/****************
- * Main Program *
- ****************/
 (function() {
+
+  /*****************
+   * City Settings *
+   *****************/
+  var settings = {
+    width: 220,
+    length: 220,
+    blockWidth: 24,
+    blockLength: 24,
+    roadWidth: 4,
+  };
 
   /***************
    * Define City *
    ***************/
-  var city = new ObsidianCity();
+  var city = new ObsidianCity(settings);
   city.enableFloorGrid(256, 16, 0x999999);
 
   // Hemisphere lighting
@@ -106,5 +114,4 @@
 
   // Run update loop
   city.updateScene();
-
 })();
