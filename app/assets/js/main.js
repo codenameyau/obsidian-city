@@ -15,8 +15,76 @@
     length: 100,
     blockWidth: 24,
     blockLength: 24,
-    roadWidth: 4,
+    roadWidth: 5,
   };
+
+  /******************
+   * Building Names *
+   ******************/
+  var prefix = [
+    'i', 
+    'Green', 
+    'Mega',
+    'Super',
+    'Omni',
+    'e',
+    'Hyper',
+    'Global', 
+    'Vital', 
+    'Next', 
+    'Pacific', 
+    'Metro',
+    'Unity', 
+    'G-',
+    'Trans',
+    'Infinity',  
+    'Superior', 
+    'Monolith', 
+    'Best', 
+    'Atlantic', 
+    'First', 
+    'Union', 
+    'National', 
+  ];
+
+  var business = [
+    'Biotic',
+    'Info',
+    'Data',
+    'Solar',
+    'Aerospace',
+    'Motors',
+    'Nano',
+    'Online',
+    'Circuits',
+    'Energy',
+    'Med',
+    'Robotic',
+    'Exports',
+    'Security',
+    'Systems',
+    'Financial',
+    'Industrial',
+    'Media',
+    'Materials',
+    'Foods',
+    'Networks',
+    'Shipping',
+    'Tools',
+    'Medical',
+    'Publishing',
+    'Enterprises',
+    'Audio',
+    'Health',
+    'Bank',
+    'Imports',
+    'Apparel',
+    'Petroleum', 
+    'Studios',
+    'Labs',
+    'Unlimited',
+    'Tech',
+  ];
 
   /***************
    * Define City *
@@ -67,10 +135,20 @@
         break;
 
       case 4: // Unused
+        building = new ObsidianBuilding(build.alternatingBuilding, settings);
+        break;
+
+      case 5: // Unused
         building = new ObsidianBuilding(build.cylinderBuilding, settings);
         break;
     }
     return building;
+  };
+
+  var generateBusinessName = function() {
+    var pValue = city.utils.randomInteger(0, prefix.length);
+    var bValue = city.utils.randomInteger(0, business.length);
+    return prefix[pValue] + business[bValue];
   };
 
   var constructBuildings = function(l, w) {
@@ -87,7 +165,7 @@
         height: hSize,
         stack: stacks,
         radius: radius,
-        text: 'Hello',
+        text: generateBusinessName(),
       };
 
     // Select random building type
