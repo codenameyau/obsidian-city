@@ -11,8 +11,8 @@
    * City Settings *
    *****************/
   var settings = {
-    width: 100,
-    length: 100,
+    width: 180,
+    length: 180,
     blockWidth: 24,
     blockLength: 24,
     roadWidth: 5,
@@ -22,29 +22,30 @@
    * Building Names *
    ******************/
   var prefix = [
-    'i', 
-    'Green', 
+    'i',
+    'Green',
     'Mega',
     'Super',
     'Omni',
     'e',
     'Hyper',
-    'Global', 
-    'Vital', 
-    'Next', 
-    'Pacific', 
+    'Global',
+    'Vital',
+    'Next',
+    'Pacific',
     'Metro',
-    'Unity', 
+    'Unity',
     'G-',
     'Trans',
-    'Infinity',  
-    'Superior', 
-    'Monolith', 
-    'Best', 
-    'Atlantic', 
-    'First', 
-    'Union', 
-    'National', 
+    'Infinity',
+    'Superior',
+    'Monolith',
+    'Best',
+    'Atlantic',
+    'First',
+    'Union',
+    'National',
+    'Vision',
   ];
 
   var business = [
@@ -59,7 +60,7 @@
     'Circuits',
     'Energy',
     'Med',
-    'Robotic',
+    'Robotics',
     'Exports',
     'Security',
     'Systems',
@@ -79,7 +80,7 @@
     'Bank',
     'Imports',
     'Apparel',
-    'Petroleum', 
+    'Petroleum',
     'Studios',
     'Labs',
     'Unlimited',
@@ -135,10 +136,6 @@
         break;
 
       case 4: // Unused
-        building = new ObsidianBuilding(build.alternatingBuilding, settings);
-        break;
-
-      case 5: // Unused
         building = new ObsidianBuilding(build.cylinderBuilding, settings);
         break;
     }
@@ -151,9 +148,8 @@
     return prefix[pValue] + business[bValue];
   };
 
-  var constructBuildings = function(l, w) {
-    // [TODO] Better height-position modifier
-    var hMod = Math.floor(0.03 * Math.max(Math.abs(l), Math.abs(w)));
+  var constructBuildings = function(x, z) {
+    var hMod = Math.floor(0.03 * Math.max(Math.abs(x), Math.abs(z)));
     var wSize = 4 * city.utils.randomInteger(4, 8);
     var lSize = 4 * city.utils.randomInteger(4, 8);
     var hSize = 4 * (city.utils.randomInteger(9, 16) - hMod);
@@ -173,7 +169,7 @@
     var building = selectBuilding(buildingType, settings);
     var rotationAngle = city.utils.randomInteger(0, 4) * 90;
     building.rotate(rotationAngle);
-    building.move(l, 0, w);
+    building.move(x, 0, z);
     city.add(building.mesh);
   };
 
@@ -189,7 +185,7 @@
     l += roadWidth;
   }
 
-
   // Run update loop
   city.updateScene();
+
 })();

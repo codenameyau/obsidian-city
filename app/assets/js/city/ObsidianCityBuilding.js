@@ -207,23 +207,6 @@ ObsidianBuilding.prototype.stackedBuilding = function() {
 };
 
 
-ObsidianBuilding.prototype.alternatingBuilding = function() {
-  var width = this.dimension.width;
-  var length = this.dimension.length;
-  var height = this.dimension.height;
-  var stackHeight = 10;
-  var stacks = Math.floor(height / stackHeight);
-  var blackMaterial = this.material.black;
-  this.buildBase(blackMaterial, 1);
-  for (var i=0; i<stacks; i++) {
-    var windowMateral = this.generateWindows(width, length, stackHeight);
-    this.buildBase(blackMaterial, 1);
-    this.buildStack(windowMateral, stackHeight, 0.92);
-  }
-  this.buildRoof(blackMaterial);
-};
-
-
 ObsidianBuilding.prototype.hShapedBuilding = function() {
   var dim = this.dimension;
   var sliceHeight = 10;
