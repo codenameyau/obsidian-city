@@ -142,17 +142,27 @@
     return building;
   };
 
-  var generateBusinessName = function() {
-    var pValue = city.utils.randomInteger(0, prefix.length);
-    var bValue = city.utils.randomInteger(0, business.length);
-    return prefix[pValue] + business[bValue];
+  var generateBusinessName = function(width, length) {
+    var businessName = '';
+    if (width > 25 || length > 25) {
+      var pValue = city.utils.randomInteger(0, prefix.length);
+      var bValue = city.utils.randomInteger(0, business.length);
+      businessName = prefix[pValue] + business[bValue];
+    }
+    return businessName;
+  };
+
+  var computerHeight = function(x, z) {
+    var hMod = Math.floor(0.03 * Math.max(Math.abs(x), Math.abs(z)));
+    var hSize = 4 * (city.utils.randomInteger(8, 22 - hMod) - hMod);
+    hSize = (hSize < 25) ? 25 : hSize;
+    return hSize;
   };
 
   var constructBuildings = function(x, z) {
-    var hMod = Math.floor(0.03 * Math.max(Math.abs(x), Math.abs(z)));
     var wSize = 4 * city.utils.randomInteger(4, 8);
     var lSize = 4 * city.utils.randomInteger(4, 8);
-    var hSize = 4 * (city.utils.randomInteger(9, 16) - hMod);
+    var hSize = computerHeight(x, z);
     var stacks = city.utils.randomInteger(0, 3);
     var radius = city.utils.randomInteger(8, 12);
     var settings = {
@@ -161,7 +171,7 @@
         height: hSize,
         stack: stacks,
         radius: radius,
-        text: generateBusinessName(),
+        text: generateBusinessName(wSize, lSize),
       };
 
     // Select random building type
