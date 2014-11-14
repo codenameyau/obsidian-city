@@ -105,18 +105,29 @@ ObsidianCity.prototype.enableSkybox = function() {
   // Set skybox resolution
   var width  = 1024;
   var height = 768;
-  var texture = this.drawSkyboxGradient(width, height, '#996622', '#111111');
+  var size = width / 4;
+  var texture = this.drawSkyboxGradient(width, height, '#992222', '#111111');
+
+  // Gets specfic cube side
+  var getSide = function (x, y) {
+    var canvas = document.createElement('canvas');
+    var context = canvas.getContext('2d');
+    canvas.width = size;
+    canvas.height = size;
+    context.drawImage(texture, -x*size, -y*size);
+    return canvas;
+  };
 
   // Map skybox to canvas image
   var cubeMap = new THREE.Texture([]);
   cubeMap.format = THREE.RGBFormat;
   cubeMap.flipY = false;
-  cubeMap.image[0] = texture;
-  cubeMap.image[1] = texture;
-  cubeMap.image[2] = texture;
-  cubeMap.image[3] = texture;
-  cubeMap.image[4] = texture;
-  cubeMap.image[5] = texture;
+  cubeMap.image[0] = getSide(2, 1); // px
+  cubeMap.image[1] = getSide(0, 1); // nx
+  cubeMap.image[2] = getSide(1, 0); // py
+  cubeMap.image[3] = getSide(1, 2); // ny
+  cubeMap.image[4] = getSide(1, 1); // pz
+  cubeMap.image[5] = getSide(3, 1); // nz
   cubeMap.needsUpdate = true;
 
   // Apply shader to cubeMap
@@ -131,7 +142,7 @@ ObsidianCity.prototype.enableSkybox = function() {
   });
 
   // Create and add skybox
-  var geometry = new THREE.BoxGeometry(3000, 3000, 3000);
+  var geometry = new THREE.BoxGeometry(2000, 2000, 2000);
   var skybox = new THREE.Mesh(geometry, skyboxMaterial);
   this.add(skybox);
 };
