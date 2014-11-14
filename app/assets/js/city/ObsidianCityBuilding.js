@@ -39,12 +39,13 @@ ObsidianBuilding.prototype.rotate = function(deg) {
   this.mesh.rotation.y = this.utils.degToRad(deg);
 };
 
+
 /*******************************
  * ObsidianBuilding Foundation *
  *******************************/
 ObsidianBuilding.prototype.updateHeight = function(value) {
   this.dimension.current += value;
-}
+};
 
 
 ObsidianBuilding.prototype.buildBase = function(material, height) {
@@ -102,7 +103,7 @@ ObsidianBuilding.prototype.buildRoof = function(material) {
     var textMesh = new THREE.Mesh(textGeometry, textMaterial);
     var posX = Math.ceil(-text.length/2);
     var posZ = dim.length / 2;
-    textMesh.scale.set(0.6, 0.5, 0.2);
+    textMesh.scale.set(0.6, 0.6, 0.2);
     textMesh.position.set(posX, dim.current, posZ);
     this.mesh.add(textMesh);
   }
@@ -112,8 +113,8 @@ ObsidianBuilding.prototype.buildRoof = function(material) {
 
 
 ObsidianBuilding.prototype.buildDecoration = function(x, z) {
-  var height = 2;
   var dim = this.dimension;
+  var height = this.utils.randomInteger(2, 4);
   var width = Math.floor(dim.width / 3);
   var length = Math.floor(dim.length / 3);
   var geometry = this.geometry.building;
@@ -182,7 +183,7 @@ ObsidianBuilding.prototype.crossBuilding = function() {
 
 ObsidianBuilding.prototype.stackedBuilding = function() {
   var stacks = this.settings.stack || 2;
-  var stackHeight = 2 * stacks;
+  var stackHeight = 3 * stacks;
   var dim = this.dimension;
   var width = dim.width;
   var height = dim.height - stackHeight * stacks;
@@ -196,8 +197,8 @@ ObsidianBuilding.prototype.stackedBuilding = function() {
 
   // Create building stacks
   for (var i=0; i<stacks; i++) {
-    dim.width -= 2;
-    dim.length -= 2;
+    dim.width -= 4;
+    dim.length -= 4;
     this.buildBase(black, 1);
     var stackWindow = this.generateWindows(dim.width, dim.length, stackHeight);
     this.buildStack(stackWindow, stackHeight);

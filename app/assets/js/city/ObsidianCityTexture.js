@@ -89,6 +89,7 @@ ObsidianBuilding.prototype.generateCylinderWindows = function(radius, height) {
 /*******************************
  * ObsidianCity Skybox Texture *
  *******************************/
+ObsidianCity.prototype.textureCanvas = ObsidianBuilding.prototype.textureCanvas;
 ObsidianCity.prototype.drawSkyboxGradient = function(topColor, bottomColor) {
   var width  = 1024;
   var height = 768;
@@ -97,6 +98,11 @@ ObsidianCity.prototype.drawSkyboxGradient = function(topColor, bottomColor) {
   gradient.addColorStop(0, topColor);
   gradient.addColorStop(1, bottomColor);
   ctx.fillStyle = gradient;
-  ctx.fillRect(0, 0, width, height);
+  ctx.fill();
   return ctx.canvas;
+};
+
+
+ObsidianCity.prototype.generateSkybox = function() {
+
 };
