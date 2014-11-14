@@ -1,6 +1,8 @@
-/*-------JSHint Directives--------*/
-/* global ObsidianBuilding, THREE */
-/*--------------------------------*/
+/*-------JSHint Directives-------*/
+/* global ObsidianCity           */
+/* global ObsidianBuilding       */
+/* global THREE                  */
+/*-------------------------------*/
 'use strict';
 
 
@@ -21,11 +23,11 @@ ObsidianBuilding.prototype.textureCanvas = function(width, height, bgcolor) {
 };
 
 
-ObsidianBuilding.prototype.createTexture = function(canvas) {
+ObsidianBuilding.prototype.createTexture = function(canvas, width, height) {
   // Create hi-res canvas (change resolution)
   var hiResCanvas = document.createElement('canvas');
-  hiResCanvas.width  = 256;
-  hiResCanvas.height = 256;
+  hiResCanvas.width  = width  || 256;
+  hiResCanvas.height = height || 256;
 
   // Draw in old canvas to new canvas
   var ctx = hiResCanvas.getContext('2d');
@@ -55,7 +57,7 @@ ObsidianBuilding.prototype.drawWindows = function(width, height) {
   // Draw windows texture on new canvas
   var ctx = this.textureCanvas(windows, height);
   for (var h=padding; h<height; h += 2) {
-    var lightsColor = this.utils.randomInteger(20, 150);
+    var lightsColor = this.utils.randomInteger(10, 160);
     for (var w=padding; w<windows; w += 2.5) {
       var windowColor = this.utils.getGrayscale(
         this.utils.randomNormal(lightsColor, 100));
@@ -81,4 +83,20 @@ ObsidianBuilding.prototype.generateCylinderWindows = function(radius, height) {
   var texture = this.createTexture(this.drawWindows(radius, height));
   var windowsMap = [texture, texture, black, black, texture, texture];
   return new THREE.MeshFaceMaterial(windowsMap);
+};
+
+
+/*******************************
+ * ObsidianCity Skybox Texture *
+ *******************************/
+ObsidianCity.prototype.drawSkyboxGradient = function(topColor, bottomColor) {
+  var width  = 1024;
+  var height = 768;
+  var ctx = this.textureCanvas(width, height, topColor);
+  var gradient = ctx.createLinearGradient(0, 0, 0, height);
+  gradient.addColorStop(0, topColor);
+  gradient.addColorStop(1, bottomColor);
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, width, height);
+  return ctx.canvas;
 };
