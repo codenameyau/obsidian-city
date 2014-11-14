@@ -90,9 +90,7 @@ ObsidianBuilding.prototype.generateCylinderWindows = function(radius, height) {
  * ObsidianCity Skybox Texture *
  *******************************/
 ObsidianCity.prototype.textureCanvas = ObsidianBuilding.prototype.textureCanvas;
-ObsidianCity.prototype.drawSkyboxGradient = function(topColor, bottomColor) {
-  var width  = 1024;
-  var height = 768;
+ObsidianCity.prototype.drawSkyboxGradient = function(width, height, topColor, bottomColor) {
   var ctx = this.textureCanvas(width, height, topColor);
   var gradient = ctx.createLinearGradient(0, 0, 0, height);
   gradient.addColorStop(0, topColor);
@@ -103,6 +101,37 @@ ObsidianCity.prototype.drawSkyboxGradient = function(topColor, bottomColor) {
 };
 
 
-ObsidianCity.prototype.generateSkybox = function() {
+ObsidianCity.prototype.enableSkybox = function() {
+  // Set skybox resolution
+  var width  = 1024;
+  var height = 768;
+  var texture = this.drawSkyboxGradient(width, height, '#996622', '#111111');
 
+  // Map skybox to canvas image
+  var cubeMap = new THREE.Texture([]);
+  cubeMap.format = THREE.RGBFormat;
+  cubeMap.flipY = false;
+  cubeMap.image[0] = texture;
+  cubeMap.image[1] = texture;
+  cubeMap.image[2] = texture;
+  cubeMap.image[3] = texture;
+  cubeMap.image[4] = texture;
+  cubeMap.image[5] = texture;
+  cubeMap.needsUpdate = true;
+
+  // Apply shader to cubeMap
+  var cubeShader = THREE.ShaderLib.cube;
+  cubeShader.uniforms.tCube.value = cubeMap;
+  var skyboxMaterial = new THREE.ShaderMaterial( {
+    fragmentShader: cubeShader.fragmentShader,
+    vertexShader: cubeShader.vertexShader,
+    uniforms: cubeShader.uniforms,
+    depthWrite: false,
+    side: THREE.BackSide
+  });
+
+  // Create and add skybox
+  var geometry = new THREE.BoxGeometry(3000, 3000, 3000);
+  var skybox = new THREE.Mesh(geometry, skyboxMaterial);
+  this.add(skybox);
 };
