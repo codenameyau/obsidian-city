@@ -106,7 +106,7 @@ ObsidianCity.prototype.enableSkybox = function() {
   var width  = 1024;
   var height = 768;
   var size = width / 4;
-  var texture = this.drawSkyboxGradient(width, height, '#000000', '#02040A');
+  var texture = this.drawSkyboxGradient(width, height, '#880000', '#02040A');
 
   // Gets specfic cube side
   var getSide = function (x, y) {

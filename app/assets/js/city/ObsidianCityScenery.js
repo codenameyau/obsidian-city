@@ -12,11 +12,13 @@ ObsidianCity.prototype.addAmbientLight = function(color) {
   this.add(light);
 };
 
+
 ObsidianCity.prototype.addDirectionalLight = function(color, x, y, z) {
   var light = new THREE.DirectionalLight(color);
   light.position.set(x, y, z);
   this.add(light);
 };
+
 
 ObsidianCity.prototype.addHemisphereLight = function(skyColor, groundColor, intensity) {
   var light = new THREE.HemisphereLight(skyColor, groundColor, intensity);
@@ -39,5 +41,16 @@ ObsidianCity.prototype.enableFloorGrid = function(lines, steps, gridColor) {
     floorGrid.vertices.push(new THREE.Vector3( i, 0, -lines));
     floorGrid.vertices.push(new THREE.Vector3( i, 0, lines));
   }
-  this.scene.add(new THREE.Line(floorGrid, gridLine, THREE.LinePieces));
+  this.add(new THREE.Line(floorGrid, gridLine, THREE.LinePieces));
+};
+
+
+ObsidianCity.prototype.enableBaseFloor = function() {
+  var dim = this.settings.city;
+  var geometry = this.geometry.base;
+  var material = this.material.black;
+  var mesh = new THREE.Mesh(geometry, material);
+  mesh.scale.set(2.3 * dim.width, 1, 2.3 * dim.length);
+  mesh.position.set(0, -1, 0);
+  this.add(mesh);
 };

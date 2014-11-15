@@ -93,13 +93,14 @@
   var city = new ObsidianCity(settings);
   city.enableFloorGrid(256, 16, 0x999999);
   city.enableSkybox();
+  city.enableBaseFloor();
 
   // Hemisphere lighting
   city.addAmbientLight(0x777777);
   city.addDirectionalLight(0x2F2AAF, 0.2, 0.5, 0.2);
   city.addHemisphereLight(0x9999C9, 0x222222, 0.7);
 
-  //  Construct buildings
+  //  City parameters
   var build = ObsidianBuilding.prototype;
   var cs = city.settings.city;
   var top = -cs.length;
