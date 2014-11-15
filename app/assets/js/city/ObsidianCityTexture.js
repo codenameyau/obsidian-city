@@ -90,23 +90,25 @@ ObsidianBuilding.prototype.generateCylinderWindows = function(radius, height) {
  * ObsidianCity Skybox Texture *
  *******************************/
 ObsidianCity.prototype.textureCanvas = ObsidianBuilding.prototype.textureCanvas;
-ObsidianCity.prototype.drawSkyboxGradient = function(width, height, topColor, bottomColor) {
-  var ctx = this.textureCanvas(width, height, topColor);
-  var gradient = ctx.createLinearGradient(0, 0, 0, height);
+ObsidianCity.prototype.drawSkyboxGradient = function(size, topColor, centerColor) {
+  var width  = size * 4;
+  var height = size * 2;
+  var ctx = this.textureCanvas(width, height);
+  var gradient = ctx.createLinearGradient(0, size, 0, 2 * size);
   gradient.addColorStop(0, topColor);
-  gradient.addColorStop(1, bottomColor);
+  gradient.addColorStop(0.7, centerColor);
+  gradient.addColorStop(1, topColor);
   ctx.fillStyle = gradient;
   ctx.fillRect(0, 0, width, height);
   return ctx.canvas;
 };
 
 
-ObsidianCity.prototype.enableSkybox = function() {
+ObsidianCity.prototype.enableSkybox = function(topColor, centerColor) {
   // Set skybox resolution
   var width  = 1024;
-  var height = 768;
   var size = width / 4;
-  var texture = this.drawSkyboxGradient(width, height, '#880000', '#02040A');
+  var texture = this.drawSkyboxGradient(size, topColor, centerColor);
 
   // Gets specfic cube side
   var getSide = function (x, y) {

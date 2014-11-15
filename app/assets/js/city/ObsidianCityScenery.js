@@ -50,7 +50,7 @@ ObsidianCity.prototype.enableBaseFloor = function() {
   var geometry = this.geometry.base;
   var material = this.material.black;
   var mesh = new THREE.Mesh(geometry, material);
-  mesh.scale.set(2.3 * dim.width, 1, 2.3 * dim.length);
+  mesh.scale.set(2.5 * dim.width, 1, 2.5 * dim.length);
   mesh.position.set(0, -1, 0);
   this.add(mesh);
 };

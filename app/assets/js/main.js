@@ -92,7 +92,7 @@
    ***************/
   var city = new ObsidianCity(settings);
   city.enableFloorGrid(256, 16, 0x999999);
-  city.enableSkybox();
+  city.enableSkybox('#000000', '#14131A');
   city.enableBaseFloor();
 
   // Hemisphere lighting
