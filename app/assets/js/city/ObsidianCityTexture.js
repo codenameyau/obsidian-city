@@ -96,7 +96,7 @@ ObsidianCity.prototype.drawSkyboxGradient = function(width, height, topColor, bo
   gradient.addColorStop(0, topColor);
   gradient.addColorStop(1, bottomColor);
   ctx.fillStyle = gradient;
-  ctx.fill();
+  ctx.fillRect(0, 0, width, height);
   return ctx.canvas;
 };
 
@@ -106,7 +106,7 @@ ObsidianCity.prototype.enableSkybox = function() {
   var width  = 1024;
   var height = 768;
   var size = width / 4;
-  var texture = this.drawSkyboxGradient(width, height, '#992222', '#111111');
+  var texture = this.drawSkyboxGradient(width, height, '#000000', '#02040A');
 
   // Gets specfic cube side
   var getSide = function (x, y) {
@@ -142,7 +142,7 @@ ObsidianCity.prototype.enableSkybox = function() {
   });
 
   // Create and add skybox
-  var geometry = new THREE.BoxGeometry(2000, 2000, 2000);
+  var geometry = new THREE.BoxGeometry(800, 800, 800);
   var skybox = new THREE.Mesh(geometry, skyboxMaterial);
   this.add(skybox);
 };

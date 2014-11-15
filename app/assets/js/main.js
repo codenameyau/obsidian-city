@@ -92,7 +92,7 @@
    ***************/
   var city = new ObsidianCity(settings);
   city.enableFloorGrid(256, 16, 0x999999);
-  city.enableSkybox()
+  // city.enableSkybox();
 
   // Hemisphere lighting
   city.addAmbientLight(0x777777);
@@ -145,7 +145,7 @@
 
   var generateBusinessName = function(width, length) {
     var businessName = '';
-    if (width > 25 || length > 25) {
+    if (width > 20 && length > 20) {
       var pValue = city.utils.randomInteger(0, prefix.length);
       var bValue = city.utils.randomInteger(0, business.length);
       businessName = prefix[pValue] + business[bValue];

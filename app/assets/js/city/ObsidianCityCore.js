@@ -16,7 +16,7 @@ ObsidianCity.prototype.initializeSettings = function() {
     camera: {
       fov: 40,
       near: 0.5,
-      far: 3000,
+      far: 2000,
       zoomX: 200,
       zoomY: 100,
       zoomZ: 200,
@@ -27,7 +27,7 @@ ObsidianCity.prototype.initializeSettings = function() {
       userPan: false,
       userPanSpeed: 2,
       minDistance: 80.0,
-      maxDistance: 500.0,
+      maxDistance: 600.0,
       maxPolarAngle: (Math.PI/180) * 85,
     },
 
