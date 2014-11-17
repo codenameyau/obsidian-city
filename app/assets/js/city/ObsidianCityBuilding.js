@@ -90,7 +90,7 @@ ObsidianBuilding.prototype.buildCylinder = function(geometry, material, radius, 
 
 
 ObsidianBuilding.prototype.fontSettings = {
-  size: 2, height: 1, curveSegments: 3,
+  size: 2, height: 1, curveSegments: 5,
 };
 
 
@@ -98,12 +98,12 @@ ObsidianBuilding.prototype.buildRoof = function(material) {
   var text = this.settings.text;
   if (text) {
     var dim = this.dimension;
-    var textMaterial = this.material.tint;
+    var textMaterial = this.material.text;
     var textGeometry = new THREE.TextGeometry(text, this.fontSettings);
     var textMesh = new THREE.Mesh(textGeometry, textMaterial);
     var posX = Math.ceil(-text.length/2);
     var posZ = dim.length / 2;
-    textMesh.scale.set(0.6, 0.6, 0.2);
+    textMesh.scale.set(0.65, 0.65, 0.2);
     textMesh.position.set(posX, dim.current, posZ);
     this.mesh.add(textMesh);
   }

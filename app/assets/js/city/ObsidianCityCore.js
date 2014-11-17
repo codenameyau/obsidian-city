@@ -4,6 +4,21 @@
 'use strict';
 
 
+/****************************
+ * ObsidianCity Constructor *
+ ****************************/
+function ObsidianCity(settings) {
+  this.initializeSettings();
+  this.initializeClock();
+  this.initializeScene();
+  this.initializeCamera();
+  this.initializeControls();
+  this.initializeHUD();
+  this.initializeEventListeners();
+  this.settings.city = settings;
+}
+
+
 /*******************************
  * ObsidianCity Initialization *
  *******************************/
@@ -14,12 +29,12 @@ ObsidianCity.prototype.initializeSettings = function() {
     },
 
     camera: {
-      fov: 40,
+      fov: 45,
       near: 0.5,
       far: 2000,
-      zoomX: 200,
-      zoomY: 100,
-      zoomZ: 200,
+      zoomX: 180,
+      zoomY: 80,
+      zoomZ: 150,
     },
 
     controls: {
@@ -27,9 +42,9 @@ ObsidianCity.prototype.initializeSettings = function() {
       userPan: false,
       userPanSpeed: 2,
       minDistance: 80.0,
-      maxDistance: 350.0,
+      maxDistance: 300.0,
       maxPolarAngle: (Math.PI/180) * 85,
-      minPolarAngle: (Math.PI/180) * 30,
+      minPolarAngle: (Math.PI/180) * 55,
     },
 
     renderer: {

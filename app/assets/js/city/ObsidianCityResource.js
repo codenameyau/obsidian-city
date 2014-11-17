@@ -23,7 +23,7 @@
   var material = {
     black: new THREE.MeshBasicMaterial({ color: 0x060606 }),
     gray:  new THREE.MeshBasicMaterial({ color: 0xCCCCCC }),
-    tint:  new THREE.MeshBasicMaterial({ color: 0xE6FDFF }),
+    text:  new THREE.MeshBasicMaterial({ color: 0xBFBEB5 }),
     road:  new THREE.MeshBasicMaterial({ color: 0x888888 }),
   };
 
