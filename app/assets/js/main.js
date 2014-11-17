@@ -11,8 +11,8 @@
    * City Settings *
    *****************/
   var settings = {
-    width: 150,
-    length: 150,
+    width: 200,
+    length: 200,
     blockWidth: 24,
     blockLength: 24,
     roadWidth: 5,
@@ -92,7 +92,7 @@
    ***************/
   var city = new ObsidianCity(settings);
   city.enableFloorGrid(256, 16, 0x999999);
-  city.enableSkybox('#000000', '#14131A');
+  city.enableSkybox('#010101', '#481822');
   city.enableBaseFloor();
 
   // Hemisphere lighting
@@ -140,9 +140,9 @@
     return building;
   };
 
-  var generateBusinessName = function(height) {
+  var generateBusinessName = function(height, width, length) {
     var businessName = '';
-    if (height > 50 && city.utils.randomInteger(0, 2)) {
+    if ((height > 50) && (width > 20) && (length > 20)) {
       var pValue = city.utils.randomInteger(0, prefix.length);
       var bValue = city.utils.randomInteger(0, business.length);
       businessName = prefix[pValue] + business[bValue];
@@ -169,7 +169,7 @@
         height: hSize,
         stack: stacks,
         radius: radius,
-        text: generateBusinessName(hSize),
+        text: generateBusinessName(hSize, wSize, lSize),
       };
 
     // Select random building type

@@ -96,7 +96,7 @@ ObsidianCity.prototype.drawSkyboxGradient = function(size, topColor, centerColor
   var ctx = this.textureCanvas(width, height);
   var gradient = ctx.createLinearGradient(0, size, 0, 2 * size);
   gradient.addColorStop(0, topColor);
-  gradient.addColorStop(0.7, centerColor);
+  gradient.addColorStop(0.9, centerColor);
   gradient.addColorStop(1, topColor);
   ctx.fillStyle = gradient;
   ctx.fillRect(0, 0, width, height);
