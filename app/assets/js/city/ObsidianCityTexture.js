@@ -59,8 +59,8 @@ ObsidianBuilding.prototype.drawWindows = function(width, height) {
   for (var h=padding; h<height; h += 2) {
     var lightsColor = this.utils.randomInteger(10, 160);
     for (var w=padding; w<windows; w += 2.5) {
-      var windowColor = this.utils.getGrayscale(
-        this.utils.randomNormal(lightsColor, 100));
+      var colorValue = this.utils.randomNormal(lightsColor, 100);
+      var windowColor = this.utils.getGrayscale(colorValue);
       ctx.fillStyle = windowColor;
       ctx.fillRect(w, h, 1.5, 1);
     }

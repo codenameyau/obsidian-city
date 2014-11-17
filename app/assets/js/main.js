@@ -92,13 +92,12 @@
    ***************/
   var city = new ObsidianCity(settings);
   city.enableFloorGrid(256, 16, 0x999999);
-  city.enableSkybox('#010101', '#481822');
+  city.enableSkybox('#010101', '#3D251E');
   city.enableBaseFloor();
 
   // Hemisphere lighting
-  city.addAmbientLight(0x777777);
-  city.addDirectionalLight(0x2F2AAF, 0.2, 0.5, 0.2);
-  city.addHemisphereLight(0x9999C9, 0x222222, 0.7);
+  city.addAmbientLight(0xA9A9A9);
+  city.addHemisphereLight(0x212181, 0x111111, 0.6);
 
   //  City parameters
   var build = ObsidianBuilding.prototype;
@@ -161,7 +160,7 @@
     var wSize = 4 * city.utils.randomInteger(4, 8);
     var lSize = 4 * city.utils.randomInteger(4, 8);
     var hSize = computerHeight(x, z);
-    var stacks = city.utils.randomInteger(0, 3);
+    var stacks = city.utils.randomInteger(0, 4);
     var radius = city.utils.randomInteger(8, 12);
     var settings = {
         width: wSize,
