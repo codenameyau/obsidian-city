@@ -11,8 +11,8 @@
    * City Settings *
    *****************/
   var settings = {
-    width: 200,
-    length: 200,
+    width: 240,
+    length: 240,
     blockWidth: 24,
     blockLength: 24,
     roadWidth: 5,
@@ -92,7 +92,7 @@
    ***************/
   var city = new ObsidianCity(settings);
   city.enableFloorGrid(256, 16, 0x999999);
-  city.enableSkybox('#010101', '#3D251E');
+  city.enableSkybox('#010101', '#46251E');
   city.enableBaseFloor();
 
   // Hemisphere lighting
