@@ -33,7 +33,7 @@
   }
 
   // Define geometry without needing translation
-  geometry.plane = new THREE.PlaneGeometry(1, 1);
+  geometry.plane = new THREE.PlaneBufferGeometry(1, 1);
 
   // Bind reusable resources
   ObsidianCity.prototype.geometry = geometry;
