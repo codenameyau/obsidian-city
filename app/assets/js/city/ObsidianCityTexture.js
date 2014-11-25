@@ -57,9 +57,9 @@ ObsidianBuilding.prototype.drawWindows = function(width, height) {
   // Draw windows texture on new canvas
   var ctx = this.textureCanvas(windows, height);
   for (var h=padding; h<height; h += 2) {
-    var lightsColor = this.utils.randomInteger(10, 160);
+    var floorLighting = this.utils.randomInteger(0, 120);
     for (var w=padding; w<windows; w += 2.5) {
-      var colorValue = this.utils.randomNormal(lightsColor, 100);
+      var colorValue = this.utils.randomNormal(floorLighting, 100);
       var windowColor = this.utils.getGrayscale(colorValue);
       ctx.fillStyle = windowColor;
       ctx.fillRect(w, h, 1.5, 1);

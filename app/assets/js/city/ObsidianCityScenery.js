@@ -8,14 +8,17 @@
  * ObsidianCity Lighting *
  *************************/
 ObsidianCity.prototype.addAmbientLight = function(color) {
-  var light = new THREE.AmbientLight(color);
-  this.add(light);
+  this.add(new THREE.AmbientLight(color));
 };
 
 
 ObsidianCity.prototype.addHemisphereLight = function(skyColor, groundColor, intensity) {
-  var light = new THREE.HemisphereLight(skyColor, groundColor, intensity);
-  this.add(light);
+  this.add(new THREE.HemisphereLight(skyColor, groundColor, intensity));
+};
+
+
+ObsidianCity.prototype.addFog = function(color, near, far) {
+  this.scene.fog = new THREE.Fog( color, near, far );
 };
 
 

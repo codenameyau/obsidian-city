@@ -96,8 +96,8 @@
   city.enableBaseFloor();
 
   // Hemisphere lighting
-  city.addAmbientLight(0x9B9E8E);
-  city.addHemisphereLight(0x333333, 0x111111, 0.6);
+  city.addAmbientLight(0xA5A28E);
+  city.addHemisphereLight(0x655555, 0x111111, 0.6);
 
   //  City parameters
   var build = ObsidianBuilding.prototype;
