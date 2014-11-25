@@ -32,9 +32,9 @@ ObsidianCity.prototype.initializeSettings = function() {
       fov: 45,
       near: 0.5,
       far: 2000,
-      zoomX: 220,
-      zoomY: 100,
-      zoomZ: 220,
+      zoomX: 330,
+      zoomY: 70,
+      zoomZ: 90,
     },
 
     controls: {
@@ -42,9 +42,9 @@ ObsidianCity.prototype.initializeSettings = function() {
       userPan: false,
       userPanSpeed: 3,
       minDistance: 80.0,
-      maxDistance: 300.0,
-      maxPolarAngle: (Math.PI/180) * 85,
-      minPolarAngle: (Math.PI/180) * 55,
+      maxDistance: 280.0,
+      maxPolarAngle: (Math.PI/180) * 80,
+      minPolarAngle: (Math.PI/180) * 65,
     },
 
     renderer: {

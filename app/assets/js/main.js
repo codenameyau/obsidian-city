@@ -11,11 +11,11 @@
    * City Settings *
    *****************/
   var settings = {
-    width: 240,
-    length: 240,
+    width: 220,
+    length: 220,
     blockWidth: 24,
     blockLength: 24,
-    roadWidth: 5,
+    roadWidth: 6,
   };
 
   /******************
@@ -91,13 +91,13 @@
    * Define City *
    ***************/
   var city = new ObsidianCity(settings);
-  city.enableFloorGrid(256, 16, 0x999999);
-  city.enableSkybox('#010101', '#46251E');
+  city.enableFloorGrid(236, 16, 0x999999);
+  city.enableSkybox('#020202', '#251B18');
   city.enableBaseFloor();
 
   // Hemisphere lighting
-  city.addAmbientLight(0xA9A9A9);
-  city.addHemisphereLight(0x212181, 0x111111, 0.6);
+  city.addAmbientLight(0x9B9E8E);
+  city.addHemisphereLight(0x333333, 0x111111, 0.6);
 
   //  City parameters
   var build = ObsidianBuilding.prototype;
