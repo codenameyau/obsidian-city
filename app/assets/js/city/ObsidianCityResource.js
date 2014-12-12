@@ -21,7 +21,7 @@
 
   // Reusable materials
   var material = {
-    black: new THREE.MeshBasicMaterial({ color: 0x060606 }),
+    black: new THREE.MeshBasicMaterial({ color: 0x010101 }),
     gray:  new THREE.MeshBasicMaterial({ color: 0xCCCCCC }),
     text:  new THREE.MeshBasicMaterial({ color: 0xBFBEB5 }),
     road:  new THREE.MeshBasicMaterial({ color: 0x888888 }),

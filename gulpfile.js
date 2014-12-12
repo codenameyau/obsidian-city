@@ -15,7 +15,7 @@ var gulp = require('gulp');
 var rimraf = require('rimraf');
 var uglify = require('gulp-uglify');
 var usemin = require('gulp-usemin');
-var rev = require('gulp-rev');
+var minifycss = require('gulp-minify-css');
 
 // File paths
 var PATHS = {
@@ -33,14 +33,14 @@ gulp.task('clean', function(cb) {
 gulp.task('usemin', ['clean'], function() {
   gulp.src(PATHS.index)
     .pipe(usemin({
-      css: [rev()],
-      js: [uglify(), rev()],
+      css: [minifycss()],
+      js: [uglify()],
     }))
     .pipe(gulp.dest('dist/'));
 });
 
-// Copy static images (todo: gulp-imagemin)
-gulp.task('images', ['clean'], function() {
+// Copy static files (todo: gulp-imagemin)
+gulp.task('static', ['clean'], function() {
   gulp.src(PATHS.favicon)
     .pipe(gulp.dest('dist/'));
   gulp.src(PATHS.images)
@@ -48,4 +48,4 @@ gulp.task('images', ['clean'], function() {
 });
 
 // Generate dist folder for production
-gulp.task('default', ['clean', 'usemin', 'images']);
+gulp.task('default', ['clean', 'usemin', 'static']);
